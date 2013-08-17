@@ -8,6 +8,7 @@
 
 #import "BXFood.h"
 
+
 @implementation BXFood
 
 @dynamic name;

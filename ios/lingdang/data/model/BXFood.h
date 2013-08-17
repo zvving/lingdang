@@ -14,7 +14,7 @@
 @interface BXFood : PFObject <PFSubclassing>
 
 @property (strong) NSString *   name;
-@property (assign) int          price;
+@property (assign) float        price;
 
 
 // link to BXShop

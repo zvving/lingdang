@@ -8,7 +8,7 @@
 
 #import "BXAppDelegate.h"
 
-#import "BXFootListViewController.h"
+#import "BXFoodListViewController.h"
 
 #import "BXShop.h"
 #import "BXFood.h"
@@ -29,9 +29,9 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-        self.viewController = [[BXFootListViewController alloc] initWithNibName:@"BXFootListViewController_iPhone" bundle:nil];
+        self.viewController = [[BXFoodListViewController alloc] initWithNibName:@"BXFoodListViewController_iPhone" bundle:nil];
     } else {
-        self.viewController = [[BXFootListViewController alloc] initWithNibName:@"BXFootListViewController_iPad" bundle:nil];
+        self.viewController = [[BXFoodListViewController alloc] initWithNibName:@"BXFoodListViewController_iPad" bundle:nil];
     }
     self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:self.viewController];
     [self.window makeKeyAndVisible];

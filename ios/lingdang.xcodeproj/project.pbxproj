@@ -11,7 +11,7 @@
 		0D1B161317BF54140019AD6F /* BXFoodInfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0D1B15E917BF54140019AD6F /* BXFoodInfoViewController.xib */; };
 		0D1B161417BF54140019AD6F /* BXOrderListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D1B15EB17BF54140019AD6F /* BXOrderListViewController.m */; };
 		0D1B161517BF54140019AD6F /* BXOrderListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0D1B15EC17BF54140019AD6F /* BXOrderListViewController.xib */; };
-		0D1B161617BF54140019AD6F /* BXFootListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D1B15EE17BF54140019AD6F /* BXFootListViewController.m */; };
+		0D1B161617BF54140019AD6F /* BXFoodListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D1B15EE17BF54140019AD6F /* BXFoodListViewController.m */; };
 		0D1B161717BF54140019AD6F /* BXLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D1B15F017BF54140019AD6F /* BXLoginViewController.m */; };
 		0D1B161817BF54140019AD6F /* BXLoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0D1B15F117BF54140019AD6F /* BXLoginViewController.xib */; };
 		0D1B161917BF54140019AD6F /* BXFoodProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D1B15F517BF54140019AD6F /* BXFoodProvider.m */; };
@@ -24,11 +24,13 @@
 		0D1B162017BF54140019AD6F /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0D1B160617BF54140019AD6F /* Default-568h@2x.png */; };
 		0D1B162117BF54140019AD6F /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 0D1B160717BF54140019AD6F /* Default.png */; };
 		0D1B162217BF54140019AD6F /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0D1B160817BF54140019AD6F /* Default@2x.png */; };
-		0D1B162317BF54140019AD6F /* BXFootListViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0D1B160917BF54140019AD6F /* BXFootListViewController_iPad.xib */; };
-		0D1B162417BF54140019AD6F /* BXFootListViewController_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0D1B160B17BF54140019AD6F /* BXFootListViewController_iPhone.xib */; };
+		0D1B162317BF54140019AD6F /* BXFoodListViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0D1B160917BF54140019AD6F /* BXFoodListViewController_iPad.xib */; };
+		0D1B162417BF54140019AD6F /* BXFoodListViewController_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0D1B160B17BF54140019AD6F /* BXFoodListViewController_iPhone.xib */; };
 		0D1B162517BF54140019AD6F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0D1B160D17BF54140019AD6F /* InfoPlist.strings */; };
 		0D1B162617BF54140019AD6F /* lingdang-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0D1B160F17BF54140019AD6F /* lingdang-Info.plist */; };
 		0D1B162717BF54140019AD6F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D1B161117BF54140019AD6F /* main.m */; };
+		0D5ACD9917BF63E000B066D0 /* NSObject+Properties.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D5ACD9617BF63E000B066D0 /* NSObject+Properties.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		0D5ACD9A17BF63E000B066D0 /* NSString+PropertyKVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D5ACD9817BF63E000B066D0 /* NSString+PropertyKVC.m */; };
 		0DF135D117BE827400262A1F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0DF135D017BE827400262A1F /* UIKit.framework */; };
 		0DF135D317BE827400262A1F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0DF135D217BE827400262A1F /* Foundation.framework */; };
 		0DF135D517BE827400262A1F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0DF135D417BE827400262A1F /* CoreGraphics.framework */; };
@@ -45,8 +47,8 @@
 		0D1B15EA17BF54140019AD6F /* BXOrderListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BXOrderListViewController.h; sourceTree = "<group>"; };
 		0D1B15EB17BF54140019AD6F /* BXOrderListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BXOrderListViewController.m; sourceTree = "<group>"; };
 		0D1B15EC17BF54140019AD6F /* BXOrderListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BXOrderListViewController.xib; sourceTree = "<group>"; };
-		0D1B15ED17BF54140019AD6F /* BXFootListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BXFootListViewController.h; sourceTree = "<group>"; };
-		0D1B15EE17BF54140019AD6F /* BXFootListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BXFootListViewController.m; sourceTree = "<group>"; };
+		0D1B15ED17BF54140019AD6F /* BXFoodListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BXFoodListViewController.h; sourceTree = "<group>"; };
+		0D1B15EE17BF54140019AD6F /* BXFoodListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BXFoodListViewController.m; sourceTree = "<group>"; };
 		0D1B15EF17BF54140019AD6F /* BXLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BXLoginViewController.h; sourceTree = "<group>"; };
 		0D1B15F017BF54140019AD6F /* BXLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BXLoginViewController.m; sourceTree = "<group>"; };
 		0D1B15F117BF54140019AD6F /* BXLoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BXLoginViewController.xib; sourceTree = "<group>"; };
@@ -68,12 +70,16 @@
 		0D1B160617BF54140019AD6F /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		0D1B160717BF54140019AD6F /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		0D1B160817BF54140019AD6F /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
-		0D1B160A17BF54140019AD6F /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/BXFootListViewController_iPad.xib; sourceTree = "<group>"; };
-		0D1B160C17BF54140019AD6F /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/BXFootListViewController_iPhone.xib; sourceTree = "<group>"; };
+		0D1B160A17BF54140019AD6F /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/BXFoodListViewController_iPad.xib; sourceTree = "<group>"; };
+		0D1B160C17BF54140019AD6F /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/BXFoodListViewController_iPhone.xib; sourceTree = "<group>"; };
 		0D1B160E17BF54140019AD6F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		0D1B160F17BF54140019AD6F /* lingdang-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "lingdang-Info.plist"; sourceTree = "<group>"; };
 		0D1B161017BF54140019AD6F /* lingdang-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "lingdang-Prefix.pch"; sourceTree = "<group>"; };
 		0D1B161117BF54140019AD6F /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		0D5ACD9517BF63E000B066D0 /* NSObject+Properties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+Properties.h"; sourceTree = "<group>"; };
+		0D5ACD9617BF63E000B066D0 /* NSObject+Properties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Properties.m"; sourceTree = "<group>"; };
+		0D5ACD9717BF63E000B066D0 /* NSString+PropertyKVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+PropertyKVC.h"; sourceTree = "<group>"; };
+		0D5ACD9817BF63E000B066D0 /* NSString+PropertyKVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+PropertyKVC.m"; sourceTree = "<group>"; };
 		0DF135CD17BE827400262A1F /* lingdang.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = lingdang.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0DF135D017BE827400262A1F /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		0DF135D217BE827400262A1F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -103,10 +109,10 @@
 			isa = PBXGroup;
 			children = (
 				0D1B15E617BF54140019AD6F /* admin */,
-				0D1B15ED17BF54140019AD6F /* BXFootListViewController.h */,
-				0D1B15EE17BF54140019AD6F /* BXFootListViewController.m */,
-				0D1B160917BF54140019AD6F /* BXFootListViewController_iPad.xib */,
-				0D1B160B17BF54140019AD6F /* BXFootListViewController_iPhone.xib */,
+				0D1B15ED17BF54140019AD6F /* BXFoodListViewController.h */,
+				0D1B15EE17BF54140019AD6F /* BXFoodListViewController.m */,
+				0D1B160917BF54140019AD6F /* BXFoodListViewController_iPad.xib */,
+				0D1B160B17BF54140019AD6F /* BXFoodListViewController_iPhone.xib */,
 				0D1B15EF17BF54140019AD6F /* BXLoginViewController.h */,
 				0D1B15F017BF54140019AD6F /* BXLoginViewController.m */,
 				0D1B15F117BF54140019AD6F /* BXLoginViewController.xib */,
@@ -167,6 +173,7 @@
 		0D1B160317BF54140019AD6F /* lib */ = {
 			isa = PBXGroup;
 			children = (
+				0D5ACD9417BF63E000B066D0 /* NSObject+Properties */,
 				0D1B160417BF54140019AD6F /* BCSingleton.h */,
 			);
 			path = lib;
@@ -184,6 +191,17 @@
 				0D1B161117BF54140019AD6F /* main.m */,
 			);
 			path = support;
+			sourceTree = "<group>";
+		};
+		0D5ACD9417BF63E000B066D0 /* NSObject+Properties */ = {
+			isa = PBXGroup;
+			children = (
+				0D5ACD9517BF63E000B066D0 /* NSObject+Properties.h */,
+				0D5ACD9617BF63E000B066D0 /* NSObject+Properties.m */,
+				0D5ACD9717BF63E000B066D0 /* NSString+PropertyKVC.h */,
+				0D5ACD9817BF63E000B066D0 /* NSString+PropertyKVC.m */,
+			);
+			path = "NSObject+Properties";
 			sourceTree = "<group>";
 		};
 		0DF135C417BE827400262A1F = {
@@ -287,11 +305,11 @@
 				0D1B162217BF54140019AD6F /* Default@2x.png in Resources */,
 				0D1B161817BF54140019AD6F /* BXLoginViewController.xib in Resources */,
 				0D1B162017BF54140019AD6F /* Default-568h@2x.png in Resources */,
-				0D1B162417BF54140019AD6F /* BXFootListViewController_iPhone.xib in Resources */,
+				0D1B162417BF54140019AD6F /* BXFoodListViewController_iPhone.xib in Resources */,
 				0D1B161317BF54140019AD6F /* BXFoodInfoViewController.xib in Resources */,
 				0D1B161517BF54140019AD6F /* BXOrderListViewController.xib in Resources */,
 				0D1B162617BF54140019AD6F /* lingdang-Info.plist in Resources */,
-				0D1B162317BF54140019AD6F /* BXFootListViewController_iPad.xib in Resources */,
+				0D1B162317BF54140019AD6F /* BXFoodListViewController_iPad.xib in Resources */,
 				0D1B162517BF54140019AD6F /* InfoPlist.strings in Resources */,
 				0D1B162117BF54140019AD6F /* Default.png in Resources */,
 			);
@@ -342,8 +360,10 @@
 				0D1B161C17BF54140019AD6F /* BXUserProvider.m in Sources */,
 				0D1B161217BF54140019AD6F /* BXFoodInfoViewController.m in Sources */,
 				0D1B161B17BF54140019AD6F /* BXShopProvider.m in Sources */,
+				0D5ACD9A17BF63E000B066D0 /* NSString+PropertyKVC.m in Sources */,
 				0D1B161917BF54140019AD6F /* BXFoodProvider.m in Sources */,
-				0D1B161617BF54140019AD6F /* BXFootListViewController.m in Sources */,
+				0D5ACD9917BF63E000B066D0 /* NSObject+Properties.m in Sources */,
+				0D1B161617BF54140019AD6F /* BXFoodListViewController.m in Sources */,
 				0D1B161A17BF54140019AD6F /* BXOrderProvider.m in Sources */,
 				0D1B161F17BF54140019AD6F /* BXShop.m in Sources */,
 				0D1B161D17BF54140019AD6F /* BXFood.m in Sources */,
@@ -356,21 +376,21 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		0D1B160917BF54140019AD6F /* BXFootListViewController_iPad.xib */ = {
+		0D1B160917BF54140019AD6F /* BXFoodListViewController_iPad.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
 				0D1B160A17BF54140019AD6F /* en */,
 			);
-			name = BXFootListViewController_iPad.xib;
+			name = BXFoodListViewController_iPad.xib;
 			path = ../support;
 			sourceTree = "<group>";
 		};
-		0D1B160B17BF54140019AD6F /* BXFootListViewController_iPhone.xib */ = {
+		0D1B160B17BF54140019AD6F /* BXFoodListViewController_iPhone.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
 				0D1B160C17BF54140019AD6F /* en */,
 			);
-			name = BXFootListViewController_iPhone.xib;
+			name = BXFoodListViewController_iPhone.xib;
 			path = ../support;
 			sourceTree = "<group>";
 		};

@@ -6,21 +6,27 @@
 //  Copyright (c) 2013年 baixing.com. All rights reserved.
 //
 
-#import "BXFootListViewController.h"
+#import "BXFoodListViewController.h"
 #import "BXOrderListViewController.h"
 #import "BXLoginViewController.h"
 #import "BXFoodInfoViewController.h"
+#import "BXFoodProvider.h"
 
 
-@interface BXFootListViewController ()
+
+@interface BXFoodListViewController () <UITableViewDataSource, UITableViewDelegate>
+
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 @property (nonatomic, strong) BXOrderListViewController *   orderListVC;
 @property (nonatomic, strong) UINavigationController *      adminNav;
 @property (nonatomic, strong) BXLoginViewController *       loginVC;
 
+@property (nonatomic, strong) NSArray *                     foodData;
+
 @end
 
-@implementation BXFootListViewController
+@implementation BXFoodListViewController
 
 - (void)viewDidLoad
 {
@@ -31,18 +37,18 @@
     self.adminNav = [[UINavigationController alloc] initWithRootViewController:_orderListVC];
     _adminNav.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
     
-    __block BXFootListViewController *weakSelf = self;
+    __block BXFoodListViewController *weakSelf = self;
     
-    if (_isAdminMode) {
+    if (_isAdminMode) { // 管理 food 界面
         self.navigationItem.rightBarButtonItem =
         [[UIBarButtonItem alloc] initWithTitle:@"增加"
                                          style:UIBarButtonItemStylePlain
                                        handler:^(id sender)
         {
-            BXFoodInfoViewController *footInfoVC = [[BXFoodInfoViewController alloc] init];
-            [self.navigationController pushViewController:footInfoVC animated:YES];
+            BXFoodInfoViewController *foodInfoVC = [[BXFoodInfoViewController alloc] init];
+            [self.navigationController pushViewController:foodInfoVC animated:YES];
         }];
-    } else {
+    } else { // 订餐界面
         self.navigationItem.leftBarButtonItem =
         [[UIBarButtonItem alloc] initWithTitle:@"切至管家"
                                          style:UIBarButtonItemStylePlain
@@ -74,12 +80,18 @@
             }
         }
     }
-
     
-
+    [_tableView addPullToRefreshWithActionHandler:^{
+        [[BXFoodProvider sharedInstance] allFood:^(NSArray *food) {
+            weakSelf.foodData = food;
+            [_tableView reloadData];
+            [_tableView.pullToRefreshView stopAnimating];
+        } fail:^(NSError *err) {
+            [SVProgressHUD showErrorWithStatus:@"获取菜单失败"];
+        }];
+    }];
     
-
-    
+    [_tableView triggerPullToRefresh];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -92,6 +104,28 @@
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
+}
+
+#pragma mark - UITableViewDataSource & UITableViewDelegate
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return _foodData.count;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *cellId = @"foodCellId";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellId];
+    if (!cell) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue2 reuseIdentifier:cellId];
+    }
+    
+    BXFood *food = _foodData[indexPath.row];
+    cell.textLabel.text = [NSString stringWithFormat:@"%.1f 元", food.price];
+    cell.detailTextLabel.text = food.name;  //food.pToShop.name;
+    
+    return cell;
 }
 
 @end

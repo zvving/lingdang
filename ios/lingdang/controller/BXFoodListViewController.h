@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface BXFootListViewController : UIViewController
+@interface BXFoodListViewController : UIViewController
 
 @property (nonatomic, assign) BOOL          isAdminMode;
 

@@ -7,7 +7,7 @@
 //
 
 #import "BXOrderListViewController.h"
-#import "BXFootListViewController.h"
+#import "BXFoodListViewController.h"
 
 @interface BXOrderListViewController ()
 
@@ -43,11 +43,11 @@
                                                                               style:UIBarButtonItemStylePlain
                                                                             handler:^(id sender)
     {
-        BXFootListViewController *footVC =
-        [[BXFootListViewController alloc] initWithNibName:@"BXFootListViewController_iPhone"
+        BXFoodListViewController *foodVC =
+        [[BXFoodListViewController alloc] initWithNibName:@"BXFoodListViewController_iPhone"
                                                    bundle:nil];
-        footVC.isAdminMode = YES;
-        [weakSelf.navigationController pushViewController:footVC animated:YES];
+        foodVC.isAdminMode = YES;
+        [weakSelf.navigationController pushViewController:foodVC animated:YES];
     }];
     
 }

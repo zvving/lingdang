@@ -18,4 +18,6 @@
 
 #define kCacheIsAdminMode   @"kCacheIsAdminMode"
 
+#define kCacheAllFood       @"kCacheAllFood"
+
 #endif

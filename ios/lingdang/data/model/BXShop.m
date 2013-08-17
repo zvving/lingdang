@@ -12,6 +12,7 @@
 
 @dynamic name;
 
+
 + (NSString *)parseClassName {
     return @"shop";
 }
