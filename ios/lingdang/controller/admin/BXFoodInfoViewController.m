@@ -113,7 +113,7 @@
     [SVProgressHUD showWithStatus:@"新增菜品中" maskType:SVProgressHUDMaskTypeGradient];
     
     [[BXFoodProvider sharedInstance] addFoodWithName:_nameTf.text
-                                               price:[_priceTf.text intValue]
+                                               price:[_priceTf.text floatValue]
                                                 shop:shop
                                              success:^(BXFood *food)
     {

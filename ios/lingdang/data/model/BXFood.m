@@ -13,6 +13,7 @@
 
 @dynamic name;
 @dynamic price;
+@dynamic shopName;
 
 + (NSString *)parseClassName {
     return @"food";

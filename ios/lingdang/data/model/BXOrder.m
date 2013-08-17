@@ -10,6 +10,12 @@
 
 @implementation BXOrder
 
+@dynamic pToFood;
+@dynamic count;
+@dynamic pToUser;
+@dynamic status;
+@dynamic isPaid;
+
 + (NSString *)parseClassName {
     return @"order";
 }

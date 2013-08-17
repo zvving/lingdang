@@ -10,4 +10,26 @@
 
 @implementation BXOrderProvider
 
+BCSINGLETON_IN_M(BXOrderProvider)
+
+- (void)addOrderWithFood:(BXFood*)food
+                   count:(int)count
+                 success:(void(^)(BXFood* food))sucBlock
+                    fail:(void(^)(NSError* err))failBlock;
+{
+    
+}
+
+- (void)allOrders:(void(^)(NSArray* orders))sucBlock
+             fail:(void(^)(NSError* err))failBlock;
+{
+    
+}
+
+- (void)myOrders:(void(^)(NSArray* orders))sucBlock
+            fail:(void(^)(NSError* err))failBlock;
+{
+    
+}
+
 @end

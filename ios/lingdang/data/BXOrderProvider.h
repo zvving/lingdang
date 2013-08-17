@@ -8,6 +8,21 @@
 
 #import <Foundation/Foundation.h>
 
+#import "BXFood.h"
+
 @interface BXOrderProvider : NSObject
+
+BCSINGLETON_IN_H(BXOrderProvider)
+
+- (void)addOrderWithFood:(BXFood*)food
+                  count:(int)count
+                success:(void(^)(BXFood* food))sucBlock
+                   fail:(void(^)(NSError* err))failBlock;
+
+- (void)allOrders:(void(^)(NSArray* orders))sucBlock
+             fail:(void(^)(NSError* err))failBlock;
+
+- (void)myOrders:(void(^)(NSArray* orders))sucBlock
+             fail:(void(^)(NSError* err))failBlock;
 
 @end

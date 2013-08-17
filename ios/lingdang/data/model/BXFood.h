@@ -19,5 +19,6 @@
 
 // link to BXShop
 @property (strong) BXShop *     pToShop;
+@property (strong) NSString *   shopName;
 
 @end

@@ -58,6 +58,14 @@
              [weakSelf presentViewController:_adminNav animated:YES completion:nil];
          }];
         
+        self.navigationItem.rightBarButtonItem =
+        [[UIBarButtonItem alloc] initWithTitle:@"我的订单"
+                                         style:UIBarButtonItemStylePlain
+                                       handler:^(id sender)
+        {
+            
+        }];
+        
 
         // 摇动退出
         /*
@@ -88,6 +96,7 @@
             [_tableView.pullToRefreshView stopAnimating];
         } fail:^(NSError *err) {
             [SVProgressHUD showErrorWithStatus:@"获取菜单失败"];
+            [_tableView.pullToRefreshView stopAnimating];
         }];
     }];
     
@@ -126,6 +135,27 @@
     cell.detailTextLabel.text = food.name;  //food.pToShop.name;
     
     return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    BXFood *food = _foodData[indexPath.row];
+    
+    if (_isAdminMode) { // 管家管理菜单界面
+        
+    } else { // 食客下单界面
+        UIActionSheet *as = [UIActionSheet actionSheetWithTitle:@"这顿就它了？"];
+        [as setDestructiveButtonWithTitle:food.name handler:^{
+            [SVProgressHUD showSuccessWithStatus:@"已下单"];
+            [tableView deselectRowAtIndexPath:indexPath animated:YES];
+        }];
+        [as setCancelButtonWithTitle:@"取消" handler:^{
+            [tableView deselectRowAtIndexPath:indexPath animated:YES];
+        }];
+        [as showInView:self.view];
+
+    }
+
 }
 
 @end
