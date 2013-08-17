@@ -1,0 +1,31 @@
+//
+// Prefix header for all source files of the 'lingdang' target in the 'lingdang' project
+//
+
+#import <Availability.h>
+
+#ifndef __IPHONE_4_0
+#warning "This project uses features only available in iOS SDK 4.0 and later."
+#endif
+
+#ifdef __OBJC__
+    #import <UIKit/UIKit.h>
+    #import <Foundation/Foundation.h>
+#endif
+
+
+#import <BlocksKit.h>
+#import <AFNetworking.h>
+#import <Parse/Parse.h>
+#import <SVProgressHUD.h>
+#import <SVPullToRefresh.h>
+#import <EGOCache.h>
+
+
+
+#import "BCSingleton.h"
+
+// BXConfig.h 中只保存不能公开的 parse key 信息， 不要放其它东西 @zengming
+#import "BXConfig.h"
+
+#import "BXCore.h"

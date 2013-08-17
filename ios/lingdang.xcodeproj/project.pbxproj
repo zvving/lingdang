@@ -1,0 +1,498 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0D1B161217BF54140019AD6F /* BXFoodInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D1B15E817BF54140019AD6F /* BXFoodInfoViewController.m */; };
+		0D1B161317BF54140019AD6F /* BXFoodInfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0D1B15E917BF54140019AD6F /* BXFoodInfoViewController.xib */; };
+		0D1B161417BF54140019AD6F /* BXOrderListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D1B15EB17BF54140019AD6F /* BXOrderListViewController.m */; };
+		0D1B161517BF54140019AD6F /* BXOrderListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0D1B15EC17BF54140019AD6F /* BXOrderListViewController.xib */; };
+		0D1B161617BF54140019AD6F /* BXFootListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D1B15EE17BF54140019AD6F /* BXFootListViewController.m */; };
+		0D1B161717BF54140019AD6F /* BXLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D1B15F017BF54140019AD6F /* BXLoginViewController.m */; };
+		0D1B161817BF54140019AD6F /* BXLoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0D1B15F117BF54140019AD6F /* BXLoginViewController.xib */; };
+		0D1B161917BF54140019AD6F /* BXFoodProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D1B15F517BF54140019AD6F /* BXFoodProvider.m */; };
+		0D1B161A17BF54140019AD6F /* BXOrderProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D1B15F717BF54140019AD6F /* BXOrderProvider.m */; };
+		0D1B161B17BF54140019AD6F /* BXShopProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D1B15F917BF54140019AD6F /* BXShopProvider.m */; };
+		0D1B161C17BF54140019AD6F /* BXUserProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D1B15FB17BF54140019AD6F /* BXUserProvider.m */; };
+		0D1B161D17BF54140019AD6F /* BXFood.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D1B15FE17BF54140019AD6F /* BXFood.m */; };
+		0D1B161E17BF54140019AD6F /* BXOrder.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D1B160017BF54140019AD6F /* BXOrder.m */; };
+		0D1B161F17BF54140019AD6F /* BXShop.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D1B160217BF54140019AD6F /* BXShop.m */; };
+		0D1B162017BF54140019AD6F /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0D1B160617BF54140019AD6F /* Default-568h@2x.png */; };
+		0D1B162117BF54140019AD6F /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 0D1B160717BF54140019AD6F /* Default.png */; };
+		0D1B162217BF54140019AD6F /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0D1B160817BF54140019AD6F /* Default@2x.png */; };
+		0D1B162317BF54140019AD6F /* BXFootListViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0D1B160917BF54140019AD6F /* BXFootListViewController_iPad.xib */; };
+		0D1B162417BF54140019AD6F /* BXFootListViewController_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0D1B160B17BF54140019AD6F /* BXFootListViewController_iPhone.xib */; };
+		0D1B162517BF54140019AD6F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0D1B160D17BF54140019AD6F /* InfoPlist.strings */; };
+		0D1B162617BF54140019AD6F /* lingdang-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0D1B160F17BF54140019AD6F /* lingdang-Info.plist */; };
+		0D1B162717BF54140019AD6F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D1B161117BF54140019AD6F /* main.m */; };
+		0DF135D117BE827400262A1F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0DF135D017BE827400262A1F /* UIKit.framework */; };
+		0DF135D317BE827400262A1F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0DF135D217BE827400262A1F /* Foundation.framework */; };
+		0DF135D517BE827400262A1F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0DF135D417BE827400262A1F /* CoreGraphics.framework */; };
+		0DF135E117BE827400262A1F /* BXAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DF135E017BE827400262A1F /* BXAppDelegate.m */; };
+		44C2C0FD30594384975C71D8 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E20000085954C69A6BBD3EE /* libPods.a */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		0D1B15C217BE9F170019AD6F /* BXConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BXConfig.h; sourceTree = "<group>"; };
+		0D1B15CB17BF07B60019AD6F /* BXCore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BXCore.h; sourceTree = "<group>"; };
+		0D1B15E717BF54140019AD6F /* BXFoodInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BXFoodInfoViewController.h; sourceTree = "<group>"; };
+		0D1B15E817BF54140019AD6F /* BXFoodInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BXFoodInfoViewController.m; sourceTree = "<group>"; };
+		0D1B15E917BF54140019AD6F /* BXFoodInfoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BXFoodInfoViewController.xib; sourceTree = "<group>"; };
+		0D1B15EA17BF54140019AD6F /* BXOrderListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BXOrderListViewController.h; sourceTree = "<group>"; };
+		0D1B15EB17BF54140019AD6F /* BXOrderListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BXOrderListViewController.m; sourceTree = "<group>"; };
+		0D1B15EC17BF54140019AD6F /* BXOrderListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BXOrderListViewController.xib; sourceTree = "<group>"; };
+		0D1B15ED17BF54140019AD6F /* BXFootListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BXFootListViewController.h; sourceTree = "<group>"; };
+		0D1B15EE17BF54140019AD6F /* BXFootListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BXFootListViewController.m; sourceTree = "<group>"; };
+		0D1B15EF17BF54140019AD6F /* BXLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BXLoginViewController.h; sourceTree = "<group>"; };
+		0D1B15F017BF54140019AD6F /* BXLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BXLoginViewController.m; sourceTree = "<group>"; };
+		0D1B15F117BF54140019AD6F /* BXLoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BXLoginViewController.xib; sourceTree = "<group>"; };
+		0D1B15F417BF54140019AD6F /* BXFoodProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BXFoodProvider.h; sourceTree = "<group>"; };
+		0D1B15F517BF54140019AD6F /* BXFoodProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BXFoodProvider.m; sourceTree = "<group>"; };
+		0D1B15F617BF54140019AD6F /* BXOrderProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BXOrderProvider.h; sourceTree = "<group>"; };
+		0D1B15F717BF54140019AD6F /* BXOrderProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BXOrderProvider.m; sourceTree = "<group>"; };
+		0D1B15F817BF54140019AD6F /* BXShopProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BXShopProvider.h; sourceTree = "<group>"; };
+		0D1B15F917BF54140019AD6F /* BXShopProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BXShopProvider.m; sourceTree = "<group>"; };
+		0D1B15FA17BF54140019AD6F /* BXUserProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BXUserProvider.h; sourceTree = "<group>"; };
+		0D1B15FB17BF54140019AD6F /* BXUserProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BXUserProvider.m; sourceTree = "<group>"; };
+		0D1B15FD17BF54140019AD6F /* BXFood.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BXFood.h; sourceTree = "<group>"; };
+		0D1B15FE17BF54140019AD6F /* BXFood.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BXFood.m; sourceTree = "<group>"; };
+		0D1B15FF17BF54140019AD6F /* BXOrder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BXOrder.h; sourceTree = "<group>"; };
+		0D1B160017BF54140019AD6F /* BXOrder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BXOrder.m; sourceTree = "<group>"; };
+		0D1B160117BF54140019AD6F /* BXShop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BXShop.h; sourceTree = "<group>"; };
+		0D1B160217BF54140019AD6F /* BXShop.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BXShop.m; sourceTree = "<group>"; };
+		0D1B160417BF54140019AD6F /* BCSingleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BCSingleton.h; sourceTree = "<group>"; };
+		0D1B160617BF54140019AD6F /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		0D1B160717BF54140019AD6F /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		0D1B160817BF54140019AD6F /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		0D1B160A17BF54140019AD6F /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/BXFootListViewController_iPad.xib; sourceTree = "<group>"; };
+		0D1B160C17BF54140019AD6F /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/BXFootListViewController_iPhone.xib; sourceTree = "<group>"; };
+		0D1B160E17BF54140019AD6F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		0D1B160F17BF54140019AD6F /* lingdang-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "lingdang-Info.plist"; sourceTree = "<group>"; };
+		0D1B161017BF54140019AD6F /* lingdang-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "lingdang-Prefix.pch"; sourceTree = "<group>"; };
+		0D1B161117BF54140019AD6F /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		0DF135CD17BE827400262A1F /* lingdang.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = lingdang.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		0DF135D017BE827400262A1F /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		0DF135D217BE827400262A1F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		0DF135D417BE827400262A1F /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		0DF135DF17BE827400262A1F /* BXAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BXAppDelegate.h; sourceTree = "<group>"; };
+		0DF135E017BE827400262A1F /* BXAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BXAppDelegate.m; sourceTree = "<group>"; };
+		25CEC70C09A74C44940607E2 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
+		9E20000085954C69A6BBD3EE /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		0DF135CA17BE827400262A1F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0DF135D117BE827400262A1F /* UIKit.framework in Frameworks */,
+				0DF135D317BE827400262A1F /* Foundation.framework in Frameworks */,
+				0DF135D517BE827400262A1F /* CoreGraphics.framework in Frameworks */,
+				44C2C0FD30594384975C71D8 /* libPods.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		0D1B15E517BF54140019AD6F /* controller */ = {
+			isa = PBXGroup;
+			children = (
+				0D1B15E617BF54140019AD6F /* admin */,
+				0D1B15ED17BF54140019AD6F /* BXFootListViewController.h */,
+				0D1B15EE17BF54140019AD6F /* BXFootListViewController.m */,
+				0D1B160917BF54140019AD6F /* BXFootListViewController_iPad.xib */,
+				0D1B160B17BF54140019AD6F /* BXFootListViewController_iPhone.xib */,
+				0D1B15EF17BF54140019AD6F /* BXLoginViewController.h */,
+				0D1B15F017BF54140019AD6F /* BXLoginViewController.m */,
+				0D1B15F117BF54140019AD6F /* BXLoginViewController.xib */,
+				0D1B15F217BF54140019AD6F /* eater */,
+			);
+			path = controller;
+			sourceTree = "<group>";
+		};
+		0D1B15E617BF54140019AD6F /* admin */ = {
+			isa = PBXGroup;
+			children = (
+				0D1B15E717BF54140019AD6F /* BXFoodInfoViewController.h */,
+				0D1B15E817BF54140019AD6F /* BXFoodInfoViewController.m */,
+				0D1B15E917BF54140019AD6F /* BXFoodInfoViewController.xib */,
+				0D1B15EA17BF54140019AD6F /* BXOrderListViewController.h */,
+				0D1B15EB17BF54140019AD6F /* BXOrderListViewController.m */,
+				0D1B15EC17BF54140019AD6F /* BXOrderListViewController.xib */,
+			);
+			path = admin;
+			sourceTree = "<group>";
+		};
+		0D1B15F217BF54140019AD6F /* eater */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = eater;
+			sourceTree = "<group>";
+		};
+		0D1B15F317BF54140019AD6F /* data */ = {
+			isa = PBXGroup;
+			children = (
+				0D1B15F417BF54140019AD6F /* BXFoodProvider.h */,
+				0D1B15F517BF54140019AD6F /* BXFoodProvider.m */,
+				0D1B15F617BF54140019AD6F /* BXOrderProvider.h */,
+				0D1B15F717BF54140019AD6F /* BXOrderProvider.m */,
+				0D1B15F817BF54140019AD6F /* BXShopProvider.h */,
+				0D1B15F917BF54140019AD6F /* BXShopProvider.m */,
+				0D1B15FA17BF54140019AD6F /* BXUserProvider.h */,
+				0D1B15FB17BF54140019AD6F /* BXUserProvider.m */,
+				0D1B15FC17BF54140019AD6F /* model */,
+			);
+			path = data;
+			sourceTree = "<group>";
+		};
+		0D1B15FC17BF54140019AD6F /* model */ = {
+			isa = PBXGroup;
+			children = (
+				0D1B15FD17BF54140019AD6F /* BXFood.h */,
+				0D1B15FE17BF54140019AD6F /* BXFood.m */,
+				0D1B15FF17BF54140019AD6F /* BXOrder.h */,
+				0D1B160017BF54140019AD6F /* BXOrder.m */,
+				0D1B160117BF54140019AD6F /* BXShop.h */,
+				0D1B160217BF54140019AD6F /* BXShop.m */,
+			);
+			path = model;
+			sourceTree = "<group>";
+		};
+		0D1B160317BF54140019AD6F /* lib */ = {
+			isa = PBXGroup;
+			children = (
+				0D1B160417BF54140019AD6F /* BCSingleton.h */,
+			);
+			path = lib;
+			sourceTree = "<group>";
+		};
+		0D1B160517BF54140019AD6F /* support */ = {
+			isa = PBXGroup;
+			children = (
+				0D1B160617BF54140019AD6F /* Default-568h@2x.png */,
+				0D1B160717BF54140019AD6F /* Default.png */,
+				0D1B160817BF54140019AD6F /* Default@2x.png */,
+				0D1B160D17BF54140019AD6F /* InfoPlist.strings */,
+				0D1B160F17BF54140019AD6F /* lingdang-Info.plist */,
+				0D1B161017BF54140019AD6F /* lingdang-Prefix.pch */,
+				0D1B161117BF54140019AD6F /* main.m */,
+			);
+			path = support;
+			sourceTree = "<group>";
+		};
+		0DF135C417BE827400262A1F = {
+			isa = PBXGroup;
+			children = (
+				0DF135D617BE827400262A1F /* lingdang */,
+				0DF135CF17BE827400262A1F /* Frameworks */,
+				0DF135CE17BE827400262A1F /* Products */,
+				25CEC70C09A74C44940607E2 /* Pods.xcconfig */,
+			);
+			sourceTree = "<group>";
+		};
+		0DF135CE17BE827400262A1F /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				0DF135CD17BE827400262A1F /* lingdang.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		0DF135CF17BE827400262A1F /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				0DF135D017BE827400262A1F /* UIKit.framework */,
+				0DF135D217BE827400262A1F /* Foundation.framework */,
+				0DF135D417BE827400262A1F /* CoreGraphics.framework */,
+				9E20000085954C69A6BBD3EE /* libPods.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		0DF135D617BE827400262A1F /* lingdang */ = {
+			isa = PBXGroup;
+			children = (
+				0D1B15CB17BF07B60019AD6F /* BXCore.h */,
+				0DF135DF17BE827400262A1F /* BXAppDelegate.h */,
+				0DF135E017BE827400262A1F /* BXAppDelegate.m */,
+				0D1B15C217BE9F170019AD6F /* BXConfig.h */,
+				0D1B15E517BF54140019AD6F /* controller */,
+				0D1B15F317BF54140019AD6F /* data */,
+				0D1B160317BF54140019AD6F /* lib */,
+				0D1B160517BF54140019AD6F /* support */,
+			);
+			path = lingdang;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		0DF135CC17BE827400262A1F /* lingdang */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0DF135F317BE827400262A1F /* Build configuration list for PBXNativeTarget "lingdang" */;
+			buildPhases = (
+				B0764B80AA0A49EA86AAC8FB /* Check Pods Manifest.lock */,
+				0DF135C917BE827400262A1F /* Sources */,
+				0DF135CA17BE827400262A1F /* Frameworks */,
+				0DF135CB17BE827400262A1F /* Resources */,
+				E6CC699EBBFB445F897E5909 /* Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = lingdang;
+			productName = lingdang;
+			productReference = 0DF135CD17BE827400262A1F /* lingdang.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		0DF135C517BE827400262A1F /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = BX;
+				LastUpgradeCheck = 0460;
+				ORGANIZATIONNAME = baixing.com;
+			};
+			buildConfigurationList = 0DF135C817BE827400262A1F /* Build configuration list for PBXProject "lingdang" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 0DF135C417BE827400262A1F;
+			productRefGroup = 0DF135CE17BE827400262A1F /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				0DF135CC17BE827400262A1F /* lingdang */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		0DF135CB17BE827400262A1F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0D1B162217BF54140019AD6F /* Default@2x.png in Resources */,
+				0D1B161817BF54140019AD6F /* BXLoginViewController.xib in Resources */,
+				0D1B162017BF54140019AD6F /* Default-568h@2x.png in Resources */,
+				0D1B162417BF54140019AD6F /* BXFootListViewController_iPhone.xib in Resources */,
+				0D1B161317BF54140019AD6F /* BXFoodInfoViewController.xib in Resources */,
+				0D1B161517BF54140019AD6F /* BXOrderListViewController.xib in Resources */,
+				0D1B162617BF54140019AD6F /* lingdang-Info.plist in Resources */,
+				0D1B162317BF54140019AD6F /* BXFootListViewController_iPad.xib in Resources */,
+				0D1B162517BF54140019AD6F /* InfoPlist.strings in Resources */,
+				0D1B162117BF54140019AD6F /* Default.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		B0764B80AA0A49EA86AAC8FB /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		E6CC699EBBFB445F897E5909 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		0DF135C917BE827400262A1F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0D1B162717BF54140019AD6F /* main.m in Sources */,
+				0D1B161417BF54140019AD6F /* BXOrderListViewController.m in Sources */,
+				0D1B161C17BF54140019AD6F /* BXUserProvider.m in Sources */,
+				0D1B161217BF54140019AD6F /* BXFoodInfoViewController.m in Sources */,
+				0D1B161B17BF54140019AD6F /* BXShopProvider.m in Sources */,
+				0D1B161917BF54140019AD6F /* BXFoodProvider.m in Sources */,
+				0D1B161617BF54140019AD6F /* BXFootListViewController.m in Sources */,
+				0D1B161A17BF54140019AD6F /* BXOrderProvider.m in Sources */,
+				0D1B161F17BF54140019AD6F /* BXShop.m in Sources */,
+				0D1B161D17BF54140019AD6F /* BXFood.m in Sources */,
+				0DF135E117BE827400262A1F /* BXAppDelegate.m in Sources */,
+				0D1B161717BF54140019AD6F /* BXLoginViewController.m in Sources */,
+				0D1B161E17BF54140019AD6F /* BXOrder.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		0D1B160917BF54140019AD6F /* BXFootListViewController_iPad.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				0D1B160A17BF54140019AD6F /* en */,
+			);
+			name = BXFootListViewController_iPad.xib;
+			path = ../support;
+			sourceTree = "<group>";
+		};
+		0D1B160B17BF54140019AD6F /* BXFootListViewController_iPhone.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				0D1B160C17BF54140019AD6F /* en */,
+			);
+			name = BXFootListViewController_iPhone.xib;
+			path = ../support;
+			sourceTree = "<group>";
+		};
+		0D1B160D17BF54140019AD6F /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				0D1B160E17BF54140019AD6F /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		0DF135F117BE827400262A1F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		0DF135F217BE827400262A1F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		0DF135F417BE827400262A1F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 25CEC70C09A74C44940607E2 /* Pods.xcconfig */;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "lingdang/support/lingdang-Prefix.pch";
+				INFOPLIST_FILE = "$(SRCROOT)/lingdang/support/lingdang-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		0DF135F517BE827400262A1F /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 25CEC70C09A74C44940607E2 /* Pods.xcconfig */;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "lingdang/support/lingdang-Prefix.pch";
+				INFOPLIST_FILE = "$(SRCROOT)/lingdang/support/lingdang-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		0DF135C817BE827400262A1F /* Build configuration list for PBXProject "lingdang" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0DF135F117BE827400262A1F /* Debug */,
+				0DF135F217BE827400262A1F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		0DF135F317BE827400262A1F /* Build configuration list for PBXNativeTarget "lingdang" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0DF135F417BE827400262A1F /* Debug */,
+				0DF135F517BE827400262A1F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 0DF135C517BE827400262A1F /* Project object */;
+}
