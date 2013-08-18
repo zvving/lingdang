@@ -18,6 +18,8 @@
 
 @property (nonatomic, strong) NSArray *             orderData;
 
+@property (nonatomic, strong) NSDateFormatter       *formatter;
+
 @end
 
 @implementation BXOrderListViewController
@@ -105,12 +107,13 @@
     static NSString *cellId = @"orderCellId";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellId];
     if (!cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue2 reuseIdentifier:cellId];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:cellId];
     }
     
     BXOrder *order = _orderData[indexPath.row];
-    cell.textLabel.text = [NSString stringWithFormat:@"%lf", order.createdAt.timeIntervalSince1970];
-    cell.detailTextLabel.text = [NSString stringWithFormat:@"%@ 想吃 %@", order.userName, order.foodName];  //food.pToShop.name;
+    
+    cell.textLabel.text = [NSString stringWithFormat:@"%@ 想吃 %@", order.userName, order.foodName];
+    cell.detailTextLabel.text = [self.formatter stringFromDate:order.createdAt];
     
     return cell;
 }
@@ -144,7 +147,21 @@
 //        [as showInView:self.view];
 //        
 //    }
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+
     
+}
+
+#pragma mark - get & set
+
+// inside the implementation (.m)
+// When you need, just use self.formatter
+- (NSDateFormatter *)formatter {
+    if (! _formatter) {
+        _formatter = [[NSDateFormatter alloc] init];
+        _formatter.dateFormat = @"M-dd HH:mm:ss"; // twitter date format
+    }
+    return _formatter;
 }
 
 @end
