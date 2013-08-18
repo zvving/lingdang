@@ -69,20 +69,7 @@
             myOrdersVC.isAdminMode = NO;
             [weakSelf.navigationController pushViewController:myOrdersVC animated:YES];
         }];
-        
 
-        // 摇动退出
-        /*
-            UIAlertView *alert = [UIAlertView alertViewWithTitle:@"注销"];
-            [alert setCancelBlock:nil];
-            [alert addButtonWithTitle:@"注销" handler:^{
-                [self presentViewController:_loginVC animated:YES completion:^{
-                    [PFUser logOut];
-                }];
-            }];
-            [alert show];
-         */
-        
         if ([PFUser currentUser] == nil) {
             [self presentViewController:_loginVC animated:NO completion:nil];
         } else {
@@ -112,11 +99,6 @@
     [super viewWillAppear:animated];
     PFUser *user = [PFUser currentUser];
     self.title = _isAdminMode ? @"菜单管理" : [NSString stringWithFormat:@"%@ 的菜单", user.username];
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
 }
 
 #pragma mark - UITableViewDataSource & UITableViewDelegate
