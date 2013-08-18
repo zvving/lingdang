@@ -28,4 +28,8 @@
 // 付款状态，备用
 @property (assign) BOOL                 isPaid;
 
+@property (strong) NSString *           shopName;
+@property (strong) NSString *           foodName;
+@property (strong) NSString *           userName;
+
 @end

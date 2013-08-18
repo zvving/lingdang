@@ -10,11 +10,13 @@
 
 @implementation BXOrder
 
-@dynamic pToFood;
 @dynamic count;
-@dynamic pToUser;
 @dynamic status;
 @dynamic isPaid;
+
+@dynamic shopName;
+@dynamic foodName;
+@dynamic userName;
 
 + (NSString *)parseClassName {
     return @"order";
@@ -36,4 +38,23 @@
     return [PFQuery queryWithClassName:[self parseClassName]];
 }
 
+- (void)setPToFood:(BXFood *)pToFood
+{
+    [self setObject:pToFood forKey:@"pToFood"];
+}
+
+- (BXFood *)pToFood
+{
+    return [self objectForKey:@"pToFood"];
+}
+
+- (void)setPToUser:(PFUser *)pToUser
+{
+    [self setObject:pToUser forKey:@"pToUser"];
+}
+
+- (PFUser *)pToUser
+{
+    return [self objectForKey:@"pToUser"];
+}
 @end

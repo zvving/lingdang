@@ -14,22 +14,73 @@ BCSINGLETON_IN_M(BXOrderProvider)
 
 - (void)addOrderWithFood:(BXFood*)food
                    count:(int)count
-                 success:(void(^)(BXFood* food))sucBlock
+                 success:(void(^)(BXOrder* order))sucBlock
                     fail:(void(^)(NSError* err))failBlock;
 {
+    BXOrder *order = [BXOrder object];
     
+    order.pToFood = food;
+    order.count = 1;
+    order.pToUser = [PFUser currentUser];
+    order.status = 0;
+    order.isPaid = NO;
+    
+    order.shopName = food.shopName;
+    order.userName = [[PFUser currentUser] username];
+    order.foodName = food.name;
+    
+    [order saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        if (succeeded) {
+            if (sucBlock) {
+                sucBlock(order);
+            }
+        } else {
+            if (failBlock) {
+                failBlock(error);
+            }
+        }
+    }];
 }
 
 - (void)allOrders:(void(^)(NSArray* orders))sucBlock
              fail:(void(^)(NSError* err))failBlock;
 {
-    
+    PFQuery *query = [BXOrder query];
+
+    [query addAscendingOrder:@"updatedAt"];
+
+    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if (error) {
+            if (failBlock) {
+                failBlock(error);
+            }
+        } else {
+            if (sucBlock) {
+                sucBlock(objects);
+            }
+        }
+    }];
 }
 
 - (void)myOrders:(void(^)(NSArray* orders))sucBlock
             fail:(void(^)(NSError* err))failBlock;
 {
+    PFQuery *query = [BXOrder query];
     
+    [query whereKey:@"userName" equalTo:[[PFUser currentUser] username]];
+    [query addAscendingOrder:@"updatedAt"];
+    
+    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if (error) {
+            if (failBlock) {
+                failBlock(error);
+            }
+        } else {
+            if (sucBlock) {
+                sucBlock(objects);
+            }
+        }
+    }];
 }
 
 @end

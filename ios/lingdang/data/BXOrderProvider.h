@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 
 #import "BXFood.h"
+#import "BXOrder.h"
 
 @interface BXOrderProvider : NSObject
 
@@ -16,7 +17,7 @@ BCSINGLETON_IN_H(BXOrderProvider)
 
 - (void)addOrderWithFood:(BXFood*)food
                   count:(int)count
-                success:(void(^)(BXFood* food))sucBlock
+                success:(void(^)(BXOrder* order))sucBlock
                    fail:(void(^)(NSError* err))failBlock;
 
 - (void)allOrders:(void(^)(NSArray* orders))sucBlock

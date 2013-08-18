@@ -11,7 +11,7 @@
 #import "BXLoginViewController.h"
 #import "BXFoodInfoViewController.h"
 #import "BXFoodProvider.h"
-
+#import "BXOrderProvider.h"
 
 
 @interface BXFoodListViewController () <UITableViewDataSource, UITableViewDelegate>
@@ -35,6 +35,8 @@
     self.orderListVC = [[BXOrderListViewController alloc] init];
     self.loginVC = [[BXLoginViewController alloc] init];
     self.adminNav = [[UINavigationController alloc] initWithRootViewController:_orderListVC];
+    
+    _orderListVC.isAdminMode = YES;
     _adminNav.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
     
     __block BXFoodListViewController *weakSelf = self;
@@ -63,7 +65,9 @@
                                          style:UIBarButtonItemStylePlain
                                        handler:^(id sender)
         {
-            
+            BXOrderListViewController *myOrdersVC = [[BXOrderListViewController alloc] init];
+            myOrdersVC.isAdminMode = NO;
+            [weakSelf.navigationController pushViewController:myOrdersVC animated:YES];
         }];
         
 
@@ -146,7 +150,18 @@
     } else { // 食客下单界面
         UIActionSheet *as = [UIActionSheet actionSheetWithTitle:@"这顿就它了？"];
         [as setDestructiveButtonWithTitle:food.name handler:^{
-            [SVProgressHUD showSuccessWithStatus:@"已下单"];
+            [SVProgressHUD showWithStatus:@"排队中"
+                                 maskType:SVProgressHUDMaskTypeGradient];
+            [[BXOrderProvider sharedInstance] addOrderWithFood:food
+                                                         count:1
+                                                       success:^(BXOrder *order)
+            {
+                [SVProgressHUD showSuccessWithStatus:@"已下单"];
+            } fail:^(NSError *err) {
+                [SVProgressHUD showErrorWithStatus:@"网络异常"];
+            }];
+            
+
             [tableView deselectRowAtIndexPath:indexPath animated:YES];
         }];
         [as setCancelButtonWithTitle:@"取消" handler:^{

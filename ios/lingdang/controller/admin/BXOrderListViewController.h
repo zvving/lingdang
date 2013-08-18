@@ -10,4 +10,6 @@
 
 @interface BXOrderListViewController : UIViewController
 
+@property (nonatomic, assign) BOOL          isAdminMode;
+
 @end
