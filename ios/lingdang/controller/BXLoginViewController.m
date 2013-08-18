@@ -18,25 +18,6 @@
 
 @implementation BXLoginViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
-
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-
-//    __block BXLoginViewController *weakSelf = self;
-//    [self.view whenTapped:^{
-//        [weakSelf.view endEditing:YES];
-//    }];
-}
-
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
@@ -52,12 +33,6 @@
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
         [_usernameTf becomeFirstResponder];
     });
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 #pragma mark - UITextFieldDelegate

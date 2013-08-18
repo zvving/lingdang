@@ -22,7 +22,7 @@
 @property (nonatomic, strong) UINavigationController *      adminNav;
 @property (nonatomic, strong) BXLoginViewController *       loginVC;
 
-@property (nonatomic, strong) NSArray *                     foodData;
+@property (nonatomic, strong) NSMutableArray *                     foodData;
 
 @end
 
@@ -69,20 +69,7 @@
             myOrdersVC.isAdminMode = NO;
             [weakSelf.navigationController pushViewController:myOrdersVC animated:YES];
         }];
-        
 
-        // 摇动退出
-        /*
-            UIAlertView *alert = [UIAlertView alertViewWithTitle:@"注销"];
-            [alert setCancelBlock:nil];
-            [alert addButtonWithTitle:@"注销" handler:^{
-                [self presentViewController:_loginVC animated:YES completion:^{
-                    [PFUser logOut];
-                }];
-            }];
-            [alert show];
-         */
-        
         if ([PFUser currentUser] == nil) {
             [self presentViewController:_loginVC animated:NO completion:nil];
         } else {
@@ -95,7 +82,7 @@
     
     [_tableView addPullToRefreshWithActionHandler:^{
         [[BXFoodProvider sharedInstance] allFood:^(NSArray *food) {
-            weakSelf.foodData = food;
+            weakSelf.foodData = [NSMutableArray arrayWithArray:food];
             [_tableView reloadData];
             [_tableView.pullToRefreshView stopAnimating];
         } fail:^(NSError *err) {
@@ -112,11 +99,6 @@
     [super viewWillAppear:animated];
     PFUser *user = [PFUser currentUser];
     self.title = _isAdminMode ? @"菜单管理" : [NSString stringWithFormat:@"%@ 的菜单", user.username];
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
 }
 
 #pragma mark - UITableViewDataSource & UITableViewDelegate
@@ -141,12 +123,40 @@
     return cell;
 }
 
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (_isAdminMode == YES) {
+        return YES;
+    }
+    return NO;
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    BXFood *food = [_foodData objectAtIndex:indexPath.row];
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        [SVProgressHUD showWithStatus:@"删除菜品中" maskType:SVProgressHUDMaskTypeGradient];
+        [[BXFoodProvider sharedInstance] deleteFood:food onSuccess:^{
+            [SVProgressHUD showSuccessWithStatus:@"删除成功"];
+            [_foodData removeObjectAtIndex:indexPath.row];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+            });
+        } onFail:^(NSError *err) {
+             [SVProgressHUD showSuccessWithStatus:@"删除失败"];
+        }];
+    }
+}
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     BXFood *food = _foodData[indexPath.row];
     
     if (_isAdminMode) { // 管家管理菜单界面
+        BXFoodInfoViewController *foodInfo = [[BXFoodInfoViewController alloc] init];
+        foodInfo.food = food;
         
+        [self.navigationController pushViewController:foodInfo animated:YES];
     } else { // 食客下单界面
         UIActionSheet *as = [UIActionSheet actionSheetWithTitle:@"这顿就它了？"];
         [as setDestructiveButtonWithTitle:food.name handler:^{
@@ -168,9 +178,10 @@
             [tableView deselectRowAtIndexPath:indexPath animated:YES];
         }];
         [as showInView:self.view];
-
     }
-
+    [self.tableView deselectRowAtIndexPath:self.tableView.indexPathForSelectedRow animated:YES];
 }
+
+
 
 @end

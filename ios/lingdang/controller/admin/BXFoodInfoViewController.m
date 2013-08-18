@@ -33,15 +33,6 @@
 
 @implementation BXFoodInfoViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -62,12 +53,6 @@
     
     
     [self reloadShopData];
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-
 }
 
 #pragma mark - post action
@@ -110,26 +95,43 @@
 
 - (void)addFoodWithShop:(BXShop *)shop
 {
-    [SVProgressHUD showWithStatus:@"新增菜品中" maskType:SVProgressHUDMaskTypeGradient];
+    NSString *message =[NSString stringWithFormat:@"%@菜品中", _food==nil? @"新增":@"更新"];
+    [SVProgressHUD showWithStatus:message maskType:SVProgressHUDMaskTypeGradient];
     
-    [[BXFoodProvider sharedInstance] addFoodWithName:_nameTf.text
-                                               price:[_priceTf.text floatValue]
-                                                shop:shop
-                                             success:^(BXFood *food)
-    {
-        [SVProgressHUD showSuccessWithStatus:@"新菜品已添加"];
-        double delayInSeconds = 1.0;
-        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-            [self.navigationController popViewControllerAnimated:YES];
-        });
-    } fail:^(NSError *err) {
-        [SVProgressHUD showErrorWithStatus:@"新菜品添加失败"];
-    }];
-    
+    if (_food != nil) {
+        _food.name = _nameTf.text;
+        _food.price = [_priceTf.text floatValue];
+        _food.pToShop = shop;
+        [[BXFoodProvider sharedInstance] updateFood:_food onSuccess:^{
+            [SVProgressHUD showSuccessWithStatus:@"菜品已更新"];
+            double delayInSeconds = 1.0;
+            dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+            dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                [self.navigationController popViewControllerAnimated:YES];
+            });
+        } onFail:^(NSError *err) {
+            [SVProgressHUD showErrorWithStatus:@"更新菜品失败"];
+        }];
+    } else {
+        [[BXFoodProvider sharedInstance] addFoodWithName:_nameTf.text
+                                                   price:[_priceTf.text floatValue]
+                                                    shop:shop
+                                                 success:^(BXFood *food)
+         {
+             [SVProgressHUD showSuccessWithStatus:@"新菜品已添加"];
+             double delayInSeconds = 1.0;
+             dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+             dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                 [self.navigationController popViewControllerAnimated:YES];
+             });
+         } fail:^(NSError *err) {
+             [SVProgressHUD showErrorWithStatus:@"新菜品添加失败"];
+         }];
+
+    }
 }
 
-#pragma mark -
+#pragma mark - refresh data
 
 - (void)reloadShopData;
 {
@@ -137,10 +139,21 @@
         self.shopData = shops;
         [_shopPicker reloadAllComponents];
         
-        if (_food) { // select food.shop_p
+        if (_food) {
+            // select food.shop_p
             BXShop *shop = _food.pToShop;
-            int idx = [_shopData indexOfObject:shop];
+            int idx = [_shopData indexOfObjectPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
+                BXShop *objShop = (BXShop *)obj;
+                if ([shop.objectId isEqualToString:objShop.objectId]) {
+                    *stop = YES;
+                    return YES;
+                }
+                return NO;
+            }];
             [_shopPicker selectRow:idx inComponent:0 animated:YES];
+            
+            _nameTf.text = _food.name;
+            _priceTf.text = [NSString stringWithFormat:@"%.1f", _food.price];
         } else {
             [_shopPicker selectRow:_shopData.count inComponent:0 animated:YES];
         }
