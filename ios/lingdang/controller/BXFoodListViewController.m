@@ -22,7 +22,7 @@
 @property (nonatomic, strong) UINavigationController *      adminNav;
 @property (nonatomic, strong) BXLoginViewController *       loginVC;
 
-@property (nonatomic, strong) NSArray *                     foodData;
+@property (nonatomic, strong) NSMutableArray *                     foodData;
 
 @end
 
@@ -82,7 +82,7 @@
     
     [_tableView addPullToRefreshWithActionHandler:^{
         [[BXFoodProvider sharedInstance] allFood:^(NSArray *food) {
-            weakSelf.foodData = food;
+            weakSelf.foodData = [NSMutableArray arrayWithArray:food];
             [_tableView reloadData];
             [_tableView.pullToRefreshView stopAnimating];
         } fail:^(NSError *err) {
@@ -123,6 +123,31 @@
     return cell;
 }
 
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (_isAdminMode == YES) {
+        return YES;
+    }
+    return NO;
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    BXFood *food = [_foodData objectAtIndex:indexPath.row];
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        [SVProgressHUD showWithStatus:@"删除菜品中" maskType:SVProgressHUDMaskTypeGradient];
+        [[BXFoodProvider sharedInstance] deleteFood:food onSuccess:^{
+            [SVProgressHUD showSuccessWithStatus:@"删除成功"];
+            [_foodData removeObjectAtIndex:indexPath.row];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+            });
+        } onFail:^(NSError *err) {
+             [SVProgressHUD showSuccessWithStatus:@"删除失败"];
+        }];
+    }
+}
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     BXFood *food = _foodData[indexPath.row];
@@ -153,9 +178,10 @@
             [tableView deselectRowAtIndexPath:indexPath animated:YES];
         }];
         [as showInView:self.view];
-
     }
-
+    [self.tableView deselectRowAtIndexPath:self.tableView.indexPathForSelectedRow animated:YES];
 }
+
+
 
 @end

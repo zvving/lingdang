@@ -35,6 +35,23 @@ BCSINGLETON_IN_M(BXFoodProvider)
     }];
 }
 
+- (void)deleteFood:(BXFood *)food
+         onSuccess:(void(^)(void))sucBlock
+            onFail:(void(^)(NSError *err))failBlock
+{
+    [food deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        if (succeeded) {
+            if (succeeded) {
+                sucBlock();
+            }
+        } else {
+            if (failBlock) {
+                failBlock(error);
+            }
+        }
+    }];
+}
+
 - (void)updateFood:(BXFood *)food
          onSuccess:(void(^)(void))sucBlock
             onFail:(void(^)(NSError *err))failBlock
