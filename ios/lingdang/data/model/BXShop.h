@@ -8,7 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
-@interface BXShop : PFObject <PFSubclassing>
+#import "BXObject.h"
+
+@interface BXShop : BXObject
 
 @property (strong) NSString *       name;
 

@@ -12,7 +12,7 @@
 #import "BXFoodInfoViewController.h"
 #import "BXFoodProvider.h"
 #import "BXOrderProvider.h"
-
+#import "BXMyOrderViewController.h"
 
 @interface BXFoodListViewController () <UITableViewDataSource, UITableViewDelegate>
 
@@ -65,12 +65,11 @@
                                          style:UIBarButtonItemStylePlain
                                        handler:^(id sender)
         {
-            BXOrderListViewController *myOrdersVC = [[BXOrderListViewController alloc] init];
-            myOrdersVC.isAdminMode = NO;
+            BXMyOrderViewController *myOrdersVC = [[BXMyOrderViewController alloc] init];
             [weakSelf.navigationController pushViewController:myOrdersVC animated:YES];
         }];
 
-        if ([PFUser currentUser] == nil) {
+        if ([AVUser currentUser] == nil) {
             [self presentViewController:_loginVC animated:NO completion:nil];
         } else {
             // 缓存 食客、管家状态，下次启动自动显示缓存状态
@@ -97,7 +96,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    PFUser *user = [PFUser currentUser];
+    AVUser *user = [AVUser currentUser];
     self.title = _isAdminMode ? @"菜单管理" : [NSString stringWithFormat:@"%@ 的菜单", user.username];
 }
 
@@ -117,8 +116,9 @@
     }
     
     BXFood *food = _foodData[indexPath.row];
-    cell.textLabel.text = [NSString stringWithFormat:@"%.1f 元", food.price];
-    cell.detailTextLabel.text = food.name;  //food.pToShop.name;
+
+    cell.textLabel.text = [NSString stringWithFormat:@"%.1f 元", [[food objectForKey:@"price"] floatValue]];
+    cell.detailTextLabel.text = [food objectForKey:@"name"];  //food.pToShop.name;
     
     return cell;
 }
@@ -159,7 +159,7 @@
         [self.navigationController pushViewController:foodInfo animated:YES];
     } else { // 食客下单界面
         UIActionSheet *as = [UIActionSheet actionSheetWithTitle:@"这顿就它了？"];
-        [as setDestructiveButtonWithTitle:food.name handler:^{
+        [as setDestructiveButtonWithTitle:[food objectForKey:@"name"] handler:^{
             [SVProgressHUD showWithStatus:@"排队中"
                                  maskType:SVProgressHUDMaskTypeGradient];
             [[BXOrderProvider sharedInstance] addOrderWithFood:food

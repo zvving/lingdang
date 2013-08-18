@@ -179,7 +179,7 @@
 {
     if (row < _shopData.count) {
         BXShop *shop = _shopData[row];
-        return shop.name;
+        return [shop objectForKey:@"name"];
     }
     return @"新增一个店铺";
 }

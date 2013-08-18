@@ -21,13 +21,13 @@ BCSINGLETON_IN_M(BXOrderProvider)
     
     order.pToFood = food;
     order.count = 1;
-    order.pToUser = [PFUser currentUser];
+    order.pToUser = [AVUser currentUser];
     order.status = 0;
     order.isPaid = NO;
     
-    order.shopName = food.shopName;
-    order.userName = [[PFUser currentUser] username];
-    order.foodName = food.name;
+    order.shopName = [food objectForKey:@"shopName"];
+    order.userName = [[AVUser currentUser] username];
+    order.foodName = [food objectForKey:@"name"];
     
     [order saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         if (succeeded) {
@@ -67,7 +67,7 @@ BCSINGLETON_IN_M(BXOrderProvider)
 {
     PFQuery *query = [BXOrder query];
     
-    [query whereKey:@"userName" equalTo:[[PFUser currentUser] username]];
+    [query whereKey:@"userName" equalTo:[[AVUser currentUser] username]];
     [query addAscendingOrder:@"updatedAt"];
     
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {

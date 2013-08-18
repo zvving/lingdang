@@ -21,7 +21,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    PFUser *user = [PFUser currentUser];
+    AVUser *user = [AVUser currentUser];
     _usernameTf.text = user.username ?: [[UIDevice currentDevice] name];
 }
 
@@ -41,7 +41,7 @@
 {
     [SVProgressHUD showWithStatus:@"登录中" maskType:SVProgressHUDMaskTypeGradient];
     [[BXUserProvider sharedInstance] audoLoginWithUsername:textField.text
-                                                   success:^(PFUser *user)
+                                                   success:^(AVUser *user)
     {
         [SVProgressHUD showSuccessWithStatus:@"登录成功"];
         double delayInSeconds = 1.0;

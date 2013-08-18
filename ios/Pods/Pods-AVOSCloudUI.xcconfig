@@ -1,0 +1,2 @@
+PODS_AVOSCLOUDUI_FRAMEWORK_SEARCH_PATHS = "$(PODS_ROOT)/AVOSCloudUI/iOS/release-v1.3.1/"
+PODS_AVOSCLOUDUI_OTHER_LDFLAGS = -licucore -framework AVOSCloudUI -framework AudioToolbox -framework CFNetwork -framework CoreGraphics -framework CoreLocation -framework MobileCoreServices -framework QuartzCore -framework Security -framework SystemConfiguration

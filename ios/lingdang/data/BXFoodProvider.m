@@ -72,8 +72,9 @@ BCSINGLETON_IN_M(BXFoodProvider)
 - (void)allFood:(void(^)(NSArray* food))sucBlock
            fail:(void(^)(NSError* err))failBlock;
 {
-    PFQuery *query = [BXFood query];
+    AVQuery *query = [BXFood query];
 //    [query addAscendingOrder:];
+    query.cachePolicy = kPFCachePolicyCacheThenNetwork;
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (error) {
             if (failBlock) {

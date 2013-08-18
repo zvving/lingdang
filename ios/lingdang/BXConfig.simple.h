@@ -11,7 +11,10 @@
 
 
 // see https://www.parse.com/apps/ 
-#define kParseAppId     @""
-#define kParseClientKey @""
+// #define kParseAppId     @""
+// #define kParseClientKey @""
+
+#define kAVOSAppId          @""
+#define kAVOSClientKey      @""
 
 #endif

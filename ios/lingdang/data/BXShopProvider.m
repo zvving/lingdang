@@ -18,7 +18,7 @@ BCSINGLETON_IN_M(BXShopProvider)
                    fail:(void(^)(NSError* err))failBlock;
 {
     // 根据 name 查找已有 店铺
-    PFQuery *query = [BXShop query];
+    AVQuery *query = [BXShop query];
     [query whereKey:kDBColName equalTo:name];
     BXShop *shop = (BXShop*) [query getFirstObject];
     if (shop) {

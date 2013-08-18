@@ -10,27 +10,23 @@
 
 @implementation BXShop
 
-@dynamic name;
-
-
 + (NSString *)parseClassName {
     return @"shop";
 }
 
 + (instancetype)object
 {
-    return [super objectWithClassName:[self parseClassName]];
+    return [[BXShop alloc] initWithClassName:[BXShop parseClassName]];
 }
 
-+ (instancetype)objectWithoutDataWithObjectId:(NSString *)objectId
+- (void)setName:(NSString *)name
 {
-    return [super objectWithoutDataWithClassName:[self parseClassName]
-                                        objectId:objectId];
+    [self setObject:name forKey:@"name"];
 }
 
-+ (PFQuery *)query
+- (NSString *)name
 {
-    return [PFQuery queryWithClassName:[self parseClassName]];
+    return [self objectForKey:@"name"];
 }
 
 @end

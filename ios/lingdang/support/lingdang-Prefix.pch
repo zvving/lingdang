@@ -15,12 +15,13 @@
 
 
 #import <BlocksKit.h>
-#import <AFNetworking.h>
-#import <Parse/Parse.h>
+//#import <AFNetworking.h>
+//#import <Parse/Parse.h>
 #import <SVProgressHUD.h>
 #import <SVPullToRefresh.h>
 #import <EGOCache.h>
-
+#import <AVOSCloud/AVOSCloud.h>
+//#import <AVOSCloudUI/AVOSCloudUI.h>
 
 
 #import "BCSingleton.h"
@@ -29,3 +30,4 @@
 #import "BXConfig.h"
 
 #import "BXCore.h"
+
