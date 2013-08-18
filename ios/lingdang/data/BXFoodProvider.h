@@ -24,4 +24,8 @@ BCSINGLETON_IN_H(BXFoodProvider)
 - (void)allFood:(void(^)(NSArray* food))sucBlock
            fail:(void(^)(NSError* err))failBlock;
 
+- (void)updateFood:(BXFood *)food
+         onSuccess:(void(^)(void))sucBlock
+            onFail:(void(^)(NSError *err))failBlock;
+
 @end

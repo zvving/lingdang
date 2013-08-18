@@ -128,7 +128,10 @@
     BXFood *food = _foodData[indexPath.row];
     
     if (_isAdminMode) { // 管家管理菜单界面
+        BXFoodInfoViewController *foodInfo = [[BXFoodInfoViewController alloc] init];
+        foodInfo.food = food;
         
+        [self.navigationController pushViewController:foodInfo animated:YES];
     } else { // 食客下单界面
         UIActionSheet *as = [UIActionSheet actionSheetWithTitle:@"这顿就它了？"];
         [as setDestructiveButtonWithTitle:food.name handler:^{
