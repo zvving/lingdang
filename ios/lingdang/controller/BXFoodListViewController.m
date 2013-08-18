@@ -12,6 +12,7 @@
 #import "BXFoodInfoViewController.h"
 #import "BXFoodProvider.h"
 #import "BXOrderProvider.h"
+#import "BXShopProvider.h"
 
 
 @interface BXFoodListViewController () <UITableViewDataSource, UITableViewDelegate>
@@ -22,7 +23,11 @@
 @property (nonatomic, strong) UINavigationController *      adminNav;
 @property (nonatomic, strong) BXLoginViewController *       loginVC;
 
-@property (nonatomic, strong) NSMutableArray *                     foodData;
+@property (nonatomic, strong) NSArray *                     sectionKeys;
+@property (nonatomic, strong) NSMutableDictionary *         shopFoods;
+
+//build UI
+- (void)buildBarButtons;
 
 @end
 
@@ -39,52 +44,31 @@
     _orderListVC.isAdminMode = YES;
     _adminNav.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
     
-    __block BXFoodListViewController *weakSelf = self;
+    [self buildBarButtons];
     
-    if (_isAdminMode) { // 管理 food 界面
-        self.navigationItem.rightBarButtonItem =
-        [[UIBarButtonItem alloc] initWithTitle:@"增加"
-                                         style:UIBarButtonItemStylePlain
-                                       handler:^(id sender)
-        {
-            BXFoodInfoViewController *foodInfoVC = [[BXFoodInfoViewController alloc] init];
-            [self.navigationController pushViewController:foodInfoVC animated:YES];
-        }];
-    } else { // 订餐界面
-        self.navigationItem.leftBarButtonItem =
-        [[UIBarButtonItem alloc] initWithTitle:@"切至管家"
-                                         style:UIBarButtonItemStylePlain
-                                       handler:^(id sender)
-         {
-             [[EGOCache globalCache] setString:@"YES" forKey:kCacheIsAdminMode];
-             [weakSelf presentViewController:_adminNav animated:YES completion:nil];
-         }];
-        
-        self.navigationItem.rightBarButtonItem =
-        [[UIBarButtonItem alloc] initWithTitle:@"我的订单"
-                                         style:UIBarButtonItemStylePlain
-                                       handler:^(id sender)
-        {
-            BXOrderListViewController *myOrdersVC = [[BXOrderListViewController alloc] init];
-            myOrdersVC.isAdminMode = NO;
-            [weakSelf.navigationController pushViewController:myOrdersVC animated:YES];
-        }];
-
-        if ([PFUser currentUser] == nil) {
-            [self presentViewController:_loginVC animated:NO completion:nil];
-        } else {
-            // 缓存 食客、管家状态，下次启动自动显示缓存状态
-            if ([[EGOCache globalCache] hasCacheForKey:kCacheIsAdminMode]) {
-                [weakSelf presentViewController:_adminNav animated:NO completion:nil];
-            }
-        }
-    }
+    // load the data;
+    _shopFoods = [[NSMutableDictionary alloc] init];
     
+    __weak BXFoodListViewController *weakself = self;
     [_tableView addPullToRefreshWithActionHandler:^{
-        [[BXFoodProvider sharedInstance] allFood:^(NSArray *food) {
-            weakSelf.foodData = [NSMutableArray arrayWithArray:food];
-            [_tableView reloadData];
-            [_tableView.pullToRefreshView stopAnimating];
+        [[BXShopProvider sharedInstance] allShops:^(NSArray *shops) {
+            [shops enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+                BXShop *shop = obj;
+                PFQuery *query = [BXFood query];
+                [query whereKey:@"pToShop" equalTo:shop];
+                [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+                    if (error == nil) {
+                        [weakself.shopFoods setObject:objects forKey:shop.name];
+                    }
+                    
+                    if (idx == [shops count] - 1) {
+                        [weakself.tableView reloadData];
+                        weakself.sectionKeys = [weakself.shopFoods allKeys];
+                        [weakself.tableView.pullToRefreshView stopAnimating];
+                    }
+                }];
+            }];
+
         } fail:^(NSError *err) {
             [SVProgressHUD showErrorWithStatus:@"获取菜单失败"];
             [_tableView.pullToRefreshView stopAnimating];
@@ -101,11 +85,62 @@
     self.title = _isAdminMode ? @"菜单管理" : [NSString stringWithFormat:@"%@ 的菜单", user.username];
 }
 
+- (void)buildBarButtons
+{
+    __block BXFoodListViewController *weakSelf = self;
+    
+    if (_isAdminMode) { // 管理 food 界面
+        self.navigationItem.rightBarButtonItem =
+        [[UIBarButtonItem alloc] initWithTitle:@"增加"
+                                         style:UIBarButtonItemStylePlain
+                                       handler:^(id sender)
+         {
+             BXFoodInfoViewController *foodInfoVC = [[BXFoodInfoViewController alloc] init];
+             [self.navigationController pushViewController:foodInfoVC animated:YES];
+         }];
+    } else { // 订餐界面
+        self.navigationItem.leftBarButtonItem =
+        [[UIBarButtonItem alloc] initWithTitle:@"切至管家"
+                                         style:UIBarButtonItemStylePlain
+                                       handler:^(id sender)
+         {
+             [[EGOCache globalCache] setString:@"YES" forKey:kCacheIsAdminMode];
+             [weakSelf presentViewController:_adminNav animated:YES completion:nil];
+         }];
+        
+        self.navigationItem.rightBarButtonItem =
+        [[UIBarButtonItem alloc] initWithTitle:@"我的订单"
+                                         style:UIBarButtonItemStylePlain
+                                       handler:^(id sender)
+         {
+             BXOrderListViewController *myOrdersVC = [[BXOrderListViewController alloc] init];
+             myOrdersVC.isAdminMode = NO;
+             [weakSelf.navigationController pushViewController:myOrdersVC animated:YES];
+         }];
+        
+        if ([PFUser currentUser] == nil) {
+            [self presentViewController:_loginVC animated:NO completion:nil];
+        } else {
+            // 缓存 食客、管家状态，下次启动自动显示缓存状态
+            if ([[EGOCache globalCache] hasCacheForKey:kCacheIsAdminMode]) {
+                [weakSelf presentViewController:_adminNav animated:NO completion:nil];
+            }
+        }
+    }
+
+}
+
 #pragma mark - UITableViewDataSource & UITableViewDelegate
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return [_sectionKeys count];
+}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return _foodData.count;
+    NSArray *foods = [_shopFoods objectForKey:_sectionKeys[section]];
+    return [foods count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -116,7 +151,7 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue2 reuseIdentifier:cellId];
     }
     
-    BXFood *food = _foodData[indexPath.row];
+    BXFood *food = [[_shopFoods objectForKey:_sectionKeys[indexPath.section]] objectAtIndex:indexPath.row];;
     cell.textLabel.text = [NSString stringWithFormat:@"%.1f 元", food.price];
     cell.detailTextLabel.text = food.name;  //food.pToShop.name;
     
@@ -131,27 +166,31 @@
     return NO;
 }
 
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    BXFood *food = [_foodData objectAtIndex:indexPath.row];
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        [SVProgressHUD showWithStatus:@"删除菜品中" maskType:SVProgressHUDMaskTypeGradient];
-        [[BXFoodProvider sharedInstance] deleteFood:food onSuccess:^{
-            [SVProgressHUD showSuccessWithStatus:@"删除成功"];
-            [_foodData removeObjectAtIndex:indexPath.row];
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-            });
-        } onFail:^(NSError *err) {
-             [SVProgressHUD showSuccessWithStatus:@"删除失败"];
-        }];
-    }
+    return [_sectionKeys objectAtIndex:section];
 }
+
+//- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    BXFood *food = [_foodData objectAtIndex:indexPath.row];
+//    if (editingStyle == UITableViewCellEditingStyleDelete) {
+//        [SVProgressHUD showWithStatus:@"删除菜品中" maskType:SVProgressHUDMaskTypeGradient];
+//        [[BXFoodProvider sharedInstance] deleteFood:food onSuccess:^{
+//            [SVProgressHUD showSuccessWithStatus:@"删除成功"];
+//            [_foodData removeObjectAtIndex:indexPath.row];
+//            dispatch_async(dispatch_get_main_queue(), ^{
+//                [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+//            });
+//        } onFail:^(NSError *err) {
+//             [SVProgressHUD showSuccessWithStatus:@"删除失败"];
+//        }];
+//    }
+//}
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    BXFood *food = _foodData[indexPath.row];
-    
+    BXFood *food =[[_shopFoods objectForKey:_sectionKeys[indexPath.section]] objectAtIndex:indexPath.row];    
     if (_isAdminMode) { // 管家管理菜单界面
         BXFoodInfoViewController *foodInfo = [[BXFoodInfoViewController alloc] init];
         foodInfo.food = food;
