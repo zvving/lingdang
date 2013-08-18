@@ -111,9 +111,13 @@
     }
     
     BXOrder *order = _orderData[indexPath.row];
+    NSArray *statusArr = @[@"等", @"已订", @"已达", @"已存"];
     
     cell.textLabel.text = [NSString stringWithFormat:@"%@ 想吃 %@", order.userName, order.foodName];
-    cell.detailTextLabel.text = [self.formatter stringFromDate:order.createdAt];
+    cell.detailTextLabel.text =
+    [NSString stringWithFormat:@"%@ %@",
+     [self.formatter stringFromDate:order.createdAt],
+     statusArr[order.status]];
     
     return cell;
 }
