@@ -37,7 +37,7 @@
 
 - (void)setPToShop:(BXShop *)pToShop
 {
-    [self setObject:pToShop forKey:@"pToShop"];
+    [self setObject:pToShop?:@"" forKey:@"pToShop"];
 }
 
 - (BXShop *)pToShop
@@ -67,7 +67,7 @@
 
 - (void)setShopName:(NSString *)shopName
 {
-    [self setObject:shopName forKey:@"shopName"];
+    [self setObject:shopName?:@"" forKey:@"shopName"];
 }
 
 - (NSString *)shopName

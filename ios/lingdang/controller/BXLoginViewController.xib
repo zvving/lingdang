@@ -39,7 +39,7 @@
 					<object class="IBUILabel" id="995041676">
 						<reference key="NSNextResponder" ref="538911464"/>
 						<int key="NSvFlags">1316</int>
-						<string key="NSFrame">{{64, 20}, {193, 69}}</string>
+						<string key="NSFrame">{{41, 20}, {236, 69}}</string>
 						<reference key="NSSuperview" ref="538911464"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="373329764"/>
@@ -50,7 +50,7 @@
 						<int key="IBUIContentMode">7</int>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-						<string key="IBUIText">狗铃订餐</string>
+						<string key="IBUIText">叮叮叮叮叮餐  </string>
 						<object class="NSColor" key="IBUITextColor">
 							<int key="NSColorSpace">1</int>
 							<bytes key="NSRGB">MCAwIDAAA</bytes>
@@ -117,6 +117,7 @@
 						<string key="NSFrame">{{85, 507}, {151, 21}}</string>
 						<reference key="NSSuperview" ref="538911464"/>
 						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<string key="NSHuggingPriority">{251, 251}</string>
 						<bool key="IBUIOpaque">NO</bool>
@@ -223,8 +224,8 @@
 						<reference key="object" ref="538911464"/>
 						<array class="NSMutableArray" key="children">
 							<reference ref="250846487"/>
-							<reference ref="995041676"/>
 							<reference ref="373329764"/>
+							<reference ref="995041676"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>

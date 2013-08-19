@@ -17,6 +17,7 @@
 
 @property (weak, nonatomic) IBOutlet UIView *           bgView;
 @property (weak, nonatomic) IBOutlet UIPickerView *     shopPicker;
+@property (weak, nonatomic) IBOutlet UIButton *         shopNameButton;
 @property (weak, nonatomic) IBOutlet UITextField *      nameTf;
 @property (weak, nonatomic) IBOutlet UITextField *      priceTf;
 
@@ -28,6 +29,8 @@
 
 // private
 - (void)reloadShopData;
+- (IBAction)addShopButtonClicked:(id)sender;
+- (IBAction)shopNameButtonClicked:(id)sender;
 
 @end
 
@@ -65,32 +68,15 @@
     }
     
     int selectedShopIdx = [_shopPicker selectedRowInComponent:0];
-    if (selectedShopIdx < _shopData.count) {
-        BXShop *shop = _shopData[selectedShopIdx];
-        [self addFoodWithShop:shop];
-    } else {
-        UIAlertView *shopAlert = [UIAlertView alertViewWithTitle:@"新店铺名称："];
-        shopAlert.alertViewStyle = UIAlertViewStylePlainTextInput;
-        [shopAlert addButtonWithTitle:@"取消"];
-        __block UIAlertView *weakAlert = shopAlert;
-        __block BXFoodInfoViewController *weakSelf = self;
-        [shopAlert addButtonWithTitle:@"确定" handler:^{
-            UITextField *tf = [weakAlert textFieldAtIndex:0];
-            if (tf.text.length == 0) {
-                [SVProgressHUD showErrorWithStatus:@"店铺名称不可为空"];
-                return;
-            }
-            [SVProgressHUD showWithStatus:@"新增店铺中" maskType:SVProgressHUDMaskTypeGradient];
-            [[BXShopProvider sharedInstance] addShopWithName:tf.text success:^(BXShop *shop) {
-                [SVProgressHUD showSuccessWithStatus:@"店铺已添加"];
-                [weakSelf addFoodWithShop:shop];
-                [weakSelf reloadShopData];
-            } fail:^(NSError *err) {
-                [SVProgressHUD showErrorWithStatus:@"新增店铺失败"];
-            }];
-        }];
-        [shopAlert show];
+    
+    
+    if (selectedShopIdx >= _shopData.count) {
+        [SVProgressHUD showErrorWithStatus:@"请先新增店铺"];
+        return;
     }
+    
+    BXShop *shop = _shopData[selectedShopIdx];
+    [self addFoodWithShop:shop];
 }
 
 - (void)addFoodWithShop:(BXShop *)shop
@@ -141,26 +127,76 @@
         
         if (_food) {
             // select food.shop_p
-            BXShop *shop = _food.pToShop;
+            NSString *shopName = _food.shopName;
             int idx = [_shopData indexOfObjectPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
-                BXShop *objShop = (BXShop *)obj;
-                if ([shop.objectId isEqualToString:objShop.objectId]) {
+                if ([shopName isEqualToString:[obj objectForKey:@"name"]]) {
                     *stop = YES;
                     return YES;
                 }
                 return NO;
             }];
             [_shopPicker selectRow:idx inComponent:0 animated:YES];
+            [_shopNameButton setTitle:shopName
+                             forState:UIControlStateNormal];
             
             _nameTf.text = _food.name;
             _priceTf.text = [NSString stringWithFormat:@"%.1f", _food.price];
         } else {
-            [_shopPicker selectRow:_shopData.count inComponent:0 animated:YES];
+            if (_shopData.count > 0) {
+                [_shopPicker selectRow:_shopData.count-1
+                           inComponent:0
+                              animated:YES];
+                BXShop *shop = _shopData.lastObject;
+                [_shopNameButton setTitle:[shop objectForKey:@"name"]
+                                 forState:UIControlStateNormal];
+            }
+
         }
+        
+        
     } fail:^(NSError *err) {
         self.shopData = nil;
         [_shopPicker reloadAllComponents];
     }];
+}
+
+- (IBAction)addShopButtonClicked:(id)sender {
+    UIAlertView *shopAlert = [UIAlertView alertViewWithTitle:@"新店铺名称："];
+    shopAlert.alertViewStyle = UIAlertViewStylePlainTextInput;
+    [shopAlert addButtonWithTitle:@"取消"];
+    __block UIAlertView *weakAlert = shopAlert;
+    __block BXFoodInfoViewController *weakSelf = self;
+    [shopAlert addButtonWithTitle:@"确定" handler:^{
+        UITextField *tf = [weakAlert textFieldAtIndex:0];
+        if (tf.text.length == 0) {
+            [SVProgressHUD showErrorWithStatus:@"店铺名称不可为空"];
+            return;
+        }
+        [SVProgressHUD showWithStatus:@"新增店铺中" maskType:SVProgressHUDMaskTypeGradient];
+        [[BXShopProvider sharedInstance] addShopWithName:tf.text success:^(BXShop *shop) {
+            [SVProgressHUD showSuccessWithStatus:@"店铺已添加"];
+            [weakSelf reloadShopData];
+        } fail:^(NSError *err) {
+            [SVProgressHUD showErrorWithStatus:@"新增店铺失败"];
+        }];
+    }];
+    [shopAlert show];
+}
+
+- (IBAction)shopNameButtonClicked:(id)sender {
+    BOOL forceShow = NO;
+    if (_nameTf.isEditing || _priceTf.isEditing) {
+        forceShow = YES;
+    }
+    [self.view endEditing:YES];
+    
+    float viewHeight = self.view.frame.size.height;
+    
+    [UIView animateWithDuration:0.25f animations:^{
+        CGRect rect = _shopPicker.frame;
+        rect.origin.y = ( forceShow || rect.origin.y == viewHeight ? viewHeight - rect.size.height : viewHeight );
+        _shopPicker.frame = rect;
+    } completion:nil];
 }
 
 #pragma mark - UIPickerViewDataSource & UIPickerViewDelegate
@@ -172,21 +208,23 @@
 
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
 {
-    return _shopData.count + 1;
+    return _shopData.count;
 }
 
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
 {
-    if (row < _shopData.count) {
-        BXShop *shop = _shopData[row];
-        return [shop objectForKey:@"name"];
-    }
-    return @"新增一个店铺";
+    BXShop *shop = _shopData[row];
+    return [shop objectForKey:@"name"];
 }
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
-
+    if (row >= _shopData.count) {
+        return;
+    }
+    BXShop *shop = _shopData[row];
+    NSString *shopName = [shop objectForKey:@"name"];
+    [_shopNameButton setTitle:shopName forState:UIControlStateNormal];
 }
 
 @end

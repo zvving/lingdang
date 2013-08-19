@@ -154,7 +154,13 @@
     
     if (_isAdminMode) { // 管家管理菜单界面
         BXFoodInfoViewController *foodInfo = [[BXFoodInfoViewController alloc] init];
-        foodInfo.food = food;
+        BXFood *aFood = [BXFood object];
+        aFood.name = [food objectForKey:@"name"];
+        aFood.price = [[food objectForKey:@"price"] floatValue];
+        aFood.pToShop = [food objectForKey:@"pToShop"];
+        aFood.shopName = [food objectForKey:@"shopName"];
+        
+        foodInfo.food = aFood;
         
         [self.navigationController pushViewController:foodInfo animated:YES];
     } else { // 食客下单界面
