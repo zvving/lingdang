@@ -13,11 +13,11 @@
 BCSINGLETON_IN_M(BXUserProvider)
 
 - (void)audoLoginWithUsername:(NSString*)username
-                      success:(void(^)(PFUser* user))sucBlock
+                      success:(void(^)(AVUser* user))sucBlock
                          fail:(void(^)(NSError* err))failBlock;
 {
-    [PFUser logInWithUsernameInBackground:username password:kConstPassword
-                                    block:^(PFUser *user, NSError *error)
+    [AVUser logInWithUsernameInBackground:username password:kConstPassword
+                                    block:^(AVUser *user, NSError *error)
     {
         if (user) {
             if (sucBlock) {
@@ -25,7 +25,7 @@ BCSINGLETON_IN_M(BXUserProvider)
             }
         } else {
             // 自动登录
-            PFUser *newUser = [PFUser user];
+            AVUser *newUser = [AVUser user];
             newUser.username = username;
             newUser.password = kConstPassword;
 

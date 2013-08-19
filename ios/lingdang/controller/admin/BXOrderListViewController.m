@@ -105,11 +105,13 @@
     BXOrder *order = _orderData[indexPath.row];
     NSArray *statusArr = @[@"等", @"已订", @"已达", @"已存"];
     
-    cell.textLabel.text = [NSString stringWithFormat:@"%@ 想吃 %@", order.userName, order.foodName];
+;
+    
+    cell.textLabel.text = [NSString stringWithFormat:@"%@ 想吃 %@", [order objectForKey:@"userName"], [order objectForKey:@"foodName"]];
     cell.detailTextLabel.text =
     [NSString stringWithFormat:@"%@ %@",
      [self.formatter stringFromDate:order.createdAt],
-     statusArr[order.status]];
+     statusArr[[[order objectForKey:@"status"] intValue]]];
     
     return cell;
 }
@@ -155,7 +157,7 @@
 - (NSDateFormatter *)formatter {
     if (! _formatter) {
         _formatter = [[NSDateFormatter alloc] init];
-        _formatter.dateFormat = @"M-dd HH:mm:ss"; // twitter date format
+        _formatter.dateFormat = @"H:m"; // twitter date format
     }
     return _formatter;
 }

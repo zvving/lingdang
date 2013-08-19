@@ -11,7 +11,10 @@
 
 #import "BXShop.h"
 
-@interface BXFood : PFObject <PFSubclassing>
+#import "BXObject.h"
+
+@interface BXFood : BXObject
+
 
 @property (strong) NSString *   name;
 @property (assign) float        price;
@@ -20,5 +23,6 @@
 // link to BXShop
 @property (strong) BXShop *     pToShop;
 @property (strong) NSString *   shopName;
+
 
 @end

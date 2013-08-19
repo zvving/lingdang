@@ -29,12 +29,13 @@
 		0D1B162517BF54140019AD6F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0D1B160D17BF54140019AD6F /* InfoPlist.strings */; };
 		0D1B162617BF54140019AD6F /* lingdang-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0D1B160F17BF54140019AD6F /* lingdang-Info.plist */; };
 		0D1B162717BF54140019AD6F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D1B161117BF54140019AD6F /* main.m */; };
-		0D5ACD9917BF63E000B066D0 /* NSObject+Properties.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D5ACD9617BF63E000B066D0 /* NSObject+Properties.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		0D5ACD9A17BF63E000B066D0 /* NSString+PropertyKVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D5ACD9817BF63E000B066D0 /* NSString+PropertyKVC.m */; };
 		0DF135D117BE827400262A1F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0DF135D017BE827400262A1F /* UIKit.framework */; };
 		0DF135D317BE827400262A1F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0DF135D217BE827400262A1F /* Foundation.framework */; };
 		0DF135D517BE827400262A1F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0DF135D417BE827400262A1F /* CoreGraphics.framework */; };
 		0DF135E117BE827400262A1F /* BXAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DF135E017BE827400262A1F /* BXAppDelegate.m */; };
+		0DFC857117C0DEAB00266138 /* BXMyOrderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DFC856F17C0DEAB00266138 /* BXMyOrderViewController.m */; };
+		0DFC857217C0DEAB00266138 /* BXMyOrderViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0DFC857017C0DEAB00266138 /* BXMyOrderViewController.xib */; };
+		0DFC857517C1034A00266138 /* BXObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DFC857417C1034A00266138 /* BXObject.m */; };
 		44C2C0FD30594384975C71D8 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E20000085954C69A6BBD3EE /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -76,16 +77,17 @@
 		0D1B160F17BF54140019AD6F /* lingdang-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "lingdang-Info.plist"; sourceTree = "<group>"; };
 		0D1B161017BF54140019AD6F /* lingdang-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "lingdang-Prefix.pch"; sourceTree = "<group>"; };
 		0D1B161117BF54140019AD6F /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		0D5ACD9517BF63E000B066D0 /* NSObject+Properties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+Properties.h"; sourceTree = "<group>"; };
-		0D5ACD9617BF63E000B066D0 /* NSObject+Properties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Properties.m"; sourceTree = "<group>"; };
-		0D5ACD9717BF63E000B066D0 /* NSString+PropertyKVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+PropertyKVC.h"; sourceTree = "<group>"; };
-		0D5ACD9817BF63E000B066D0 /* NSString+PropertyKVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+PropertyKVC.m"; sourceTree = "<group>"; };
 		0DF135CD17BE827400262A1F /* lingdang.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = lingdang.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0DF135D017BE827400262A1F /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		0DF135D217BE827400262A1F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		0DF135D417BE827400262A1F /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		0DF135DF17BE827400262A1F /* BXAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BXAppDelegate.h; sourceTree = "<group>"; };
 		0DF135E017BE827400262A1F /* BXAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BXAppDelegate.m; sourceTree = "<group>"; };
+		0DFC856E17C0DEAB00266138 /* BXMyOrderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BXMyOrderViewController.h; sourceTree = "<group>"; };
+		0DFC856F17C0DEAB00266138 /* BXMyOrderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BXMyOrderViewController.m; sourceTree = "<group>"; };
+		0DFC857017C0DEAB00266138 /* BXMyOrderViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BXMyOrderViewController.xib; sourceTree = "<group>"; };
+		0DFC857317C1034A00266138 /* BXObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BXObject.h; sourceTree = "<group>"; };
+		0DFC857417C1034A00266138 /* BXObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BXObject.m; sourceTree = "<group>"; };
 		25CEC70C09A74C44940607E2 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
 		9E20000085954C69A6BBD3EE /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -137,6 +139,9 @@
 		0D1B15F217BF54140019AD6F /* eater */ = {
 			isa = PBXGroup;
 			children = (
+				0DFC856E17C0DEAB00266138 /* BXMyOrderViewController.h */,
+				0DFC856F17C0DEAB00266138 /* BXMyOrderViewController.m */,
+				0DFC857017C0DEAB00266138 /* BXMyOrderViewController.xib */,
 			);
 			path = eater;
 			sourceTree = "<group>";
@@ -166,6 +171,8 @@
 				0D1B160017BF54140019AD6F /* BXOrder.m */,
 				0D1B160117BF54140019AD6F /* BXShop.h */,
 				0D1B160217BF54140019AD6F /* BXShop.m */,
+				0DFC857317C1034A00266138 /* BXObject.h */,
+				0DFC857417C1034A00266138 /* BXObject.m */,
 			);
 			path = model;
 			sourceTree = "<group>";
@@ -173,7 +180,6 @@
 		0D1B160317BF54140019AD6F /* lib */ = {
 			isa = PBXGroup;
 			children = (
-				0D5ACD9417BF63E000B066D0 /* NSObject+Properties */,
 				0D1B160417BF54140019AD6F /* BCSingleton.h */,
 			);
 			path = lib;
@@ -191,17 +197,6 @@
 				0D1B161117BF54140019AD6F /* main.m */,
 			);
 			path = support;
-			sourceTree = "<group>";
-		};
-		0D5ACD9417BF63E000B066D0 /* NSObject+Properties */ = {
-			isa = PBXGroup;
-			children = (
-				0D5ACD9517BF63E000B066D0 /* NSObject+Properties.h */,
-				0D5ACD9617BF63E000B066D0 /* NSObject+Properties.m */,
-				0D5ACD9717BF63E000B066D0 /* NSString+PropertyKVC.h */,
-				0D5ACD9817BF63E000B066D0 /* NSString+PropertyKVC.m */,
-			);
-			path = "NSObject+Properties";
 			sourceTree = "<group>";
 		};
 		0DF135C417BE827400262A1F = {
@@ -312,6 +307,7 @@
 				0D1B162317BF54140019AD6F /* BXFoodListViewController_iPad.xib in Resources */,
 				0D1B162517BF54140019AD6F /* InfoPlist.strings in Resources */,
 				0D1B162117BF54140019AD6F /* Default.png in Resources */,
+				0DFC857217C0DEAB00266138 /* BXMyOrderViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -357,12 +353,11 @@
 			files = (
 				0D1B162717BF54140019AD6F /* main.m in Sources */,
 				0D1B161417BF54140019AD6F /* BXOrderListViewController.m in Sources */,
+				0DFC857517C1034A00266138 /* BXObject.m in Sources */,
 				0D1B161C17BF54140019AD6F /* BXUserProvider.m in Sources */,
 				0D1B161217BF54140019AD6F /* BXFoodInfoViewController.m in Sources */,
 				0D1B161B17BF54140019AD6F /* BXShopProvider.m in Sources */,
-				0D5ACD9A17BF63E000B066D0 /* NSString+PropertyKVC.m in Sources */,
 				0D1B161917BF54140019AD6F /* BXFoodProvider.m in Sources */,
-				0D5ACD9917BF63E000B066D0 /* NSObject+Properties.m in Sources */,
 				0D1B161617BF54140019AD6F /* BXFoodListViewController.m in Sources */,
 				0D1B161A17BF54140019AD6F /* BXOrderProvider.m in Sources */,
 				0D1B161F17BF54140019AD6F /* BXShop.m in Sources */,
@@ -370,6 +365,7 @@
 				0DF135E117BE827400262A1F /* BXAppDelegate.m in Sources */,
 				0D1B161717BF54140019AD6F /* BXLoginViewController.m in Sources */,
 				0D1B161E17BF54140019AD6F /* BXOrder.m in Sources */,
+				0DFC857117C0DEAB00266138 /* BXMyOrderViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -9,13 +9,14 @@
 #import <Foundation/Foundation.h>
 
 #import "BXFood.h"
+#import "BXObject.h"
 
-@interface BXOrder : PFObject <PFSubclassing>
+@interface BXOrder : BXObject
 
 @property (strong) BXFood *             pToFood;
 @property (assign) int                  count;
 
-@property (strong) PFUser *             pToUser;
+@property (strong) AVUser *             pToUser;
 
 /* 
  0 初始

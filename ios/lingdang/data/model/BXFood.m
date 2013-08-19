@@ -21,19 +21,19 @@
 
 + (instancetype)object
 {
-    return [super objectWithClassName:[self parseClassName]];
+    return [[BXFood alloc] initWithClassName:[BXFood parseClassName]];
 }
-
-+ (instancetype)objectWithoutDataWithObjectId:(NSString *)objectId
-{
-    return [super objectWithoutDataWithClassName:[self parseClassName]
-                                        objectId:objectId];
-}
-
-+ (PFQuery *)query
-{
-    return [PFQuery queryWithClassName:[self parseClassName]];
-}
+//
+//+ (instancetype)objectWithoutDataWithObjectId:(NSString *)objectId
+//{
+//    return [super objectWithoutDataWithClassName:[self parseClassName]
+//                                        objectId:objectId];
+//}
+//
+//+ (PFQuery *)query
+//{
+//    return [PFQuery queryWithClassName:[self parseClassName]];
+//}
 
 - (void)setPToShop:(BXShop *)pToShop
 {
@@ -43,6 +43,36 @@
 - (BXShop *)pToShop
 {
     return [self objectForKey:@"pToShop"];
+}
+
+- (void)setName:(NSString *)name
+{
+    [self setObject:name forKey:@"name"];
+}
+
+- (NSString *)name
+{
+    return [self objectForKey:@"name"];
+}
+
+- (void)setPrice:(float)price
+{
+    [self setObject:@(price) forKey:@"price"];
+}
+
+- (float)price
+{
+    return [[self objectForKey:@"price"] floatValue];
+}
+
+- (void)setShopName:(NSString *)shopName
+{
+    [self setObject:shopName forKey:@"shopName"];
+}
+
+- (NSString *)shopName
+{
+    return [self objectForKey:@"shopName"];
 }
 
 @end
