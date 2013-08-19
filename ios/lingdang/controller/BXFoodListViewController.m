@@ -150,7 +150,7 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue2 reuseIdentifier:cellId];
     }
     
-    BXFood *food =[[_shopFoods objectForKey:_sectionKeys[indexPath.section]] objectAtIndex:indexPath.row];    
+    BXFood *food =[[_shopFoods objectForKey:_sectionKeys[indexPath.section]] objectAtIndex:indexPath.row];
 
     cell.textLabel.text = [NSString stringWithFormat:@"%.1f 元", [[food objectForKey:@"price"] floatValue]];
     cell.detailTextLabel.text = [food objectForKey:@"name"];  //food.pToShop.name;
