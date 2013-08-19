@@ -22,7 +22,11 @@
 {
     [super viewWillAppear:animated];
     AVUser *user = [AVUser currentUser];
-    _usernameTf.text = user.username ?: [[UIDevice currentDevice] name];
+
+    NSString *devieceName = [[UIDevice currentDevice] name];
+    NSRange range = [devieceName rangeOfString:@"'"];
+
+    _usernameTf.text = user.username ?: (range.location == NSNotFound? devieceName : [devieceName substringToIndex:range.location]);
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -40,7 +44,7 @@
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     [SVProgressHUD showWithStatus:@"登录中" maskType:SVProgressHUDMaskTypeGradient];
-    [[BXUserProvider sharedInstance] audoLoginWithUsername:textField.text
+    [[BXUserProvider sharedInstance] autoLoginWithUsername:textField.text
                                                    success:^(AVUser *user)
     {
         [SVProgressHUD showSuccessWithStatus:@"登录成功"];

@@ -62,9 +62,9 @@
                     }
                     
                     if (idx == [shops count] - 1) {
-                        [weakself.tableView reloadData];
                         weakself.sectionKeys = [weakself.shopFoods allKeys];
                         [weakself.tableView.pullToRefreshView stopAnimating];
+                        [weakself.tableView reloadData];
                     }
                 }];
             }];
