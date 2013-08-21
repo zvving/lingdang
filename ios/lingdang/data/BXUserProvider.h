@@ -12,7 +12,7 @@
 
 BCSINGLETON_IN_H(BXUserProvider)
 
-- (void)audoLoginWithUsername:(NSString*)username
+- (void)autoLoginWithUsername:(NSString*)username
                       success:(void(^)(AVUser* user))sucBlock
                          fail:(void(^)(NSError* err))failBlock;
 
