@@ -1,2 +1,2 @@
-PODS_AVOSCLOUD_FRAMEWORK_SEARCH_PATHS = "$(PODS_ROOT)/AVOSCloud/iOS/release-v1.3.1/"
-PODS_AVOSCLOUD_OTHER_LDFLAGS = -framework AVOSCloud -framework AudioToolbox -framework CFNetwork -framework CoreGraphics -framework CoreLocation -framework MobileCoreServices -framework QuartzCore -framework Security -framework SystemConfiguration
+PODS_AVOSCLOUD_FRAMEWORK_SEARCH_PATHS = "$(PODS_ROOT)/AVOSCloud/iOS/release-v1.3.2/"
+PODS_AVOSCLOUD_OTHER_LDFLAGS = -ObjC -all_load -framework AVOSCloud -framework AudioToolbox -framework CFNetwork -framework CoreGraphics -framework CoreLocation -framework MobileCoreServices -framework QuartzCore -framework Security -framework SystemConfiguration

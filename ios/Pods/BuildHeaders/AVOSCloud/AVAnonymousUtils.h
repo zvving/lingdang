@@ -1,1 +1,1 @@
-../../AVOSCloud/iOS/release-v1.3.1/AVOSCloud.framework/Versions/A/Headers/AVAnonymousUtils.h
+../../AVOSCloud/iOS/release-v1.3.2/AVOSCloud.framework/Versions/A/Headers/AVAnonymousUtils.h
