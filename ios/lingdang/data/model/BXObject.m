@@ -21,8 +21,12 @@
 
 + (instancetype)fixAVOSObject:(AVObject*)avObj;
 {
-    Class cls = [self class];
-    id obj = [[cls alloc] init];
+    id obj = [self object];
+    AVObject *aObj = (AVObject*)obj;
+    aObj.objectId = avObj.objectId;
+    [aObj setValue:avObj.createdAt forKeyPath:@"createdAt"];
+    [aObj setValue:avObj.updatedAt forKeyPath:@"updatedAt"];
+    aObj.ACL = avObj.ACL;
     
     [avObj.allKeys enumerateObjectsUsingBlock:^(NSString *key, NSUInteger idx, BOOL *stop) {
         id value = [avObj objectForKeyedSubscript:key];
