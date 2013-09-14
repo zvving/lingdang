@@ -60,15 +60,15 @@
                     if (error == nil) {
                         [weakself.shopFoods setObject:objects forKey:[shop objectForKey:@"name"]];
                     }
-                    
+
                     if (idx == [shops count] - 1) {
                         weakself.sectionKeys = [weakself.shopFoods allKeys];
-                        [weakself.tableView.pullToRefreshView stopAnimating];
                         [weakself.tableView reloadData];
                     }
                 }];
             }];
-
+            
+            [weakself.tableView.pullToRefreshView stopAnimating];
         } fail:^(NSError *err) {
             [SVProgressHUD showErrorWithStatus:@"获取菜单失败"];
             [_tableView.pullToRefreshView stopAnimating];
@@ -81,7 +81,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    PFUser *user = [PFUser currentUser];
+    AVUser *user = [AVUser currentUser];
     self.title = _isAdminMode ? @"菜单管理" : [NSString stringWithFormat:@"%@ 的菜单", user.username];
 }
 

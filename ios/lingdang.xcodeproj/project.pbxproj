@@ -110,7 +110,6 @@
 		0D1B15E517BF54140019AD6F /* controller */ = {
 			isa = PBXGroup;
 			children = (
-				0D1B15E617BF54140019AD6F /* admin */,
 				0D1B15ED17BF54140019AD6F /* BXFoodListViewController.h */,
 				0D1B15EE17BF54140019AD6F /* BXFoodListViewController.m */,
 				0D1B160917BF54140019AD6F /* BXFoodListViewController_iPad.xib */,
@@ -118,6 +117,7 @@
 				0D1B15EF17BF54140019AD6F /* BXLoginViewController.h */,
 				0D1B15F017BF54140019AD6F /* BXLoginViewController.m */,
 				0D1B15F117BF54140019AD6F /* BXLoginViewController.xib */,
+				0D1B15E617BF54140019AD6F /* admin */,
 				0D1B15F217BF54140019AD6F /* eater */,
 			);
 			path = controller;

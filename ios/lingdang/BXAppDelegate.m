@@ -13,6 +13,7 @@
 #import "BXShop.h"
 #import "BXFood.h"
 #import "BXOrder.h"
+#import "BXConfig.h"
 
 
 @implementation BXAppDelegate

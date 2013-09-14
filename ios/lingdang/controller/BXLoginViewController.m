@@ -14,19 +14,15 @@
 
 @property (weak, nonatomic) IBOutlet UITextField *usernameTf;
 
+- (IBAction)login:(id)sender;
+
 @end
 
 @implementation BXLoginViewController
 
-- (void)viewWillAppear:(BOOL)animated
+- (void)viewDidLoad
 {
-    [super viewWillAppear:animated];
-    AVUser *user = [AVUser currentUser];
-
-    NSString *devieceName = [[UIDevice currentDevice] name];
-    NSRange range = [devieceName rangeOfString:@"'"];
-
-    _usernameTf.text = user.username ?: (range.location == NSNotFound? devieceName : [devieceName substringToIndex:range.location]);
+    _usernameTf.borderStyle = UITextBorderStyleRoundedRect;
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -39,25 +35,27 @@
     });
 }
 
-#pragma mark - UITextFieldDelegate
 
-- (BOOL)textFieldShouldReturn:(UITextField *)textField
+- (IBAction)login:(id)sender
 {
+    NSString *userName = _usernameTf.text;
+    if (userName.length == 0) {
+        [SVProgressHUD showErrorWithStatus:@"请输入您的大名"];
+        return ;
+    }
     [SVProgressHUD showWithStatus:@"登录中" maskType:SVProgressHUDMaskTypeGradient];
-    [[BXUserProvider sharedInstance] autoLoginWithUsername:textField.text
+    [[BXUserProvider sharedInstance] autoLoginWithUsername:_usernameTf.text
                                                    success:^(AVUser *user)
-    {
-        [SVProgressHUD showSuccessWithStatus:@"登录成功"];
-        double delayInSeconds = 1.0;
-        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-            [self dismissViewControllerAnimated:YES completion:nil];
-        });
-    } fail:^(NSError *err) {
-        [SVProgressHUD showErrorWithStatus:@"登录失败"];
-    }];
-    
-    return YES;
-}
+     {
+         [SVProgressHUD showSuccessWithStatus:@"登录成功"];
+         double delayInSeconds = 1.0;
+         dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+         dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+             [self dismissViewControllerAnimated:YES completion:nil];
+         });
+     } fail:^(NSError *err) {
+         [SVProgressHUD showErrorWithStatus:@"登录失败"];
+     }];
 
+}
 @end
