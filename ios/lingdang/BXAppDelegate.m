@@ -8,34 +8,24 @@
 
 #import "BXAppDelegate.h"
 
-#import "BXFoodListViewController.h"
+#import "BXShopListViewController.h"
 
 #import "BXShop.h"
 #import "BXFood.h"
 #import "BXOrder.h"
+#import "BXConfig.h"
 
 
 @implementation BXAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
-{
-//    [BXShop registerSubclass];
-//    [BXFood registerSubclass];
-//    [BXOrder registerSubclass];
-//    
-//    [Parse setApplicationId:kParseAppId
-//                  clientKey:kParseClientKey];
-    
+{    
     [AVOSCloud setApplicationId:kAVOSAppId clientKey:kAVOSClientKey];
     [AVOSCloud useAVCloudCN];
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-        self.viewController = [[BXFoodListViewController alloc] initWithNibName:@"BXFoodListViewController_iPhone" bundle:nil];
-    } else {
-        self.viewController = [[BXFoodListViewController alloc] initWithNibName:@"BXFoodListViewController_iPad" bundle:nil];
-    }
+    self.viewController = [[BXShopListViewController alloc] init];
     self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:self.viewController];
     [self.window makeKeyAndVisible];
     

@@ -7,6 +7,7 @@
 //
 
 #import "BXFoodProvider.h"
+#import <AVQuery.h>
 
 @implementation BXFoodProvider
 
@@ -69,14 +70,16 @@ BCSINGLETON_IN_M(BXFoodProvider)
     }];
 }
 
-- (void)allFood:(void(^)(NSArray* food))sucBlock
-           fail:(void(^)(NSError* err))failBlock;
+- (void)allFoodsInShop:(AVObject *)shop
+            onSuccess:(void(^)(NSArray* food))sucBlock
+               onFail:(void(^)(NSError* err))failBlock
 {
     AVQuery *query = [BXFood query];
-//    [query addAscendingOrder:];
+    [query whereKey:@"pToShop" equalTo:shop];
     query.cachePolicy = kPFCachePolicyCacheThenNetwork;
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (error) {
+            [SVProgressHUD showErrorWithStatus:@"获取店铺food失败，哇咔咔"];
             if (failBlock) {
                 failBlock(error);
             }

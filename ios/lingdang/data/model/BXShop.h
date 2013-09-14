@@ -12,6 +12,8 @@
 
 @interface BXShop : BXObject
 
-@property (strong) NSString *       name;
+@property (nonatomic, strong) NSString *       name;
+
+@property (nonatomic, assign) NSInteger        shipFee;
 
 @end

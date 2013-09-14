@@ -47,6 +47,7 @@ BCSINGLETON_IN_M(BXShopProvider)
     [query addAscendingOrder:kDBColName];
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (error) {
+            [SVProgressHUD showErrorWithStatus:@"获取店铺信息失败"];
             if (failBlock) {
                 failBlock(error);
             }

@@ -30,7 +30,8 @@ BCSINGLETON_IN_H(BXFoodProvider)
             onFail:(void(^)(NSError *err))failBlock;
 
 
-- (void)allFood:(void(^)(NSArray* food))sucBlock
-           fail:(void(^)(NSError* err))failBlock;
+- (void)allFoodsInShop:(AVObject *)shop
+            onSuccess:(void(^)(NSArray* food))sucBlock
+               onFail:(void(^)(NSError* err))failBlock;
 
 @end

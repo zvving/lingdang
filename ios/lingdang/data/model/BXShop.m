@@ -29,4 +29,14 @@
     return [self objectForKey:@"name"];
 }
 
+- (void)setShipFee:(NSInteger)shipFee
+{
+    [self setObject:[NSNumber numberWithInteger:shipFee] forKey:@"shipFee"];
+}
+
+- (NSInteger)shipFee
+{
+    return [[self objectForKey:@"shipFee"] integerValue];
+}
+
 @end
