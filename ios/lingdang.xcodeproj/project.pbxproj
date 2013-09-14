@@ -36,6 +36,7 @@
 		0DFC857117C0DEAB00266138 /* BXMyOrderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DFC856F17C0DEAB00266138 /* BXMyOrderViewController.m */; };
 		0DFC857217C0DEAB00266138 /* BXMyOrderViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0DFC857017C0DEAB00266138 /* BXMyOrderViewController.xib */; };
 		0DFC857517C1034A00266138 /* BXObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DFC857417C1034A00266138 /* BXObject.m */; };
+		36F3CB0B17E4B34B0064237A /* BXDateSelectView.m in Sources */ = {isa = PBXBuildFile; fileRef = 36F3CB0A17E4B34B0064237A /* BXDateSelectView.m */; };
 		44C2C0FD30594384975C71D8 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E20000085954C69A6BBD3EE /* libPods.a */; };
 		A991CA7717E496CE00068FDD /* balana.png in Resources */ = {isa = PBXBuildFile; fileRef = A991CA7617E496CE00068FDD /* balana.png */; };
 		A9FE829117E48349008C1640 /* BXShopListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A9FE828F17E48349008C1640 /* BXShopListViewController.m */; };
@@ -92,6 +93,8 @@
 		0DFC857317C1034A00266138 /* BXObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BXObject.h; sourceTree = "<group>"; };
 		0DFC857417C1034A00266138 /* BXObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BXObject.m; sourceTree = "<group>"; };
 		25CEC70C09A74C44940607E2 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
+		36F3CB0917E4B34B0064237A /* BXDateSelectView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BXDateSelectView.h; sourceTree = "<group>"; };
+		36F3CB0A17E4B34B0064237A /* BXDateSelectView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BXDateSelectView.m; sourceTree = "<group>"; };
 		9E20000085954C69A6BBD3EE /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		A991CA7617E496CE00068FDD /* balana.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = balana.png; sourceTree = "<group>"; };
 		A9FE828E17E48349008C1640 /* BXShopListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BXShopListViewController.h; sourceTree = "<group>"; };
@@ -142,6 +145,8 @@
 				0D1B15EA17BF54140019AD6F /* BXOrderListViewController.h */,
 				0D1B15EB17BF54140019AD6F /* BXOrderListViewController.m */,
 				0D1B15EC17BF54140019AD6F /* BXOrderListViewController.xib */,
+				36F3CB0917E4B34B0064237A /* BXDateSelectView.h */,
+				36F3CB0A17E4B34B0064237A /* BXDateSelectView.m */,
 			);
 			path = admin;
 			sourceTree = "<group>";
@@ -382,6 +387,7 @@
 				0D1B161A17BF54140019AD6F /* BXOrderProvider.m in Sources */,
 				0D1B161F17BF54140019AD6F /* BXShop.m in Sources */,
 				0D1B161D17BF54140019AD6F /* BXFood.m in Sources */,
+				36F3CB0B17E4B34B0064237A /* BXDateSelectView.m in Sources */,
 				0DF135E117BE827400262A1F /* BXAppDelegate.m in Sources */,
 				0D1B161717BF54140019AD6F /* BXLoginViewController.m in Sources */,
 				0D1B161E17BF54140019AD6F /* BXOrder.m in Sources */,

@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BXDateSelectView.h"
 
 typedef enum
 {
@@ -14,7 +15,7 @@ typedef enum
     ShowByUser
 }eShowType;
 
-@interface BXOrderListViewController : UIViewController
+@interface BXOrderListViewController : UIViewController<BXDateSelectViewDelegate>
 
 @property (nonatomic, assign) eShowType     showType;
 

@@ -10,6 +10,7 @@
 #import "BXFoodListViewController.h"
 
 #import "BXOrderProvider.h"
+#import "BXDateSelectView.h"
 
 @interface BXOrderListViewController () <UITableViewDataSource, UITableViewDelegate>
 
@@ -22,6 +23,8 @@
 @property (nonatomic, strong) NSArray *             orderData;
 
 @property (nonatomic, strong) NSDateFormatter       *formatter;
+
+@property (strong, nonatomic) BXDateSelectView* dateSelectView;
 
 @end
 
@@ -42,54 +45,14 @@
 {
     [super viewDidLoad];
     
-    NSDate* now = [NSDate date];
-    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
-    NSDateComponents *comps =  [calendar components:NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit fromDate:now];
-    int nowYear=[comps year];
-    int nowMonth = [comps month];
-    int nowDay = [comps day];
     
-    calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
-    comps =  [calendar components:NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit fromDate:self.selectDate];
-    int selYear=[comps year];
-    int selMonth = [comps month];
-    int selDay = [comps day];
+    [self updateTitle];
     
-    if (nowYear == selYear && nowMonth == selMonth && nowDay == selDay)
-    {
-        self.title = @"今日订单";
-    }
-    else
-    {
-        self.title = [NSString stringWithFormat:@"%d月%d日",selMonth,selDay];
-    }
     
+    self.showTypeSeg.selectedSegmentIndex = self.showType;
     
     __block BXOrderListViewController *weakSelf = self;
     
-//    if (_isAdminMode) {
-//        self.navigationItem.leftBarButtonItem =
-//        [[UIBarButtonItem alloc] initWithTitle:@"切至食客"
-//                                         style:UIBarButtonItemStylePlain
-//                                       handler:^(id sender)
-//         {
-//             [weakSelf dismissViewControllerAnimated:YES completion:^{
-//                 [[EGOCache globalCache] removeCacheForKey:kCacheIsAdminMode];
-//             }];
-//         }];
-//        
-//        self.navigationItem.rightBarButtonItem =
-//        [[UIBarButtonItem alloc] initWithTitle:@"菜单管理"
-//                                         style:UIBarButtonItemStylePlain
-//                                       handler:^(id sender)
-//         {
-//             BXFoodListViewController *foodVC =
-//             [[BXFoodListViewController alloc] initWithNibName:@"BXFoodListViewController_iPhone"
-//                                                        bundle:nil];
-//             foodVC.isAdminMode = YES;
-//             [weakSelf.navigationController pushViewController:foodVC animated:YES];
-//         }];
-//    }
 
     self.navigationItem.leftBarButtonItem =
     [[UIBarButtonItem alloc] initWithTitle:@"返回"
@@ -106,7 +69,14 @@
                                      style:UIBarButtonItemStylePlain
                                    handler:^(id sender)
     {
-//         UIPickerView* datePickerView = [UIPickerView alloc] initWithFrame:CG
+        if (!self.dateSelectView)
+        {
+            self.dateSelectView = [[BXDateSelectView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height-206, 320, 206)];
+            self.dateSelectView.delegate = self;
+            [self.view addSubview:self.dateSelectView];
+        }
+        self.dateSelectView.hidden = NO;
+        [self.dateSelectView resetDate:self.selectDate];
     }];
     
     [_tableView addPullToRefreshWithActionHandler:^{
@@ -214,4 +184,40 @@
     return _formatter;
 }
 
+#pragma mark - delegate
+- (void) cancelSelectInView:(BXDateSelectView*)selectView
+{
+    self.dateSelectView.hidden = YES;
+}
+- (void) selectInView:(BXDateSelectView*)selectView didSelectWithDate:(NSDate*)date
+{
+    self.dateSelectView.hidden = YES;
+    self.selectDate = date;
+    [self updateTitle];
+}
+
+- (void) updateTitle
+{
+    NSDate* now = [NSDate date];
+    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    NSDateComponents *comps =  [calendar components:NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit fromDate:now];
+    int nowYear=[comps year];
+    int nowMonth = [comps month];
+    int nowDay = [comps day];
+    
+    calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    comps =  [calendar components:NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit fromDate:self.selectDate];
+    int selYear=[comps year];
+    int selMonth = [comps month];
+    int selDay = [comps day];
+    
+    if (nowYear == selYear && nowMonth == selMonth && nowDay == selDay)
+    {
+        self.title = @"今日订单";
+    }
+    else
+    {
+        self.title = [NSString stringWithFormat:@"%d月%d日",selMonth,selDay];
+    }
+}
 @end

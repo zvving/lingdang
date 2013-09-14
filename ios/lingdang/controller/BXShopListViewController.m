@@ -42,7 +42,7 @@
     self.loginVC = [[BXLoginViewController alloc] init];
     self.adminNav = [[UINavigationController alloc] initWithRootViewController:_orderListVC];
     
-    _orderListVC.isAdminMode = YES;
+//    _orderListVC.isAdminMode = YES;
     _adminNav.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
     
     [self buildBarButtons];
