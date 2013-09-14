@@ -13,8 +13,11 @@
 
 @interface BXOrderListViewController () <UITableViewDataSource, UITableViewDelegate>
 
-
 @property (weak, nonatomic) IBOutlet UITableView *  tableView;
+
+@property (weak, nonatomic) IBOutlet UISegmentedControl *  showTypeSeg;
+
+@property (nonatomic,strong) NSDate* selectDate;
 
 @property (nonatomic, strong) NSArray *             orderData;
 
@@ -24,38 +27,87 @@
 
 @implementation BXOrderListViewController
 
+- (id)init
+{
+    self = [super init];
+    if (self)
+    {
+        self.showType = ShowByShop;
+        self.selectDate = [NSDate date];
+    }
+    return self;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
-    self.title = _isAdminMode ? @"全部订单" : @"我的订单";
+    NSDate* now = [NSDate date];
+    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    NSDateComponents *comps =  [calendar components:NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit fromDate:now];
+    int nowYear=[comps year];
+    int nowMonth = [comps month];
+    int nowDay = [comps day];
+    
+    calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    comps =  [calendar components:NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit fromDate:self.selectDate];
+    int selYear=[comps year];
+    int selMonth = [comps month];
+    int selDay = [comps day];
+    
+    if (nowYear == selYear && nowMonth == selMonth && nowDay == selDay)
+    {
+        self.title = @"今日订单";
+    }
+    else
+    {
+        self.title = [NSString stringWithFormat:@"%d月%d日",selMonth,selDay];
+    }
+    
     
     __block BXOrderListViewController *weakSelf = self;
     
-    if (_isAdminMode) {
-        self.navigationItem.leftBarButtonItem =
-        [[UIBarButtonItem alloc] initWithTitle:@"切至食客"
-                                         style:UIBarButtonItemStylePlain
-                                       handler:^(id sender)
-         {
-             [weakSelf dismissViewControllerAnimated:YES completion:^{
-                 [[EGOCache globalCache] removeCacheForKey:kCacheIsAdminMode];
-             }];
-         }];
-        
-        self.navigationItem.rightBarButtonItem =
-        [[UIBarButtonItem alloc] initWithTitle:@"菜单管理"
-                                         style:UIBarButtonItemStylePlain
-                                       handler:^(id sender)
-         {
-             BXFoodListViewController *foodVC =
-             [[BXFoodListViewController alloc] init];
-#warning TODO
-             //foodVC.isAdminMode = YES;
-             [weakSelf.navigationController pushViewController:foodVC animated:YES];
-         }];
-    }
+//    if (_isAdminMode) {
+//        self.navigationItem.leftBarButtonItem =
+//        [[UIBarButtonItem alloc] initWithTitle:@"切至食客"
+//                                         style:UIBarButtonItemStylePlain
+//                                       handler:^(id sender)
+//         {
+//             [weakSelf dismissViewControllerAnimated:YES completion:^{
+//                 [[EGOCache globalCache] removeCacheForKey:kCacheIsAdminMode];
+//             }];
+//         }];
+//        
+//        self.navigationItem.rightBarButtonItem =
+//        [[UIBarButtonItem alloc] initWithTitle:@"菜单管理"
+//                                         style:UIBarButtonItemStylePlain
+//                                       handler:^(id sender)
+//         {
+//             BXFoodListViewController *foodVC =
+//             [[BXFoodListViewController alloc] initWithNibName:@"BXFoodListViewController_iPhone"
+//                                                        bundle:nil];
+//             foodVC.isAdminMode = YES;
+//             [weakSelf.navigationController pushViewController:foodVC animated:YES];
+//         }];
+//    }
 
+    self.navigationItem.leftBarButtonItem =
+    [[UIBarButtonItem alloc] initWithTitle:@"返回"
+                                     style:UIBarButtonItemStylePlain
+                                   handler:^(id sender)
+    {
+        [weakSelf dismissViewControllerAnimated:YES completion:^{
+            [[EGOCache globalCache] removeCacheForKey:kCacheIsAdminMode];
+        }];
+    }];
+    
+    self.navigationItem.rightBarButtonItem =
+    [[UIBarButtonItem alloc] initWithTitle:@"历史订单"
+                                     style:UIBarButtonItemStylePlain
+                                   handler:^(id sender)
+    {
+//         UIPickerView* datePickerView = [UIPickerView alloc] initWithFrame:CG
+    }];
     
     [_tableView addPullToRefreshWithActionHandler:^{
         
@@ -70,11 +122,11 @@
             [_tableView.pullToRefreshView stopAnimating];
         };
         
-        if (_isAdminMode) {
+//        if (_isAdminMode) {
             [[BXOrderProvider sharedInstance] allOrders:sucBlock fail:failBlock];
-        } else {
-            [[BXOrderProvider sharedInstance] myOrders:sucBlock fail:failBlock];
-        }
+//        } else {
+//            [[BXOrderProvider sharedInstance] myOrders:sucBlock fail:failBlock];
+//        }
 
     }];
     

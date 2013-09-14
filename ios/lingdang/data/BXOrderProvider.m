@@ -19,15 +19,15 @@ BCSINGLETON_IN_M(BXOrderProvider)
 {
     BXOrder *order = [BXOrder object];
     
-    order.pToFood = food;
-    order.count = 1;
+//    order.pToFood = food;
+//    order.count = 1;
     order.pToUser = [AVUser currentUser];
     order.status = 0;
     order.isPaid = NO;
     
-    order.shopName = [food objectForKey:@"shopName"];
-    order.userName = [[AVUser currentUser] username];
-    order.foodName = [food objectForKey:@"name"];
+//    order.shopName = [food objectForKey:@"shopName"];
+//    order.userName = [[AVUser currentUser] username];
+//    order.foodName = [food objectForKey:@"name"];
     
     [order saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         if (succeeded) {

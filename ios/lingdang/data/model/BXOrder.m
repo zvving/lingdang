@@ -10,39 +10,14 @@
 
 @implementation BXOrder
 
-+ (NSString *)parseClassName {
++ (NSString *)parseClassName
+{
     return @"order";
 }
 
 + (instancetype)object
 {
     return [[BXOrder alloc] initWithClassName:[BXOrder parseClassName]];
-}
-
-//+ (instancetype)object
-//{
-//    return [super objectWithClassName:[self parseClassName]];
-//}
-//
-//+ (instancetype)objectWithoutDataWithObjectId:(NSString *)objectId
-//{
-//    return [super objectWithoutDataWithClassName:[self parseClassName]
-//                                        objectId:objectId];
-//}
-//
-//+ (PFQuery *)query
-//{
-//    return [PFQuery queryWithClassName:[self parseClassName]];
-//}
-
-- (void)setPToFood:(BXFood *)pToFood
-{
-    [self setObject:pToFood forKey:@"pToFood"];
-}
-
-- (BXFood *)pToFood
-{
-    return [self objectForKey:@"pToFood"];
 }
 
 - (void)setPToUser:(AVUser *)pToUser
@@ -53,16 +28,6 @@
 - (AVUser *)pToUser
 {
     return [self objectForKey:@"pToUser"];
-}
-
-- (void)setCount:(int)count
-{
-    [self setObject:@(count) forKey:@"count"];
-}
-
-- (int)count
-{
-    return [[self objectForKey:@"count"] intValue];
 }
 
 - (void)setStatus:(int)status
@@ -85,34 +50,14 @@
     return [[self objectForKey:@"isPaid"] boolValue];
 }
 
-- (void)setShopName:(NSString *)shopName
+- (void)setFoodItems:(NSDictionary *)foodItems
 {
-    [self setObject:shopName?:@"" forKey:@"shopName"];
+    [self setObject:foodItems forKey:@"foodItems"];
 }
 
-- (NSString *)shopName
+- (NSDictionary *)foodItems
 {
-    return [self objectForKey:@"shopName"];
-}
-
-- (void)setFoodName:(NSString *)foodName
-{
-    [self setObject:foodName?:@"" forKey:@"foodName"];
-}
-
-- (NSString *)foodName
-{
-    return [self objectForKey:@"foodName"];
-}
-
-- (void)setUserName:(NSString *)userName
-{
-    [self setObject:userName?:@"" forKey:@"userName"];
-}
-
-- (NSString *)userName
-{
-    return [self objectForKey:@"userName"];
+    return [self objectForKey:@"foodItems"];
 }
 
 @end
