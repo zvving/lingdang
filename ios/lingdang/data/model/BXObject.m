@@ -19,4 +19,26 @@
     return [AVQuery queryWithClassName:[self parseClassName]];
 }
 
++ (instancetype)fixAVOSObject:(AVObject*)avObj;
+{
+    Class cls = [self class];
+    id obj = [[cls alloc] init];
+    
+    [avObj.allKeys enumerateObjectsUsingBlock:^(NSString *key, NSUInteger idx, BOOL *stop) {
+        id value = [avObj objectForKeyedSubscript:key];
+        [obj setValue:value forKeyPath:key];
+    }];
+    return obj;
+}
+
++ (NSArray*)fixAVOSArray:(NSArray*)avArr;
+{
+    NSMutableArray *result = [NSMutableArray arrayWithCapacity:avArr.count];
+    [avArr enumerateObjectsUsingBlock:^(AVObject* avObj, NSUInteger idx, BOOL *stop) {
+        id obj = [self fixAVOSObject:avObj];
+        [result addObject:obj];
+    }];
+    return result;
+}
+
 @end

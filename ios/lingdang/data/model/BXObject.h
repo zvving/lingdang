@@ -14,5 +14,7 @@
 
 + (AVQuery*)query;
 
++ (instancetype)fixAVOSObject:(AVObject*)avObj;
++ (NSArray*)fixAVOSArray:(NSArray*)avArr;
 
 @end
