@@ -9,8 +9,10 @@
 
 #import <UIKit/UIKit.h>
 
+@class BXShop;
+
 @interface BXFoodListViewController : UIViewController
 
-@property (nonatomic, assign) BOOL          isAdminMode;
+@property (nonatomic, strong)  BXShop *             shop;
 
 @end

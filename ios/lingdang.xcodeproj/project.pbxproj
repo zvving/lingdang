@@ -37,6 +37,8 @@
 		0DFC857217C0DEAB00266138 /* BXMyOrderViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0DFC857017C0DEAB00266138 /* BXMyOrderViewController.xib */; };
 		0DFC857517C1034A00266138 /* BXObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DFC857417C1034A00266138 /* BXObject.m */; };
 		44C2C0FD30594384975C71D8 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E20000085954C69A6BBD3EE /* libPods.a */; };
+		A9FE829117E48349008C1640 /* BXShopListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A9FE828F17E48349008C1640 /* BXShopListViewController.m */; };
+		A9FE829217E48349008C1640 /* BXShopListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A9FE829017E48349008C1640 /* BXShopListViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -90,6 +92,9 @@
 		0DFC857417C1034A00266138 /* BXObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BXObject.m; sourceTree = "<group>"; };
 		25CEC70C09A74C44940607E2 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
 		9E20000085954C69A6BBD3EE /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		A9FE828E17E48349008C1640 /* BXShopListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BXShopListViewController.h; sourceTree = "<group>"; };
+		A9FE828F17E48349008C1640 /* BXShopListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BXShopListViewController.m; sourceTree = "<group>"; };
+		A9FE829017E48349008C1640 /* BXShopListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BXShopListViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,6 +115,9 @@
 		0D1B15E517BF54140019AD6F /* controller */ = {
 			isa = PBXGroup;
 			children = (
+				A9FE828E17E48349008C1640 /* BXShopListViewController.h */,
+				A9FE828F17E48349008C1640 /* BXShopListViewController.m */,
+				A9FE829017E48349008C1640 /* BXShopListViewController.xib */,
 				0D1B15ED17BF54140019AD6F /* BXFoodListViewController.h */,
 				0D1B15EE17BF54140019AD6F /* BXFoodListViewController.m */,
 				0D1B160917BF54140019AD6F /* BXFoodListViewController_iPad.xib */,
@@ -297,6 +305,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A9FE829217E48349008C1640 /* BXShopListViewController.xib in Resources */,
 				0D1B162217BF54140019AD6F /* Default@2x.png in Resources */,
 				0D1B161817BF54140019AD6F /* BXLoginViewController.xib in Resources */,
 				0D1B162017BF54140019AD6F /* Default-568h@2x.png in Resources */,
@@ -355,6 +364,7 @@
 				0D1B161417BF54140019AD6F /* BXOrderListViewController.m in Sources */,
 				0DFC857517C1034A00266138 /* BXObject.m in Sources */,
 				0D1B161C17BF54140019AD6F /* BXUserProvider.m in Sources */,
+				A9FE829117E48349008C1640 /* BXShopListViewController.m in Sources */,
 				0D1B161217BF54140019AD6F /* BXFoodInfoViewController.m in Sources */,
 				0D1B161B17BF54140019AD6F /* BXShopProvider.m in Sources */,
 				0D1B161917BF54140019AD6F /* BXFoodProvider.m in Sources */,

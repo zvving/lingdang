@@ -8,12 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
-@class BXFoodListViewController;
+@class BXShopListViewController;
 
 @interface BXAppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 
-@property (strong, nonatomic) BXFoodListViewController *viewController;
+@property (strong, nonatomic) BXShopListViewController *viewController;
 
 @end
