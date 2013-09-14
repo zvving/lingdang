@@ -85,7 +85,7 @@ BCSINGLETON_IN_M(BXFoodProvider)
             }
         } else {
             if (sucBlock) {
-                sucBlock(objects);
+                sucBlock([BXFood fixAVOSArray:objects]);
             }
         }
     }];

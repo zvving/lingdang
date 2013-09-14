@@ -53,7 +53,7 @@ BCSINGLETON_IN_M(BXShopProvider)
             }
         } else {
             if (sucBlock) {
-                sucBlock(objects);
+                sucBlock([BXShop fixAVOSArray:objects]);
             }
         }
     }];
