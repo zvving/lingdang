@@ -29,6 +29,7 @@
 		0D1B162517BF54140019AD6F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0D1B160D17BF54140019AD6F /* InfoPlist.strings */; };
 		0D1B162617BF54140019AD6F /* lingdang-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0D1B160F17BF54140019AD6F /* lingdang-Info.plist */; };
 		0D1B162717BF54140019AD6F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D1B161117BF54140019AD6F /* main.m */; };
+		0D29F43B17E4477A00168ADB /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0D29F43A17E4477A00168ADB /* Images.xcassets */; };
 		0DF135D117BE827400262A1F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0DF135D017BE827400262A1F /* UIKit.framework */; };
 		0DF135D317BE827400262A1F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0DF135D217BE827400262A1F /* Foundation.framework */; };
 		0DF135D517BE827400262A1F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0DF135D417BE827400262A1F /* CoreGraphics.framework */; };
@@ -79,6 +80,7 @@
 		0D1B160F17BF54140019AD6F /* lingdang-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "lingdang-Info.plist"; sourceTree = "<group>"; };
 		0D1B161017BF54140019AD6F /* lingdang-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "lingdang-Prefix.pch"; sourceTree = "<group>"; };
 		0D1B161117BF54140019AD6F /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		0D29F43A17E4477A00168ADB /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		0DF135CD17BE827400262A1F /* lingdang.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = lingdang.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0DF135D017BE827400262A1F /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		0DF135D217BE827400262A1F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -247,6 +249,7 @@
 				0D1B15F317BF54140019AD6F /* data */,
 				0D1B160317BF54140019AD6F /* lib */,
 				0D1B160517BF54140019AD6F /* support */,
+				0D29F43A17E4477A00168ADB /* Images.xcassets */,
 			);
 			path = lingdang;
 			sourceTree = "<group>";
@@ -282,6 +285,11 @@
 				CLASSPREFIX = BX;
 				LastUpgradeCheck = 0460;
 				ORGANIZATIONNAME = baixing.com;
+				TargetAttributes = {
+					0DF135CC17BE827400262A1F = {
+						DevelopmentTeam = L5B4TBT7H9;
+					};
+				};
 			};
 			buildConfigurationList = 0DF135C817BE827400262A1F /* Build configuration list for PBXProject "lingdang" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -315,6 +323,7 @@
 				0D1B162617BF54140019AD6F /* lingdang-Info.plist in Resources */,
 				0D1B162317BF54140019AD6F /* BXFoodListViewController_iPad.xib in Resources */,
 				0D1B162517BF54140019AD6F /* InfoPlist.strings in Resources */,
+				0D29F43B17E4477A00168ADB /* Images.xcassets in Resources */,
 				0D1B162117BF54140019AD6F /* Default.png in Resources */,
 				0DFC857217C0DEAB00266138 /* BXMyOrderViewController.xib in Resources */,
 			);
@@ -473,6 +482,10 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 25CEC70C09A74C44940607E2 /* Pods.xcconfig */;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Shanghai Kijiji Information Technology Co., Ltd.";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "lingdang/support/lingdang-Prefix.pch";
 				INFOPLIST_FILE = "$(SRCROOT)/lingdang/support/lingdang-Info.plist";
@@ -487,6 +500,10 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 25CEC70C09A74C44940607E2 /* Pods.xcconfig */;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Shanghai Kijiji Information Technology Co., Ltd.";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "lingdang/support/lingdang-Prefix.pch";
 				INFOPLIST_FILE = "$(SRCROOT)/lingdang/support/lingdang-Info.plist";
