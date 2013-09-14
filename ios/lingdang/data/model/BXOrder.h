@@ -13,24 +13,16 @@
 
 @interface BXOrder : BXObject
 
-@property (strong) BXFood *             pToFood;
-@property (assign) int                  count;
-
+//下单者
 @property (strong) AVUser *             pToUser;
 
-/* 
- 0 初始
- 1 已订购
- 2 已送达
- 3 存档
- */
+//订单状态:0 已下单可修改,1 已预订不可修改,2 已送达
 @property (assign) int                  status;
 
-// 付款状态，备用
+//付款状态
 @property (assign) BOOL                 isPaid;
 
-@property (strong) NSString *           shopName;
-@property (strong) NSString *           foodName;
-@property (strong) NSString *           userName;
+//预定的食物和数量
+@property (strong) NSDictionary *       foodItems;
 
 @end
