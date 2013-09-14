@@ -8,6 +8,7 @@
 
 #import "BXShopListViewController.h"
 #import "BXOrderListViewController.h"
+#import "BXFoodListViewController.h"
 #import "BXMyOrderViewController.h"
 #import "BXLoginViewController.h"
 #import "BXFoodInfoViewController.h"
@@ -64,7 +65,6 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    AVUser *user = [AVUser currentUser];
     self.title = _isAdminMode ? @"菜单管理" : [NSString stringWithFormat:@"菜单"];
 }
 
@@ -124,6 +124,11 @@
     return [_shops count];
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 64.0f;
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *cellId = @"shopCellId";
@@ -143,6 +148,12 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
+    BXFoodListViewController *foodListVC = [[BXFoodListViewController alloc]init];
+    foodListVC.shop = _shops[indexPath.row];
+    
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    [self.navigationController pushViewController:foodListVC animated:YES];
 }
 
 @end

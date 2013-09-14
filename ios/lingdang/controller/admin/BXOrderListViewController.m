@@ -49,9 +49,9 @@
                                        handler:^(id sender)
          {
              BXFoodListViewController *foodVC =
-             [[BXFoodListViewController alloc] initWithNibName:@"BXFoodListViewController_iPhone"
-                                                        bundle:nil];
-             foodVC.isAdminMode = YES;
+             [[BXFoodListViewController alloc] init];
+#warning TODO
+             //foodVC.isAdminMode = YES;
              [weakSelf.navigationController pushViewController:foodVC animated:YES];
          }];
     }

@@ -19,14 +19,7 @@
 @implementation BXAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
-{
-//    [BXShop registerSubclass];
-//    [BXFood registerSubclass];
-//    [BXOrder registerSubclass];
-//    
-//    [Parse setApplicationId:kParseAppId
-//                  clientKey:kParseClientKey];
-    
+{    
     [AVOSCloud setApplicationId:kAVOSAppId clientKey:kAVOSClientKey];
     [AVOSCloud useAVCloudCN];
     
