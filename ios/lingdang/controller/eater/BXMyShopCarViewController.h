@@ -8,9 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
+@class BXShop;
+
 @interface BXMyShopCarViewController : UIViewController
 
-@property (strong, nonatomic) NSMutableArray *foodItems;
+/**
+ *  [{'food':{bxfood}, 'amount': number},...]
+ */
+@property (strong, nonatomic) NSMutableArray    * foodItems;
 
 BCSINGLETON_IN_H(BXMyShopCarViewController);
 

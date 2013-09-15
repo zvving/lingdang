@@ -92,17 +92,18 @@ BCSINGLETON_IN_M(BXOrderProvider)
 {
     PFQuery *query = [BXOrder query];
     
-    [query whereKey:@"userName" equalTo:[[AVUser currentUser] username]];
+    [query whereKey:@"pToUser" equalTo:[AVUser currentUser]];
     [query addAscendingOrder:@"updatedAt"];
     
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (error) {
+            [SVProgressHUD showErrorWithStatus:@"加载订单数据失败"];
             if (failBlock) {
                 failBlock(error);
             }
         } else {
             if (sucBlock) {
-                sucBlock(objects);
+                sucBlock([BXOrder fixAVOSArray:objects]);
             }
         }
     }];

@@ -115,10 +115,13 @@ BCSINGLETON_IN_M(BXMyShopCarViewController);
     [order saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         NSString *msg = nil;
         if (error) {
-            msg = @"下单失败，给程畅些反馈";
+            msg = @"下单失败，给cc些反馈";
             [SVProgressHUD showErrorWithStatus:msg];
         }else {
             msg = @"下单成功\n请等候通知";
+            
+            [self.foodItems removeAllObjects];
+            [self.tableview reloadData];
             [SVProgressHUD showSuccessWithStatus:msg];
         }
     }];

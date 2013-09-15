@@ -21,4 +21,7 @@ BCSINGLETON_IN_H(BXShopProvider)
 - (void)allShops:(void(^)(NSArray* shops))sucBlock
             fail:(void(^)(NSError* err))failBlock;
 
+- (void)deleteShop:(BXShop*)shop
+           success:(void(^)())sucBlock
+              fail:(void(^)(NSError* err))failBlock;
 @end
