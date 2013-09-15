@@ -90,9 +90,27 @@ BCSINGLETON_IN_M(BXMyShopCarViewController);
 {
     BXOrder *order = [BXOrder object];
     order.pToUser = [AVUser currentUser];
-    order.foodItems = _foodItems;
     order.status = 0;
     order.isPaid = NO;
+    NSMutableArray *foodArr = [NSMutableArray array];
+    NSMutableArray *priceArr = [NSMutableArray array];
+    NSMutableArray *amountArr = [NSMutableArray array];
+    __block BXShop *shop = nil;
+    [_foodItems enumerateObjectsUsingBlock:^(NSDictionary* dic, NSUInteger idx, BOOL *stop) {
+        BXFood *f = dic[@"food"];
+        int i = [dic[@"amount"] intValue];
+        [foodArr addObject:f.name];
+        [priceArr addObject:@(f.price)];
+        [amountArr addObject:@(i)];
+        if (!shop) {
+            shop = f.pToShop;
+        }
+        
+    }];
+    order.foodNameArr = foodArr;
+    order.foodPriceArr = priceArr;
+    order.foodAmountArr = amountArr;
+    order.shop = shop;
     
     [order saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         NSString *msg = nil;

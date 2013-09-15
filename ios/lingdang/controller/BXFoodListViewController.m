@@ -26,6 +26,7 @@ static NSIndexPath *previouse = nil;
 @property (weak, nonatomic)   IBOutlet UIPickerView     * amountPicker;
 
 @property (strong, nonatomic) NSArray                   * shopFoods;
+@property (weak, nonatomic) IBOutlet UIButton *addFoodButton;
 
 @property (strong, nonatomic) BXFood                    * food;
 
@@ -47,6 +48,7 @@ static NSIndexPath *previouse = nil;
 - (void)viewDidLoad
 {
     self.title = [NSString stringWithFormat:@"%@%@的菜", _isAdminMode ? @"管理" : @"", _shop.name];
+    _addFoodButton.hidden = !_isAdminMode;
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"购物车" style:UIBarButtonItemStyleBordered handler:^(id sender) {
         UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:_shopCar];
@@ -102,10 +104,23 @@ static NSIndexPath *previouse = nil;
     }];
     
     // load the foods accordding to the shop
-    [[BXFoodProvider sharedInstance]allFoodsInShop:self.shop onSuccess:^(NSArray *foods) {
-        weakself.shopFoods = foods;
-        [self.tableView reloadData];
-    } onFail:nil];
+
+    
+    [self.tableView addPullToRefreshWithActionHandler:^{
+        [[BXFoodProvider sharedInstance]allFoodsInShop:self.shop onSuccess:^(NSArray *foods) {
+            weakself.shopFoods = foods;
+            [weakself.tableView reloadData];
+            [weakself.tableView.pullToRefreshView stopAnimating];
+        } onFail:^(NSError *err) {
+            [weakself.tableView.pullToRefreshView stopAnimating];
+        }];
+    }];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    [self.tableView triggerPullToRefresh];
 }
 
 #pragma mark tableview delegate & datasource methods

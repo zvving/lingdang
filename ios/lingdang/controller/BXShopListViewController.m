@@ -55,12 +55,22 @@
         [[BXShopProvider sharedInstance] allShops:^(NSArray *shops) {
             weakself.shops = shops;
             [weakself.shopTable reloadData];
-            [weakself.shopTable.pullToRefreshView stopAnimating];
+            double delayInSeconds = 0.1;
+            dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+            dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                [weakself.shopTable.pullToRefreshView stopAnimating];
+            });
+            
         } fail:^(NSError *err) {
             [_shopTable.pullToRefreshView stopAnimating];
         }];
     }];
     
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
     [_shopTable triggerPullToRefresh];
 }
 

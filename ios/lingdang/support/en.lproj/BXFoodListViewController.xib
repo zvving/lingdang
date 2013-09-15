@@ -7,6 +7,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="BXFoodListViewController">
             <connections>
+                <outlet property="addFoodButton" destination="3xT-i7-cOl" id="3WW-O3-LjF"/>
                 <outlet property="amountBar" destination="J8V-5W-UEg" id="2Ta-Nm-hfe"/>
                 <outlet property="amountPicker" destination="8Xi-Ma-pxY" id="o4e-Nq-r0s"/>
                 <outlet property="containerView" destination="3qA-r7-qGo" id="7OS-5O-iRK"/>

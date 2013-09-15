@@ -60,12 +60,34 @@
     return [self objectForKey:@"foodItems"];
 }
 
-- (NSString*)shopName
+- (void)setFoodNameArr:(NSArray *)foodNameArr
 {
-    NSEnumerator *enumerator = [self.foodItems objectEnumerator];
-    BXFood* key = [[enumerator nextObject] objectForKey:@"food"];
-    key = [BXFood fixAVOSObject:key];
-    return key.pToShop.name;
+    [self setObject:foodNameArr forKey:@"foodNameArr"];
+}
+
+- (NSArray *)foodNameArr
+{
+    return [self objectForKey:@"foodNameArr"];
+}
+
+- (void)setFoodPriceArr:(NSArray *)foodPriceArr
+{
+    [self setObject:foodPriceArr forKey:@"foodPriceArr"];
+}
+
+- (NSArray *)foodPriceArr
+{
+    return [self objectForKey:@"foodPriceArr"];
+}
+
+- (void)setFoodAmountArr:(NSArray *)foodAmountArr
+{
+    [self setObject:foodAmountArr forKey:@"foodAmountArr"];
+}
+
+- (NSArray *)foodAmountArr
+{
+    return [self objectForKey:@"foodAmountArr"];
 }
 
 - (BXShop*)shop
@@ -77,7 +99,7 @@
     return food.pToShop;
 }
 
--(BXOrder*) merge:(BXOrder*)order
+-(BXOrder*)merge:(BXOrder*)order
 {
     NSMutableArray *foodItems = [[NSMutableArray alloc] initWithArray:self.foodItems];
     

@@ -83,7 +83,6 @@ BCSINGLETON_IN_M(BXFoodProvider)
     query.cachePolicy = kPFCachePolicyCacheThenNetwork;
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (error) {
-            [SVProgressHUD showErrorWithStatus:@"获取店铺food失败，哇咔咔"];
             if (failBlock) {
                 failBlock(error);
             }

@@ -55,7 +55,7 @@
     __block BXOrderListViewController *weakSelf = self;
 
     self.navigationItem.leftBarButtonItem =
-    [[UIBarButtonItem alloc] initWithTitle:@"返回"
+    [[UIBarButtonItem alloc] initWithTitle:@"切至食客"
                                      style:UIBarButtonItemStylePlain
                                    handler:^(id sender)
     {
@@ -138,12 +138,12 @@
     if (self.showType == ShowByShop)
     {
         BXOrder* order = [_orderDataByShop objectAtIndex:section];
-        return [order.foodItems count]+1;
+        return order.foodNameArr.count + 1;
     }
     else
     {
         BXOrder* order = [_orderData objectAtIndex:section];
-        return [order.foodItems count]+1;
+        return order.foodNameArr.count + 1;
     }
 }
 
@@ -152,7 +152,7 @@
     if (self.showType == ShowByShop)
     {
         BXOrder* order = [_orderDataByShop objectAtIndex:section];
-        NSString* title = [NSString stringWithFormat:@"%@ %@",order.shopName,order.shop.name];
+        NSString* title = [NSString stringWithFormat:@"%@ %@",order.shop.name, order.shop.name];
         return title;
     }
     else
@@ -179,7 +179,9 @@
     
     UITableViewCell *cell = nil;
     
-    if (indexPath.row == [order.foodItems count])
+
+    
+    if (indexPath.row == [order.foodNameArr count])
     {
         cell = [tableView dequeueReusableCellWithIdentifier:cmdCellId];
         if (!cell)
@@ -189,12 +191,11 @@
         BXOrderCmdCell* foodCell = (BXOrderCmdCell*)cell;
         
         float totalPrice = 0;
-        for(int i = 0;i<[order.foodItems count];i++)
+        for(int i = 0;i<[order.foodNameArr count];i++)
         {
-            NSNumber* amount = [[order.foodItems objectAtIndex:i] objectForKey:@"amount"];
-            BXFood* food = [[order.foodItems objectAtIndex:i] objectForKey:@"food"];
-            food = [BXFood fixAVOSObject:food];
-            totalPrice += [amount intValue]*food.price;
+            float price = [order.foodPriceArr[i] floatValue];
+            int amount = [order.foodAmountArr[i] intValue];
+            totalPrice +=  amount * price;
         }
         foodCell.priceLabel.text = [NSString stringWithFormat:@"共%.1f元",totalPrice];
         
@@ -219,14 +220,14 @@
             cell = [[[NSBundle mainBundle] loadNibNamed:foodCellId owner:self options:nil] lastObject];
             
         }
-        NSNumber* amount = [[order.foodItems objectAtIndex:indexPath.row] objectForKey:@"amount"];
-        BXFood* food = [[order.foodItems objectAtIndex:indexPath.row] objectForKey:@"food"];
-        food = [BXFood fixAVOSObject:food];
+
+        float price = [order.foodPriceArr[indexPath.row] floatValue];
+        int amount = [order.foodAmountArr[indexPath.row] intValue];
         
         BXOrderFoodCell* foodCell = (BXOrderFoodCell*)cell;
-        foodCell.foodLabel.text = food.name;
-        foodCell.priceLabel.text = [NSString stringWithFormat:@"￥%.1f",food.price];
-        foodCell.amountLabel.text = [NSString stringWithFormat:@"x%d",[amount intValue]];
+        foodCell.foodLabel.text = order.foodNameArr[indexPath.row];
+        foodCell.priceLabel.text = [NSString stringWithFormat:@"￥%.1f", price];
+        foodCell.amountLabel.text = [NSString stringWithFormat:@"x%d", amount];
     }
     
     return cell;
@@ -321,22 +322,22 @@
     
     for (BXOrder* order in self.orderData)
     {
-        NSString* shopName = order.shopName;
-        
-        BOOL found = NO;
-        for (BXOrder* shopOrder in self.orderDataByShop)
-        {
-            if ([shopOrder.shopName isEqualToString:shopName])
-            {
-                [shopOrder merge:order];
-                found = YES;
-                break;
-            }
-        }
-        if (!found)
-        {
-            [self.orderDataByShop addObject:order];
-        }
+//        NSString* shopName = order.shopName;
+//        
+//        BOOL found = NO;
+//        for (BXOrder* shopOrder in self.orderDataByShop)
+//        {
+//            if ([shopOrder.shopName isEqualToString:shopName])
+//            {
+//                [shopOrder merge:order];
+//                found = YES;
+//                break;
+//            }
+//        }
+//        if (!found)
+//        {
+//            [self.orderDataByShop addObject:order];
+//        }
     }
     
 }

@@ -14,20 +14,19 @@
 @interface BXOrder : BXObject
 
 //下单者
-@property (strong) AVUser *             pToUser;
+@property (nonatomic, strong) AVUser *             pToUser;
 
 //订单状态:0 已下单可修改,1 已预订不可修改,2 已送达
-@property (assign) int                  status;
+@property (nonatomic, assign) int                  status;
 
 //付款状态
-@property (assign) BOOL                 isPaid;
+@property (nonatomic, assign) BOOL                 isPaid;
 
 //预定的食物和数量  eg:[{food:{bxfood}, amount:int}, ...]
-@property (strong) NSArray *       foodItems;
-
-
-@property (readonly) NSString *         shopName;
-@property (readonly) BXShop *           shop;
+@property (nonatomic, strong)   NSArray *               foodNameArr;
+@property (nonatomic, strong)   NSArray *               foodPriceArr;
+@property (nonatomic, strong)   NSArray *               foodAmountArr;
+@property (nonatomic, strong)   BXShop *                shop;
 
 -(BXOrder*) merge:(BXOrder*)order;
 
