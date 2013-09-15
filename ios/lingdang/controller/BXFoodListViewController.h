@@ -13,6 +13,6 @@
 
 @interface BXFoodListViewController : UIViewController
 
-@property (nonatomic, strong)  AVObject *             shop;
+@property (nonatomic, strong)  BXShop *             shop;
 
 @end

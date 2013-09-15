@@ -42,7 +42,7 @@
     self.loginVC = [[BXLoginViewController alloc] init];
     self.adminNav = [[UINavigationController alloc] initWithRootViewController:_orderListVC];
     
-//    _orderListVC.isAdminMode = YES;
+    //_orderListVC.isAdminMode = YES;
     _adminNav.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
     
     [self buildBarButtons];
@@ -138,7 +138,7 @@
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
     
-    AVObject *shop = _shops[indexPath.row];
+    BXShop *shop = _shops[indexPath.row];
     NSString *msg = [NSString stringWithFormat:@"%@ (%@)", [shop objectForKey:@"name"], [shop objectForKey:@"shipInfo"]];
     cell.textLabel.text = msg;
 
