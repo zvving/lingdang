@@ -12,8 +12,6 @@
 @implementation BXFood
 
 @dynamic name;
-@dynamic price;
-@dynamic shopName;
 
 + (NSString *)parseClassName {
     return @"food";
@@ -23,17 +21,11 @@
 {
     return [[BXFood alloc] initWithClassName:[BXFood parseClassName]];
 }
-//
-//+ (instancetype)objectWithoutDataWithObjectId:(NSString *)objectId
-//{
-//    return [super objectWithoutDataWithClassName:[self parseClassName]
-//                                        objectId:objectId];
-//}
-//
-//+ (PFQuery *)query
-//{
-//    return [PFQuery queryWithClassName:[self parseClassName]];
-//}
+
++ (PFQuery *)query
+{
+    return [PFQuery queryWithClassName:[self parseClassName]];
+}
 
 - (void)setPToShop:(BXShop *)pToShop
 {

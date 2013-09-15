@@ -18,6 +18,8 @@ BCSINGLETON_IN_H(BXFoodProvider)
 - (void)addFoodWithName:(NSString*)name
                   price:(float)price
                    shop:(BXShop*)shop
+               imageStr:(NSString*)imageStr
+              upImgUser:(AVUser*)upImgUser
                 success:(void(^)(BXFood* food))sucBlock
                    fail:(void(^)(NSError* err))failBlock;
 

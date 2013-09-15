@@ -12,6 +12,7 @@
 
 @interface BXFoodInfoViewController : UIViewController
 
-@property (nonatomic, strong) BXFood *food;     // 新增 food 时为 nil
+@property (nonatomic, strong) BXFood *      food;     // 新增 food 时为 nil
+@property (nonatomic, strong) BXShop *      shop;
 
 @end
