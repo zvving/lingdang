@@ -10,10 +10,6 @@
 
 @implementation BXOrderFoodCell
 
-@synthesize amountLabel;
-@synthesize foodLabel;
-@synthesize priceLabel;
-
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
