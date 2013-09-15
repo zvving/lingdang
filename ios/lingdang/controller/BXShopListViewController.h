@@ -10,6 +10,6 @@
 
 @interface BXShopListViewController : UIViewController
 
-@property (nonatomic, assign) BOOL                              isAdminMode;
+@property (nonatomic, assign) BOOL  isAdminMode;
 
 @end
