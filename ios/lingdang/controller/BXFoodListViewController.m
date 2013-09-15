@@ -13,6 +13,7 @@
 
 #import "BXShop.h"
 #import "BXFoodProvider.h"
+#import "BXFoodInfoViewController.h"
 
 static NSIndexPath *previouse = nil;
 
@@ -179,5 +180,11 @@ static NSIndexPath *previouse = nil;
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
 {
     return [NSString stringWithFormat:@"%d份", row + 1];
+}
+- (IBAction)addFoodButtonClicked:(id)sender
+{
+    BXFoodInfoViewController *foodInfo = [[BXFoodInfoViewController alloc] init];
+    foodInfo.shop = _shop;
+    [self.navigationController pushViewController:foodInfo animated:YES];
 }
 @end

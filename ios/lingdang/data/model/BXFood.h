@@ -10,19 +10,14 @@
 
 
 #import "BXShop.h"
-
 #import "BXObject.h"
 
 @interface BXFood : BXObject
 
-
-@property (strong) NSString *   name;
-@property (assign) float        price;
-
-
-// link to BXShop
-@property (strong) BXShop *     pToShop;
-@property (strong) NSString *   shopName;
-
+@property (nonatomic, strong)       NSString *          name;
+@property (nonatomic, strong)       NSString *          imageStr;
+@property (nonatomic, assign)       float               price;
+@property (nonatomic, strong)       BXShop *            pToShop;
+@property (nonatomic, strong)       AVUser *            upImgUser;
 
 @end

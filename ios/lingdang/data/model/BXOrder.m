@@ -63,9 +63,9 @@
 - (NSString*)shopName
 {
     NSEnumerator *enumerator = [self.foodItems objectEnumerator];
-    BXFood* food = [[enumerator nextObject] objectForKey:@"food"];
-    food = [BXFood fixAVOSObject:food];
-    return food.shopName;
+    BXFood* key = [[enumerator nextObject] objectForKey:@"food"];
+    key = [BXFood fixAVOSObject:key];
+    return key.pToShop.name;
 }
 
 - (BXShop*)shop

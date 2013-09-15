@@ -30,7 +30,7 @@
     
     [avObj.allKeys enumerateObjectsUsingBlock:^(NSString *key, NSUInteger idx, BOOL *stop) {
         id value = [avObj objectForKeyedSubscript:key];
-        [obj setValue:value forKeyPath:key];
+        [obj setObject:value forKey:key];
     }];
     return obj;
 }
