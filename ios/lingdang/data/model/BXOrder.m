@@ -98,6 +98,9 @@
 - (BXShop*)shop
 {
     id obj = [self objectForKey:@"shop"];
+    if (obj == nil || [obj isKindOfClass:[NSNull class]]) {
+        return nil;
+    }
     if ([obj isKindOfClass:[AVObject class]]) {
         return [BXShop fixAVOSObject:obj];
     }
