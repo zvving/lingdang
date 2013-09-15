@@ -25,7 +25,6 @@
 @property (nonatomic, strong) NSArray *             orderData;
 @property (nonatomic, strong) NSMutableArray *      orderDataByShop;
 
-@property (nonatomic, strong) NSDateFormatter       *formatter;
 
 @property (strong, nonatomic) BXDateSelectView* dateSelectView;
 
@@ -166,22 +165,44 @@
 {
     static NSString *foodCellId = @"BXOrderFoodCell";
     static NSString *cmdCellId = @"BXOrderCmdCell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cmdCellId];
-    if (!cell) {
-        cell = [[[NSBundle mainBundle] loadNibNamed:cmdCellId owner:nil options:nil] lastObject];
-    }
     
-//    BXOrder *order = _orderData[indexPath.row];
-//    NSArray *statusArr = @[@"等", @"已订", @"已达", @"已存"];
+    UITableViewCell *cell = [[UITableViewCell alloc] init];
+//    BXOrder* order;
+//    if (self.showType == ShowByShop)
+//    {
+//        order = [self.orderDataByShop objectAtIndex:indexPath.section-1];
+//    }
+//    else
+//    {
+//        order = [self.orderData objectAtIndex:indexPath.section-1];
+//    }
 //    
-//;
+//    UITableViewCell *cell = nil;
 //    
-//    cell.textLabel.text = [NSString stringWithFormat:@"%@ 想吃 %@", [order objectForKey:@"userName"], [order objectForKey:@"foodName"]];
-//    cell.detailTextLabel.text =
-//    [NSString stringWithFormat:@"%@ %@",
-//     [self.formatter stringFromDate:order.createdAt],
-//     statusArr[[[order objectForKey:@"status"] intValue]]];
-    
+//    if (indexPath.row == [order.foodItems count])
+//    {
+//        cell = [tableView dequeueReusableCellWithIdentifier:cmdCellId];
+//        if (!cell)
+//        {
+//            cell = [[[NSBundle mainBundle] loadNibNamed:cmdCellId owner:nil options:nil] lastObject];
+//        }
+//        BXOrderCmdCell* foodCell = (BXOrderCmdCell*)cell;
+//        foodCell.priceLabel.text = @"共30元";
+//        [foodCell.cmdButton setTitle:@"已拨打电话" forState:UIControlStateNormal];
+//    }
+//    else
+//    {
+//        cell = [tableView dequeueReusableCellWithIdentifier:foodCellId];
+//        if (!cell)
+//        {
+//            cell = [[[NSBundle mainBundle] loadNibNamed:foodCellId owner:nil options:nil] lastObject];
+//        }
+//        BXOrderFoodCell* foodCell = (BXOrderFoodCell*)cell;
+//        foodCell.foodLabel.text = @"红烧大排";
+//        foodCell.priceLabel.text = @"￥15.00";
+//        foodCell.amountLabel.text = @"x2";
+//    }
+//    
     return cell;
 }
 
@@ -190,17 +211,6 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
-#pragma mark - get & set
-
-// inside the implementation (.m)
-// When you need, just use self.formatter
-- (NSDateFormatter *)formatter {
-    if (! _formatter) {
-        _formatter = [[NSDateFormatter alloc] init];
-        _formatter.dateFormat = @"H:m"; // twitter date format
-    }
-    return _formatter;
-}
 
 #pragma mark - delegate
 - (void) cancelSelectInView:(BXDateSelectView*)selectView
