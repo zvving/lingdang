@@ -22,7 +22,7 @@
 //付款状态
 @property (assign) BOOL                 isPaid;
 
-//预定的食物和数量
+//预定的食物和数量  eg:[{food:{bxfood}, amount:int}, ...]
 @property (strong) NSArray *       foodItems;
 
 

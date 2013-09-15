@@ -77,20 +77,31 @@
 
 -(BXOrder*) merge:(BXOrder*)order
 {
-//    [order.foodItems enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop)
-//    {
-//        if (![self.foodItems objectForKey:key])
-//        {
-//            [self.foodItems setValue:obj forKey:key];
-//        }
-//        else
-//        {
-//            int oldAmount = [[self.foodItems objectForKey:key] integerValue];
-//            int newAmount = oldAmount + [obj integerValue];
-//            [self.foodItems setValue:[NSNumber numberWithInt:newAmount] forKey:key];
-//        }
-//    }];
+    NSMutableArray *foodItems = [[NSMutableArray alloc] initWithArray:self.foodItems];
     
+    for (NSDictionary *foodItem in order.foodItems) {
+       NSUInteger index = [foodItems indexOfObjectPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
+           if ([[[obj objectForKey:@"food"] objectId] isEqualToString:[[foodItem objectForKey:@"food"] objectId]]) {
+               *stop = YES;
+               return YES;
+           }
+           return NO;
+        }];
+        if (index == NSNotFound) {
+            [foodItems addObject:foodItem];
+        } else {
+            NSMutableDictionary *mergedFoodItem = [[NSMutableDictionary alloc] init];
+            [mergedFoodItem setObject:foodItem[@"food"] forKey:@"food"];
+            NSDictionary *oldFoodItem = [foodItems objectAtIndex:index] ;
+            NSInteger oldAmount = [[oldFoodItem objectForKey:@"amount"] integerValue];
+            NSInteger anoAmount = [[foodItem objectForKey:@"amount"]integerValue];
+            [mergedFoodItem setObject:@(oldAmount + anoAmount) forKey:@"amount"];
+            
+            [foodItems replaceObjectAtIndex:index withObject:mergedFoodItem];
+        }
+    }
+    
+    self.foodItems = foodItems;
     return self;
 }
 @end
