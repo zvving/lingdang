@@ -173,12 +173,12 @@
             return;
         }
         [SVProgressHUD showWithStatus:@"新增店铺中" maskType:SVProgressHUDMaskTypeGradient];
-        [[BXShopProvider sharedInstance] addShopWithName:tf.text success:^(BXShop *shop) {
-            [SVProgressHUD showSuccessWithStatus:@"店铺已添加"];
-            [weakSelf reloadShopData];
-        } fail:^(NSError *err) {
-            [SVProgressHUD showErrorWithStatus:@"新增店铺失败"];
-        }];
+//        [[BXShopProvider sharedInstance] addShopWithName:tf.text success:^(BXShop *shop) {
+//            [SVProgressHUD showSuccessWithStatus:@"店铺已添加"];
+//            [weakSelf reloadShopData];
+//        } fail:^(NSError *err) {
+//            [SVProgressHUD showErrorWithStatus:@"新增店铺失败"];
+//        }];
     }];
     [shopAlert show];
 }

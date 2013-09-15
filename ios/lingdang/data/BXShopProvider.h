@@ -13,6 +13,8 @@
 BCSINGLETON_IN_H(BXShopProvider)
 
 - (void)addShopWithName:(NSString*)name
+                  phone:(NSString*)phone
+               shipInfo:(NSString*)shipInfo
                 success:(void(^)(BXShop* shop))sucBlock
                    fail:(void(^)(NSError* err))failBlock;
 

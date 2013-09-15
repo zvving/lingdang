@@ -14,5 +14,6 @@
 @interface BXFoodListViewController : UIViewController
 
 @property (nonatomic, strong)  BXShop *             shop;
+@property (nonatomic, assign) BOOL                              isAdminMode;
 
 @end

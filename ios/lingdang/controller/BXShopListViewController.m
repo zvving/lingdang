@@ -13,12 +13,14 @@
 #import "BXLoginViewController.h"
 #import "BXFoodInfoViewController.h"
 #import "BXShopProvider.h"
+#import "BXShopAddViewController.h"
 
 #import "BXShop.h"
 
 @interface BXShopListViewController () <UITableViewDataSource, UITableViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *shopTable;
+@property (weak, nonatomic) IBOutlet UIButton *addShopButton;
 
 @property (nonatomic, strong) BXOrderListViewController         *orderListVC;
 
@@ -26,8 +28,6 @@
 @property (nonatomic, strong) BXLoginViewController             *loginVC;
 
 @property (nonatomic, strong) NSArray                           *shops;
-
-@property (nonatomic, assign) BOOL                              isAdminMode;
 
 @end
 
@@ -38,7 +38,8 @@
 {
     [super viewDidLoad];
     
-    self.title = @"店铺";
+    self.title = _isAdminMode ? @"管理店铺" : @"浏览店铺";
+    _addShopButton.hidden = !_isAdminMode;
     
     self.orderListVC = [[BXOrderListViewController alloc] init];
     self.loginVC = [[BXLoginViewController alloc] init];
@@ -68,14 +69,7 @@
     __block BXShopListViewController *weakSelf = self;
     
     if (_isAdminMode) { // 管理 food 界面
-        self.navigationItem.rightBarButtonItem =
-        [[UIBarButtonItem alloc] initWithTitle:@"增加"
-                                         style:UIBarButtonItemStylePlain
-                                       handler:^(id sender)
-         {
-             BXFoodInfoViewController *foodInfoVC = [[BXFoodInfoViewController alloc] init];
-             [self.navigationController pushViewController:foodInfoVC animated:YES];
-         }];
+        // null
     } else { // 订餐界面
         self.navigationItem.leftBarButtonItem =
         [[UIBarButtonItem alloc] initWithTitle:@"切至管家"
@@ -145,10 +139,17 @@
     
     BXFoodListViewController *foodListVC = [[BXFoodListViewController alloc]init];
     foodListVC.shop = _shops[indexPath.row];
+    foodListVC.isAdminMode = _isAdminMode;
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     [self.navigationController pushViewController:foodListVC animated:YES];
+}
+
+- (IBAction)addShopButtonClicked:(id)sender
+{
+    BXShopAddViewController *shopAdd = [[BXShopAddViewController alloc] init];
+    [self.navigationController pushViewController:shopAdd animated:YES];
 }
 
 @end
