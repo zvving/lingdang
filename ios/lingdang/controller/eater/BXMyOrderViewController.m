@@ -11,6 +11,7 @@
 #import "BXFoodListViewController.h"
 
 #import "BXMyOrderCell.h"
+#import "BXOrderCmdCell.h"
 
 @interface BXMyOrderViewController ()<UITableViewDataSource, UITableViewDelegate>
 
@@ -85,7 +86,24 @@
     }
     
     if (isCommandCell) {
+        BXOrderCmdCell *cmdCell = (BXOrderCmdCell *)cell;
+        float sum = 0;
+        for (int i = 0; i < order.foodPriceArr.count; i ++) {
+            float price = [order.foodPriceArr[i] floatValue];
+            NSInteger amount = [order.foodAmountArr[i] integerValue];
+            sum += price * amount;
+        }
         
+        cmdCell.priceLabel.text = [NSString stringWithFormat:@"%g元", sum];
+        [cmdCell.cmdButton setTitle:@"修改订单" forState:UIControlStateNormal];
+    } else {
+        BXMyOrderCell *myOrderCell = (BXMyOrderCell *)cell;
+        float price = [order.foodPriceArr[indexPath.row] floatValue];
+        NSInteger amount = [order.foodAmountArr[indexPath.row] integerValue];
+        myOrderCell.shopNameLabel.text = order.shop.name;
+        myOrderCell.foodNameLabel.text = order.foodNameArr[indexPath.row];
+        myOrderCell.priceLabel.text = [NSString stringWithFormat:@"￥%g", price];
+        myOrderCell.amountLabel.text = [NSString stringWithFormat:@"x%d", amount];
     }
     
     return cell;
