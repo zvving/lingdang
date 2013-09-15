@@ -14,30 +14,34 @@
 BCSINGLETON_IN_M(BXShopProvider)
 
 - (void)addShopWithName:(NSString*)name
+                  phone:(NSString*)phone
+               shipInfo:(NSString*)shipInfo
                 success:(void(^)(BXShop* shop))sucBlock
                    fail:(void(^)(NSError* err))failBlock;
 {
-    // 根据 name 查找已有 店铺
-    AVQuery *query = [BXShop query];
-    [query whereKey:kDBColName equalTo:name];
-    BXShop *shop = (BXShop*) [query getFirstObject];
-    if (shop) {
-        if (sucBlock) {
-            sucBlock(shop);
+    // 先不检查重复
+//    // 根据 name 查找已有 店铺
+//    AVQuery *query = [BXShop query];
+//    [query whereKey:kDBColName equalTo:name];
+//    BXShop *shop = (BXShop*) [query getFirstObject];
+//    if (shop) {
+//        if (sucBlock) {
+//            sucBlock(shop);
+//        }
+//    } else { // 新增店铺
+    BXShop *newShop = [BXShop object];
+    newShop.name = name;
+    newShop.phone = phone;
+    newShop.shipInfo = shipInfo;
+    
+    [newShop saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        if (succeeded && sucBlock) {
+            sucBlock(newShop);
+        } else if (failBlock) {
+            failBlock(error);
         }
-    } else { // 新增店铺
-        BXShop *newShop = [BXShop object];
-        newShop.name = name;
-        if ([newShop save]) {
-            if (sucBlock) {
-                sucBlock(newShop);
-            }
-        } else {
-            if (failBlock) {
-                failBlock(nil);
-            }
-        }
-    }
+    }];
+//    }
 }
 
 - (void)allShops:(void(^)(NSArray* shops))sucBlock
