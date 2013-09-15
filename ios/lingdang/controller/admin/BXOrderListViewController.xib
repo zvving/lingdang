@@ -38,6 +38,9 @@
                                     <segment title="按店铺"/>
                                     <segment title="按人"/>
                                 </segments>
+                                <connections>
+                                    <action selector="switchViewType:" destination="-1" eventType="valueChanged" id="6fm-sf-KeD"/>
+                                </connections>
                             </segmentedControl>
                         </barButtonItem>
                     </items>

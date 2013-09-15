@@ -21,6 +21,7 @@
 @property (nonatomic,strong) NSDate* selectDate;
 
 @property (nonatomic, strong) NSArray *             orderData;
+@property (nonatomic, strong) NSMutableArray *      orderDataByShop;
 
 @property (nonatomic, strong) NSDateFormatter       *formatter;
 
@@ -45,14 +46,11 @@
 {
     [super viewDidLoad];
     
-    
     [self updateTitle];
-    
     
     self.showTypeSeg.selectedSegmentIndex = self.showType;
     
     __block BXOrderListViewController *weakSelf = self;
-    
 
     self.navigationItem.leftBarButtonItem =
     [[UIBarButtonItem alloc] initWithTitle:@"返回"
@@ -83,6 +81,9 @@
         
         void (^sucBlock)(NSArray *orders) = ^(NSArray *orders){
             weakSelf.orderData = orders;
+            if (self.showType == ShowByShop) {
+                [self mergeOrderByShop];
+            }
             [_tableView reloadData];
             [_tableView.pullToRefreshView stopAnimating];
         };
@@ -92,12 +93,7 @@
             [_tableView.pullToRefreshView stopAnimating];
         };
         
-//        if (_isAdminMode) {
-            [[BXOrderProvider sharedInstance] allOrders:sucBlock fail:failBlock];
-//        } else {
-//            [[BXOrderProvider sharedInstance] myOrders:sucBlock fail:failBlock];
-//        }
-
+        [[BXOrderProvider sharedInstance] allOrders:sucBlock fail:failBlock];
     }];
     
     [_tableView triggerPullToRefresh];
@@ -111,11 +107,47 @@
 
 #pragma mark - UITableViewDataSource & UITableViewDelegate
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+- (NSInteger) numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return _orderData.count;
+    if (self.showType == ShowByShop)
+    {
+        return _orderDataByShop.count;
+    }
+    else
+    {
+        return _orderData.count;
+    }
 }
 
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    if (self.showType == ShowByShop)
+    {
+        BXOrder* order = [_orderDataByShop objectAtIndex:section];
+        return [order.foodItems count]+1;
+    }
+    else
+    {
+        BXOrder* order = [_orderData objectAtIndex:section];
+        return [order.foodItems count]+1;
+    }
+}
+
+- (NSString*)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    if (self.showType == ShowByShop)
+    {
+        BXOrder* order = [_orderDataByShop objectAtIndex:section];
+        NSString* title = [NSString stringWithFormat:@"%@ %@",order.shopName,order.shop.name];
+        return title;
+    }
+    else
+    {
+        BXOrder* order = [_orderDataByShop objectAtIndex:section];
+        NSString* title = [NSString stringWithFormat:@"%@ %@",order.pToUser.username,order.shop.name];
+        return title;
+    }
+}
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *cellId = @"orderCellId";
@@ -194,8 +226,37 @@
     self.dateSelectView.hidden = YES;
     self.selectDate = date;
     [self updateTitle];
+    
+     __block BXOrderListViewController *weakSelf = self;
+    
+    void (^sucBlock)(NSArray *orders) = ^(NSArray *orders){
+        weakSelf.orderData = orders;
+        if (self.showType == ShowByShop) {
+            [self mergeOrderByShop];
+        }
+        [_tableView reloadData];
+        [_tableView.pullToRefreshView stopAnimating];
+    };
+    
+    void (^failBlock)(NSError *err) = ^(NSError *err) {
+        [SVProgressHUD showErrorWithStatus:@"获取订单失败"];
+        [_tableView.pullToRefreshView stopAnimating];
+    };
+    
+    [[BXOrderProvider sharedInstance] allOrdersWithDate:date success:sucBlock fail:failBlock];
+    
 }
 
+#pragma mark - UI Action
+- (IBAction)switchViewType:(id)sender
+{
+    UISegmentedControl* seg = sender;
+    NSInteger index = seg.selectedSegmentIndex;
+    self.showType = index;
+    [self.tableView reloadData];
+}
+
+#pragma mark - Private Methord
 - (void) updateTitle
 {
     NSDate* now = [NSDate date];
@@ -219,5 +280,34 @@
     {
         self.title = [NSString stringWithFormat:@"%d月%d日",selMonth,selDay];
     }
+}
+
+- (void) mergeOrderByShop
+{
+    if (!self.orderDataByShop)
+    {
+        self.orderDataByShop = [NSMutableArray array];
+    }
+    
+    for (BXOrder* order in self.orderData)
+    {
+        NSString* shopName = order.shopName;
+        
+        BOOL found = NO;
+        for (BXOrder* shopOrder in self.orderDataByShop)
+        {
+            if ([shopOrder.shopName isEqualToString:shopName])
+            {
+                [shopOrder merge:order];
+                found = YES;
+                break;
+            }
+        }
+        if (!found)
+        {
+            [self.orderDataByShop addObject:[order copy]];
+        }
+    }
+    
 }
 @end

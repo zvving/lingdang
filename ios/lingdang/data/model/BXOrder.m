@@ -60,4 +60,36 @@
     return [self objectForKey:@"foodItems"];
 }
 
+- (NSString*)shopName
+{
+    NSEnumerator *enumerator = [self.foodItems objectEnumerator];
+    BXFood* key = [enumerator nextObject];
+    return key.shopName;
+}
+
+- (BXShop*)shop
+{
+    NSEnumerator *enumerator = [self.foodItems objectEnumerator];
+    BXFood* key = [enumerator nextObject];
+    return key.pToShop;
+}
+
+-(BXOrder*) merge:(BXOrder*)order
+{
+    [order.foodItems enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop)
+    {
+        if (![self.foodItems objectForKey:key])
+        {
+            [self.foodItems setValue:obj forKey:key];
+        }
+        else
+        {
+            int oldAmount = [[self.foodItems objectForKey:key] integerValue];
+            int newAmount = oldAmount + [obj integerValue];
+            [self.foodItems setValue:[NSNumber numberWithInt:newAmount] forKey:key];
+        }
+    }];
+    
+    return self;
+}
 @end

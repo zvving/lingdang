@@ -25,4 +25,10 @@
 //预定的食物和数量
 @property (strong) NSDictionary *       foodItems;
 
+
+@property (readonly) NSString *         shopName;
+@property (readonly) BXShop *           shop;
+
+-(BXOrder*) merge:(BXOrder*)order;
+
 @end

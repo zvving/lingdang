@@ -62,6 +62,29 @@ BCSINGLETON_IN_M(BXOrderProvider)
     }];
 }
 
+- (void)allOrdersWithDate:(NSDate*)date
+                  success:(void(^)(NSArray* orders))sucBlock
+                     fail:(void(^)(NSError* err))failBlock;
+{
+    PFQuery *query = [BXOrder query];
+    [query whereKey:@"updatedAt" greaterThan:date];
+    [query whereKey:@"updatedAt" lessThan:[NSDate dateWithTimeInterval:3600*24 sinceDate:date]];
+    [query addAscendingOrder:@"updatedAt"];
+    
+    
+    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if (error) {
+            if (failBlock) {
+                failBlock(error);
+            }
+        } else {
+            if (sucBlock) {
+                sucBlock(objects);
+            }
+        }
+    }];
+}
+
 - (void)myOrders:(void(^)(NSArray* orders))sucBlock
             fail:(void(^)(NSError* err))failBlock;
 {
