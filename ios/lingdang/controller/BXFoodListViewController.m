@@ -17,7 +17,8 @@
 
 static NSIndexPath *previouse = nil;
 
-@interface BXFoodListViewController () <UITableViewDataSource, UITableViewDelegate, UIPickerViewDataSource, UIPickerViewDelegate>
+@interface BXFoodListViewController () <UITableViewDataSource, UITableViewDelegate,
+UIPickerViewDataSource,UIPickerViewDelegate, UIActionSheetDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView        * tableView;
 
@@ -50,13 +51,32 @@ static NSIndexPath *previouse = nil;
     self.title = [NSString stringWithFormat:@"%@%@的菜", _isAdminMode ? @"管理" : @"", _shop.name];
     _addFoodButton.hidden = !_isAdminMode;
     
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"购物车" style:UIBarButtonItemStyleBordered handler:^(id sender) {
-        UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:_shopCar];
-        [self presentViewController:nav animated:YES completion:nil];
+    __weak BXFoodListViewController *weakself = self;
+
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"购物车"
+                                                                              style:UIBarButtonItemStyleBordered
+                                                                            handler:^(id sender)
+    {
+        [self presentShopCar];
+    }];
+    
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回"
+                                                                             style:UIBarButtonItemStyleBordered
+                                                                           handler:^(id sender) {
+        if (weakself.shopCar.foodItems.count > 0) {
+            UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"当前餐馆点了菜但未下单，请选择"
+                                                                     delegate:self
+                                                            cancelButtonTitle:@"取消"
+                                                       destructiveButtonTitle:@"后悔了，换家馆子"
+                                                            otherButtonTitles:@"去购物车下单", nil];
+            [actionSheet showInView:self.view];
+            return ;
+        }
+        
+        [self.navigationController popViewControllerAnimated:YES];
     }];
     
     // set containerUI
-    __weak BXFoodListViewController *weakself = self;
     void (^removeSelf)(void) = ^(void){
         [UIView beginAnimations:@"pickerDown" context:nil];
         [UIView animateWithDuration:2.0f delay:0.0f options:UIViewAnimationOptionCurveEaseOut animations:^{
@@ -68,6 +88,10 @@ static NSIndexPath *previouse = nil;
             }
         }];
         [UIView commitAnimations];
+        
+        UITableViewCell *cell = [weakself.tableView cellForRowAtIndexPath:previouse];
+        cell.accessoryType = UITableViewCellAccessoryNone;
+        
         self.tableView.userInteractionEnabled = YES;
     };
     UINavigationItem *item = [_amountBar.items lastObject];
@@ -97,8 +121,7 @@ static NSIndexPath *previouse = nil;
         
         [weakself.shopCar.foodItems addObject:foodItem];
         
-        UITableViewCell *cell = [weakself.tableView cellForRowAtIndexPath:previouse];
-        cell.accessoryType = UITableViewCellAccessoryNone;
+        
         
         [SVProgressHUD showSuccessWithStatus:@"已添加到购物车"];
     }];
@@ -202,4 +225,32 @@ static NSIndexPath *previouse = nil;
     foodInfo.shop = _shop;
     [self.navigationController pushViewController:foodInfo animated:YES];
 }
+
+#pragma mark - uiaction sheet delegate methods
+
+#define GoToAnotherShop     0
+#define GoToShopCar         1
+#define Cancel              2
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    switch (buttonIndex) {
+        case GoToAnotherShop:
+            [self.shopCar.foodItems removeAllObjects];
+            [self.navigationController popViewControllerAnimated:YES];
+            break;
+        case GoToShopCar:
+            [self presentShopCar];
+            break;
+    }
+}
+
+#pragma  mark private methods
+- (void)presentShopCar
+{
+    UINavigationController *nav = [[UINavigationController alloc]
+                                   initWithRootViewController:_shopCar];
+    [self presentViewController:nav animated:YES completion:nil];
+}
+
 @end
