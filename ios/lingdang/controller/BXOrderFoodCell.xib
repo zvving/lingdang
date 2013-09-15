@@ -33,6 +33,11 @@
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="amountLabel" destination="xXn-If-4yM" id="7T9-8w-N7g"/>
+                <outlet property="foodLabel" destination="l82-0b-Ysz" id="rSu-OS-Rdj"/>
+                <outlet property="priceLabel" destination="au1-kE-gYE" id="0kE-8q-aPg"/>
+            </connections>
         </view>
     </objects>
 </document>

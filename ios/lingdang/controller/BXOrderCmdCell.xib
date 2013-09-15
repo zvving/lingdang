@@ -25,6 +25,10 @@
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="cmdButton" destination="6zf-ur-EAi" id="qii-eV-ax1"/>
+                <outlet property="priceLabel" destination="C2k-Ny-PQb" id="gGU-Oa-MhQ"/>
+            </connections>
         </view>
     </objects>
 </document>

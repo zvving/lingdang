@@ -92,8 +92,10 @@
         void (^sucBlock)(NSArray *orders) = ^(NSArray *orders){
             
             weakSelf.orderData = [BXOrder fixAVOSArray:orders];
-            if (self.showType == ShowByShop) {
-                [self mergeOrderByShop];
+            weakSelf.orderDataByShop = [BXOrder fixAVOSArray:orders];
+            if (self.showType == ShowByShop)
+            {
+               // [self mergeOrderByShop];
             }
             [_tableView reloadData];
             [_tableView.pullToRefreshView stopAnimating];
@@ -120,7 +122,6 @@
 
 - (NSInteger) numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 2;
     if (self.showType == ShowByShop)
     {
         return _orderDataByShop.count;
@@ -133,7 +134,6 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return  3;
     if (self.showType == ShowByShop)
     {
         BXOrder* order = [_orderDataByShop objectAtIndex:section];
@@ -148,7 +148,6 @@
 
 - (NSString*)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    return @"aaa";
     if (self.showType == ShowByShop)
     {
         BXOrder* order = [_orderDataByShop objectAtIndex:section];
@@ -167,43 +166,68 @@
     static NSString *foodCellId = @"BXOrderFoodCell";
     static NSString *cmdCellId = @"BXOrderCmdCell";
     
-    UITableViewCell *cell = [[UITableViewCell alloc] init];
-//    BXOrder* order;
-//    if (self.showType == ShowByShop)
-//    {
-//        order = [self.orderDataByShop objectAtIndex:indexPath.section-1];
-//    }
-//    else
-//    {
-//        order = [self.orderData objectAtIndex:indexPath.section-1];
-//    }
-//    
-//    UITableViewCell *cell = nil;
-//    
-//    if (indexPath.row == [order.foodItems count])
-//    {
-//        cell = [tableView dequeueReusableCellWithIdentifier:cmdCellId];
-//        if (!cell)
-//        {
-//            cell = [[[NSBundle mainBundle] loadNibNamed:cmdCellId owner:nil options:nil] lastObject];
-//        }
-//        BXOrderCmdCell* foodCell = (BXOrderCmdCell*)cell;
-//        foodCell.priceLabel.text = @"共30元";
-//        [foodCell.cmdButton setTitle:@"已拨打电话" forState:UIControlStateNormal];
-//    }
-//    else
-//    {
-//        cell = [tableView dequeueReusableCellWithIdentifier:foodCellId];
-//        if (!cell)
-//        {
-//            cell = [[[NSBundle mainBundle] loadNibNamed:foodCellId owner:nil options:nil] lastObject];
-//        }
-//        BXOrderFoodCell* foodCell = (BXOrderFoodCell*)cell;
-//        foodCell.foodLabel.text = @"红烧大排";
-//        foodCell.priceLabel.text = @"￥15.00";
-//        foodCell.amountLabel.text = @"x2";
-//    }
-//    
+    BXOrder* order;
+    if (self.showType == ShowByShop)
+    {
+        order = [self.orderDataByShop objectAtIndex:indexPath.section];
+    }
+    else
+    {
+        order = [self.orderData objectAtIndex:indexPath.section];
+    }
+    
+    UITableViewCell *cell = nil;
+    
+    if (indexPath.row == [order.foodItems count])
+    {
+        cell = [tableView dequeueReusableCellWithIdentifier:cmdCellId];
+        if (!cell)
+        {
+            cell = [[[NSBundle mainBundle] loadNibNamed:cmdCellId owner:nil options:nil] lastObject];
+        }
+        BXOrderCmdCell* foodCell = (BXOrderCmdCell*)cell;
+        
+        float totalPrice = 0;
+        for(int i = 0;i<[order.foodItems count];i++)
+        {
+            NSNumber* amount = [[order.foodItems objectAtIndex:i] objectForKey:@"amount"];
+            BXFood* food = [[order.foodItems objectAtIndex:i] objectForKey:@"food"];
+            food = [BXFood fixAVOSObject:food];
+            totalPrice += [amount intValue]*food.price;
+        }
+        foodCell.priceLabel.text = [NSString stringWithFormat:@"共%.1f元",totalPrice];
+        
+        if (order.status == 0)
+        {
+            [foodCell.cmdButton setTitle:@"修改订单" forState:UIControlStateNormal];
+        }
+        else if (order.status == 1)
+        {
+            [foodCell.cmdButton setTitle:@"已预定" forState:UIControlStateNormal];
+        }
+        else if (order.status == 2)
+        {
+            [foodCell.cmdButton setTitle:@"已拨打电话" forState:UIControlStateNormal];
+        }
+    }
+    else
+    {
+        cell = [tableView dequeueReusableCellWithIdentifier:foodCellId];
+        if (!cell)
+        {
+            cell = [[[NSBundle mainBundle] loadNibNamed:foodCellId owner:self options:nil] lastObject];
+            
+        }
+        NSNumber* amount = [[order.foodItems objectAtIndex:indexPath.row] objectForKey:@"amount"];
+        BXFood* food = [[order.foodItems objectAtIndex:indexPath.row] objectForKey:@"food"];
+        food = [BXFood fixAVOSObject:food];
+        
+        BXOrderFoodCell* foodCell = (BXOrderFoodCell*)cell;
+        foodCell.foodLabel.text = food.name;
+        foodCell.priceLabel.text = [NSString stringWithFormat:@"￥%.1f",food.price];
+        foodCell.amountLabel.text = [NSString stringWithFormat:@"x%d",[amount intValue]];
+    }
+    
     return cell;
 }
 

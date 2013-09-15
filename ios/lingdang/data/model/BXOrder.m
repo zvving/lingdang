@@ -63,16 +63,18 @@
 - (NSString*)shopName
 {
     NSEnumerator *enumerator = [self.foodItems objectEnumerator];
-    BXFood* key = [[enumerator nextObject] objectForKey:@"food"];
-    key = [BXFood fixAVOSObject:key];
-    return key.shopName;
+    BXFood* food = [[enumerator nextObject] objectForKey:@"food"];
+    food = [BXFood fixAVOSObject:food];
+    return food.shopName;
 }
 
 - (BXShop*)shop
 {
     NSEnumerator *enumerator = [self.foodItems objectEnumerator];
-    BXFood* key = [enumerator nextObject];
-    return key.pToShop;
+    NSDictionary* foodItem = [enumerator nextObject];
+    BXFood* food = [foodItem objectForKey:@"food"];
+    food = [BXFood fixAVOSObject:food];
+    return food.pToShop;
 }
 
 -(BXOrder*) merge:(BXOrder*)order
