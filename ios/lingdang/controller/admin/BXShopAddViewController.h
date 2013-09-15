@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+@class BXShop;
+
 @interface BXShopAddViewController : UIViewController
+
+@property (nonatomic,assign) BXShop* curShop;
 
 @end

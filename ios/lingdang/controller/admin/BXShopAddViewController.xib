@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="4510" systemVersion="13A569" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="4510" systemVersion="12E3200" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
     <dependencies>
         <deployment defaultVersion="1536" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3742"/>
@@ -9,6 +9,7 @@
             <connections>
                 <outlet property="phoneTf" destination="lDr-7P-rFM" id="H2x-rE-YuL"/>
                 <outlet property="shipInfoTf" destination="k93-Xs-xl0" id="GSz-Fi-yrN"/>
+                <outlet property="shopCmdBtn" destination="3Bz-hD-H7X" id="i0T-pB-igr"/>
                 <outlet property="shopNameTf" destination="c9X-pH-kJ3" id="syr-6d-96A"/>
                 <outlet property="view" destination="1" id="3"/>
             </connections>
@@ -71,7 +72,7 @@
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                     <connections>
-                        <action selector="addButtonClicked:" destination="-1" eventType="touchUpInside" id="rHH-7T-5Ka"/>
+                        <action selector="cmdButtonClicked:" destination="-1" eventType="touchUpInside" id="I1n-nV-cyf"/>
                     </connections>
                 </button>
             </subviews>

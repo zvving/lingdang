@@ -69,13 +69,29 @@ BCSINGLETON_IN_M(BXShopProvider)
 {
     [shop deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         if (error) {
-            [SVProgressHUD showErrorWithStatus:@"删除店铺失败"];
             if (failBlock) {
                 failBlock(error);
             }
         } else {
             if (sucBlock) {
                 sucBlock();
+            }
+        }
+    }];
+}
+
+- (void)updateShop:(BXShop*)shop
+           success:(void(^)(BXShop* shop))sucBlock
+              fail:(void(^)(NSError* err))failBlock
+{
+    [shop saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        if (error) {
+            if (failBlock) {
+                failBlock(error);
+            }
+        } else {
+            if (sucBlock) {
+                sucBlock(shop);
             }
         }
     }];

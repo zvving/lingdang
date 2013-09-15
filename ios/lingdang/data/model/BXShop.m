@@ -39,4 +39,13 @@
     return [self objectForKey:@"shipInfo"];
 }
 
+- (void)setPhone:(NSString *)phone
+{
+    [self setObject:phone forKey:@"phone"];
+}
+
+- (NSString *)phone
+{
+    return [self objectForKey:@"phone"];
+}
 @end

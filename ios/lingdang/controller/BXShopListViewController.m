@@ -41,6 +41,8 @@
     self.title = _isAdminMode ? @"管理店铺" : @"浏览店铺";
     _addShopButton.hidden = !_isAdminMode;
     
+    self.shopTable.allowsSelectionDuringEditing = YES;
+    
     self.orderListVC = [[BXOrderListViewController alloc] init];
     self.loginVC = [[BXLoginViewController alloc] init];
     self.adminNav = [[UINavigationController alloc] initWithRootViewController:_orderListVC];
@@ -170,14 +172,22 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if (self.shopTable.editing)
+    {
+        BXShopAddViewController *shopEdit = [[BXShopAddViewController alloc] init];
+        shopEdit.curShop = _shops[indexPath.row];
+        [self.navigationController pushViewController:shopEdit animated:YES];
+    }
+    else
+    {
     
-    BXFoodListViewController *foodListVC = [[BXFoodListViewController alloc]init];
-    foodListVC.shop = _shops[indexPath.row];
-    foodListVC.isAdminMode = _isAdminMode;
+        BXFoodListViewController *foodListVC = [[BXFoodListViewController alloc]init];
+        foodListVC.shop = _shops[indexPath.row];
+        foodListVC.isAdminMode = _isAdminMode;
+        [self.navigationController pushViewController:foodListVC animated:YES];
+    }
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    
-    [self.navigationController pushViewController:foodListVC animated:YES];
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
