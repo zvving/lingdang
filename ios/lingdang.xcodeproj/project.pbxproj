@@ -39,7 +39,8 @@
 		36F3CB0B17E4B34B0064237A /* BXDateSelectView.m in Sources */ = {isa = PBXBuildFile; fileRef = 36F3CB0A17E4B34B0064237A /* BXDateSelectView.m */; };
 		36F3CB1017E554770064237A /* BXOrderFoodCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 36F3CB0F17E554770064237A /* BXOrderFoodCell.m */; };
 		36F3CB1417E554D10064237A /* BXOrderCmdCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 36F3CB1317E554D10064237A /* BXOrderCmdCell.m */; };
-		36F3CB1617E554F30064237A /* BXOrderFooCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 36F3CB1517E554F30064237A /* BXOrderFooCell.xib */; };
+		36F3CB1617E554F30064237A /* BXOrderFoodCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 36F3CB1517E554F30064237A /* BXOrderFoodCell.xib */; };
+		36F3CB1817E556490064237A /* BXOrderCmdCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 36F3CB1717E556490064237A /* BXOrderCmdCell.xib */; };
 		44C2C0FD30594384975C71D8 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E20000085954C69A6BBD3EE /* libPods.a */; };
 		A991CA7717E496CE00068FDD /* balana.png in Resources */ = {isa = PBXBuildFile; fileRef = A991CA7617E496CE00068FDD /* balana.png */; };
 		A9FE829117E48349008C1640 /* BXShopListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A9FE828F17E48349008C1640 /* BXShopListViewController.m */; };
@@ -102,7 +103,8 @@
 		36F3CB0F17E554770064237A /* BXOrderFoodCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BXOrderFoodCell.m; path = lingdang/controller/cell/BXOrderFoodCell.m; sourceTree = SOURCE_ROOT; };
 		36F3CB1217E554D10064237A /* BXOrderCmdCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BXOrderCmdCell.h; path = cell/BXOrderCmdCell.h; sourceTree = "<group>"; };
 		36F3CB1317E554D10064237A /* BXOrderCmdCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BXOrderCmdCell.m; path = cell/BXOrderCmdCell.m; sourceTree = "<group>"; };
-		36F3CB1517E554F30064237A /* BXOrderFooCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BXOrderFooCell.xib; sourceTree = "<group>"; };
+		36F3CB1517E554F30064237A /* BXOrderFoodCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BXOrderFoodCell.xib; sourceTree = "<group>"; };
+		36F3CB1717E556490064237A /* BXOrderCmdCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BXOrderCmdCell.xib; sourceTree = "<group>"; };
 		9E20000085954C69A6BBD3EE /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		A991CA7617E496CE00068FDD /* balana.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = balana.png; sourceTree = "<group>"; };
 		A9FE828E17E48349008C1640 /* BXShopListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BXShopListViewController.h; sourceTree = "<group>"; };
@@ -274,9 +276,10 @@
 			children = (
 				36F3CB0E17E554770064237A /* BXOrderFoodCell.h */,
 				36F3CB0F17E554770064237A /* BXOrderFoodCell.m */,
-				36F3CB1517E554F30064237A /* BXOrderFooCell.xib */,
+				36F3CB1517E554F30064237A /* BXOrderFoodCell.xib */,
 				36F3CB1217E554D10064237A /* BXOrderCmdCell.h */,
 				36F3CB1317E554D10064237A /* BXOrderCmdCell.m */,
+				36F3CB1717E556490064237A /* BXOrderCmdCell.xib */,
 			);
 			name = cell;
 			sourceTree = "<group>";
@@ -342,10 +345,11 @@
 			files = (
 				A9FE829217E48349008C1640 /* BXShopListViewController.xib in Resources */,
 				0D1B162217BF54140019AD6F /* Default@2x.png in Resources */,
+				36F3CB1817E556490064237A /* BXOrderCmdCell.xib in Resources */,
 				0D1B161817BF54140019AD6F /* BXLoginViewController.xib in Resources */,
 				0D1B162017BF54140019AD6F /* Default-568h@2x.png in Resources */,
 				A991CA7717E496CE00068FDD /* balana.png in Resources */,
-				36F3CB1617E554F30064237A /* BXOrderFooCell.xib in Resources */,
+				36F3CB1617E554F30064237A /* BXOrderFoodCell.xib in Resources */,
 				0D1B162417BF54140019AD6F /* BXFoodListViewController.xib in Resources */,
 				0D1B161317BF54140019AD6F /* BXFoodInfoViewController.xib in Resources */,
 				0D1B161517BF54140019AD6F /* BXOrderListViewController.xib in Resources */,

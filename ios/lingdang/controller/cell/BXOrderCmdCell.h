@@ -10,4 +10,7 @@
 
 @interface BXOrderCmdCell : UITableViewCell
 
+@property (weak, nonatomic) IBOutlet UILabel *  priceLabel;
+@property (weak, nonatomic) IBOutlet UIButton *  cmdButton;
+
 @end

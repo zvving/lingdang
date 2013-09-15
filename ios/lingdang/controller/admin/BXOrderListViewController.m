@@ -11,6 +11,8 @@
 
 #import "BXOrderProvider.h"
 #import "BXDateSelectView.h"
+#import "BXOrderFoodCell.h"
+#import "BXOrderCmdCell.h"
 
 @interface BXOrderListViewController () <UITableViewDataSource, UITableViewDelegate>
 
@@ -118,6 +120,7 @@
 
 - (NSInteger) numberOfSectionsInTableView:(UITableView *)tableView
 {
+    return 2;
     if (self.showType == ShowByShop)
     {
         return _orderDataByShop.count;
@@ -130,6 +133,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
+    return  3;
     if (self.showType == ShowByShop)
     {
         BXOrder* order = [_orderDataByShop objectAtIndex:section];
@@ -144,6 +148,7 @@
 
 - (NSString*)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
+    return @"aaa";
     if (self.showType == ShowByShop)
     {
         BXOrder* order = [_orderDataByShop objectAtIndex:section];
@@ -159,22 +164,23 @@
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *cellId = @"orderCellId";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellId];
+    static NSString *foodCellId = @"BXOrderFoodCell";
+    static NSString *cmdCellId = @"BXOrderCmdCell";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cmdCellId];
     if (!cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:cellId];
+        cell = [[[NSBundle mainBundle] loadNibNamed:cmdCellId owner:nil options:nil] lastObject];
     }
     
-    BXOrder *order = _orderData[indexPath.row];
-    NSArray *statusArr = @[@"等", @"已订", @"已达", @"已存"];
-    
-;
-    
-    cell.textLabel.text = [NSString stringWithFormat:@"%@ 想吃 %@", [order objectForKey:@"userName"], [order objectForKey:@"foodName"]];
-    cell.detailTextLabel.text =
-    [NSString stringWithFormat:@"%@ %@",
-     [self.formatter stringFromDate:order.createdAt],
-     statusArr[[[order objectForKey:@"status"] intValue]]];
+//    BXOrder *order = _orderData[indexPath.row];
+//    NSArray *statusArr = @[@"等", @"已订", @"已达", @"已存"];
+//    
+//;
+//    
+//    cell.textLabel.text = [NSString stringWithFormat:@"%@ 想吃 %@", [order objectForKey:@"userName"], [order objectForKey:@"foodName"]];
+//    cell.detailTextLabel.text =
+//    [NSString stringWithFormat:@"%@ %@",
+//     [self.formatter stringFromDate:order.createdAt],
+//     statusArr[[[order objectForKey:@"status"] intValue]]];
     
     return cell;
 }

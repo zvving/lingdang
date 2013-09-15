@@ -10,4 +10,8 @@
 
 @interface BXOrderFoodCell : UITableViewCell
 
+@property (weak, nonatomic) IBOutlet UILabel *  foodLabel;
+@property (weak, nonatomic) IBOutlet UILabel *  priceLabel;
+@property (weak, nonatomic) IBOutlet UILabel *  amountLabel;
+
 @end
