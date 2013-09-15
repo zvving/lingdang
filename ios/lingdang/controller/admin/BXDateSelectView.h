@@ -17,9 +17,9 @@
 
 @end
 
-@interface BXDateSelectView : UIView
+@interface BXDateSelectView : UIView<UIPickerViewDataSource,UIPickerViewDelegate>
 {
-    UIDatePicker* _datePicker;
+    UIPickerView* _datePicker;
 }
 
 @property (nonatomic,assign) id<BXDateSelectViewDelegate> delegate;

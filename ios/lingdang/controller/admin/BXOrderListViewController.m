@@ -69,12 +69,21 @@
     {
         if (!self.dateSelectView)
         {
-            self.dateSelectView = [[BXDateSelectView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height-206, 320, 206)];
+            self.dateSelectView = [[BXDateSelectView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height, 320, 206)];
             self.dateSelectView.delegate = self;
             [self.view addSubview:self.dateSelectView];
         }
         self.dateSelectView.hidden = NO;
         [self.dateSelectView resetDate:self.selectDate];
+        self.tableView.userInteractionEnabled = NO;
+        self.showTypeSeg.userInteractionEnabled = NO;
+        
+        [UIView beginAnimations:nil context:nil];
+        [UIView animateWithDuration:1.0f delay:0.0f options:UIViewAnimationOptionCurveEaseInOut animations:^{
+            self.dateSelectView.frame = CGRectMake(0, self.view.frame.size.height-206, 320, 206);
+        } completion:nil];
+        [UIView commitAnimations];
+        
     }];
     
     [_tableView addPullToRefreshWithActionHandler:^{
@@ -220,10 +229,18 @@
 - (void) cancelSelectInView:(BXDateSelectView*)selectView
 {
     self.dateSelectView.hidden = YES;
+    self.dateSelectView.frame = CGRectMake(0, self.view.frame.size.height, 320, 206);
+    self.tableView.userInteractionEnabled = YES;
+    self.showTypeSeg.userInteractionEnabled = YES;
 }
+
 - (void) selectInView:(BXDateSelectView*)selectView didSelectWithDate:(NSDate*)date
 {
     self.dateSelectView.hidden = YES;
+    
+    self.dateSelectView.frame = CGRectMake(0, self.view.frame.size.height, 320, 206);
+    self.tableView.userInteractionEnabled = YES;
+    self.showTypeSeg.userInteractionEnabled = YES;
     self.selectDate = date;
     [self updateTitle];
     
