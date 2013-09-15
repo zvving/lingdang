@@ -51,14 +51,42 @@ UIPickerViewDataSource,UIPickerViewDelegate, UIActionSheetDelegate>
     self.title = [NSString stringWithFormat:@"%@%@的菜", _isAdminMode ? @"管理" : @"", _shop.name];
     _addFoodButton.hidden = !_isAdminMode;
     
+    self.tableView.allowsSelectionDuringEditing = YES;
+    
     __weak BXFoodListViewController *weakself = self;
 
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"购物车"
+    if (_isAdminMode)
+    {
+        UIBarButtonItem* rightItem =
+        [[UIBarButtonItem alloc] initWithTitle:@"编辑"
+                                         style:UIBarButtonItemStyleBordered
+                                       handler:^(id sender)
+        {
+             if (self.tableView.editing)
+             {
+                 self.tableView.editing = NO;
+                 ((UIBarButtonItem*)sender).title = @"编辑";;
+             }
+             else
+             {
+                 self.tableView.editing = YES;
+                 ((UIBarButtonItem*)sender).title = @"完成";;
+             }
+             
+        }];
+        
+        rightItem.possibleTitles = [NSSet setWithObjects:@"编辑", @"完成", nil];
+        self.navigationItem.rightBarButtonItem = rightItem;
+    }
+    else
+    {
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"购物车"
                                                                               style:UIBarButtonItemStyleBordered
                                                                             handler:^(id sender)
-    {
-        [self presentShopCar];
-    }];
+        {
+            [self presentShopCar];
+        }];
+    }
     
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回"
                                                                              style:UIBarButtonItemStyleBordered
@@ -121,8 +149,6 @@ UIPickerViewDataSource,UIPickerViewDelegate, UIActionSheetDelegate>
         
         [weakself.shopCar.foodItems addObject:foodItem];
         
-        
-        
         [SVProgressHUD showSuccessWithStatus:@"已添加到购物车"];
     }];
     
@@ -175,31 +201,56 @@ UIPickerViewDataSource,UIPickerViewDelegate, UIActionSheetDelegate>
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (previouse !=nil && previouse.row != indexPath.row) {
-        UITableViewCell *previousCell = [tableView cellForRowAtIndexPath:previouse];
-        previousCell.accessoryType = UITableViewCellAccessoryNone;
+    if (self.tableView.editing)
+    {
+        BXFoodInfoViewController *foodEdit = [[BXFoodInfoViewController alloc] init];
+        foodEdit.food = _shopFoods[indexPath.row];
+        [self.navigationController pushViewController:foodEdit animated:YES];
     }
-    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-    cell.accessoryType = UITableViewCellAccessoryCheckmark;
-    previouse = indexPath;
+    else
+    {
+        if (previouse !=nil && previouse.row != indexPath.row) {
+            UITableViewCell *previousCell = [tableView cellForRowAtIndexPath:previouse];
+            previousCell.accessoryType = UITableViewCellAccessoryNone;
+        }
+        UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+        cell.accessoryType = UITableViewCellAccessoryCheckmark;
+        previouse = indexPath;
     
-    _food = _shopFoods[indexPath.row];
+        _food = _shopFoods[indexPath.row];
     
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+        [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    // animate the present
-    CGRect bounds = self.view.bounds;
-    CGRect originRect = _containerView.frame;
-    _containerView.frame = CGRectMake(0, bounds.size.height, CGRectGetWidth(originRect), CGRectGetHeight(originRect));
-    [self.view addSubview:_containerView];
-    self.tableView.userInteractionEnabled = NO;
-    [UIView beginAnimations:@"pickerUp" context:nil];
-    [UIView animateWithDuration:1.0f delay:0.0f options:UIViewAnimationOptionCurveEaseInOut animations:^{
-        CGRect dstRect = CGRectMake(0, bounds.size.height - originRect.size
+        // animate the present
+        CGRect bounds = self.view.bounds;
+        CGRect originRect = _containerView.frame;
+        _containerView.frame = CGRectMake(0, bounds.size.height, CGRectGetWidth(originRect), CGRectGetHeight(originRect));
+        [self.view addSubview:_containerView];
+        self.tableView.userInteractionEnabled = NO;
+        [UIView beginAnimations:@"pickerUp" context:nil];
+        [UIView animateWithDuration:1.0f delay:0.0f options:UIViewAnimationOptionCurveEaseInOut animations:^{
+            CGRect dstRect = CGRectMake(0, bounds.size.height - originRect.size
                                     .height, CGRectGetWidth(originRect), CGRectGetHeight(originRect));
-        _containerView.frame = dstRect;
-    } completion:nil];
-    [UIView commitAnimations];
+            _containerView.frame = dstRect;
+        } completion:nil];
+        [UIView commitAnimations];
+    }
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (editingStyle == UITableViewCellEditingStyleDelete)
+    {
+        [SVProgressHUD showWithStatus:@"删除菜品中" maskType:SVProgressHUDMaskTypeGradient];
+        
+        BXFood* food = _shopFoods[indexPath.row];
+        [[BXFoodProvider sharedInstance] deleteFood:food onSuccess:^{
+            [SVProgressHUD showErrorWithStatus:@"删除菜品成功"];
+            [self.tableView triggerPullToRefresh];
+        } onFail:^(NSError *err) {
+            [SVProgressHUD showErrorWithStatus:@"删除菜品失败"];
+        }];
+    }
 }
 
 #pragma mark - picker view delegate & datasouce methods
