@@ -60,7 +60,7 @@
 {
     BXOrderShopGroup *group = [[BXOrderShopGroup alloc] init];
     [orders enumerateObjectsUsingBlock:^(BXOrder *o, NSUInteger idx, BOOL *stop) {
-        if (o.shop == nil) {
+        if (o.shop == nil || [o.shop isKindOfClass:[NSNull class]]) {
             return;
         }
         if ([group.keyMap.allKeys containsObject:o.shop.objectId]) {
