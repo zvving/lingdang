@@ -318,6 +318,8 @@
         self.orderDataByShop = [NSMutableArray array];
     }
     
+    [self.orderDataByShop removeAllObjects];
+    
     for (BXOrder* order in self.orderData)
     {
         NSString* shopName = order.shopName;
