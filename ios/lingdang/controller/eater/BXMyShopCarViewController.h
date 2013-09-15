@@ -12,13 +12,10 @@
 
 @interface BXMyShopCarViewController : UIViewController
 
-@property (strong, nonatomic) NSMutableArray    * foodItems;
-
 /**
- *  食客只能在一个店铺下单
+ *  [{'food':{bxfood}, 'amount': number},...]
  */
-@property (strong, nonatomic) BXShop            * shop;
-
+@property (strong, nonatomic) NSMutableArray    * foodItems;
 
 BCSINGLETON_IN_H(BXMyShopCarViewController);
 

@@ -47,6 +47,8 @@
 		A991CA7717E496CE00068FDD /* balana.png in Resources */ = {isa = PBXBuildFile; fileRef = A991CA7617E496CE00068FDD /* balana.png */; };
 		A991CA7B17E5512000068FDD /* BXMyShopCarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A991CA7917E5512000068FDD /* BXMyShopCarViewController.m */; };
 		A991CA7C17E5512000068FDD /* BXMyShopCarViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A991CA7A17E5512000068FDD /* BXMyShopCarViewController.xib */; };
+		A9B2981717E5D466000D9862 /* BXMyOrderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A9B2981617E5D466000D9862 /* BXMyOrderCell.m */; };
+		A9B2981917E5D4CA000D9862 /* BXMyOrderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A9B2981817E5D4CA000D9862 /* BXMyOrderCell.xib */; };
 		A9FE829117E48349008C1640 /* BXShopListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A9FE828F17E48349008C1640 /* BXShopListViewController.m */; };
 		A9FE829217E48349008C1640 /* BXShopListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A9FE829017E48349008C1640 /* BXShopListViewController.xib */; };
 /* End PBXBuildFile section */
@@ -117,6 +119,9 @@
 		A991CA7817E5512000068FDD /* BXMyShopCarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BXMyShopCarViewController.h; sourceTree = "<group>"; };
 		A991CA7917E5512000068FDD /* BXMyShopCarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BXMyShopCarViewController.m; sourceTree = "<group>"; };
 		A991CA7A17E5512000068FDD /* BXMyShopCarViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BXMyShopCarViewController.xib; sourceTree = "<group>"; };
+		A9B2981517E5D466000D9862 /* BXMyOrderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BXMyOrderCell.h; path = cell/BXMyOrderCell.h; sourceTree = "<group>"; };
+		A9B2981617E5D466000D9862 /* BXMyOrderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BXMyOrderCell.m; path = cell/BXMyOrderCell.m; sourceTree = "<group>"; };
+		A9B2981817E5D4CA000D9862 /* BXMyOrderCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = BXMyOrderCell.xib; path = cell/BXMyOrderCell.xib; sourceTree = "<group>"; };
 		A9FE828E17E48349008C1640 /* BXShopListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BXShopListViewController.h; sourceTree = "<group>"; };
 		A9FE828F17E48349008C1640 /* BXShopListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BXShopListViewController.m; sourceTree = "<group>"; };
 		A9FE829017E48349008C1640 /* BXShopListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BXShopListViewController.xib; sourceTree = "<group>"; };
@@ -296,6 +301,9 @@
 				36F3CB1217E554D10064237A /* BXOrderCmdCell.h */,
 				36F3CB1317E554D10064237A /* BXOrderCmdCell.m */,
 				36F3CB1717E556490064237A /* BXOrderCmdCell.xib */,
+				A9B2981517E5D466000D9862 /* BXMyOrderCell.h */,
+				A9B2981617E5D466000D9862 /* BXMyOrderCell.m */,
+				A9B2981817E5D4CA000D9862 /* BXMyOrderCell.xib */,
 			);
 			name = cell;
 			sourceTree = "<group>";
@@ -361,6 +369,7 @@
 			files = (
 				A9FE829217E48349008C1640 /* BXShopListViewController.xib in Resources */,
 				0D1B162217BF54140019AD6F /* Default@2x.png in Resources */,
+				A9B2981917E5D4CA000D9862 /* BXMyOrderCell.xib in Resources */,
 				36F3CB1817E556490064237A /* BXOrderCmdCell.xib in Resources */,
 				0D1B161817BF54140019AD6F /* BXLoginViewController.xib in Resources */,
 				0D1B162017BF54140019AD6F /* Default-568h@2x.png in Resources */,
@@ -431,6 +440,7 @@
 				36F3CB1417E554D10064237A /* BXOrderCmdCell.m in Sources */,
 				0D1B161917BF54140019AD6F /* BXFoodProvider.m in Sources */,
 				0D1B161617BF54140019AD6F /* BXFoodListViewController.m in Sources */,
+				A9B2981717E5D466000D9862 /* BXMyOrderCell.m in Sources */,
 				0D1B161A17BF54140019AD6F /* BXOrderProvider.m in Sources */,
 				0D1B161F17BF54140019AD6F /* BXShop.m in Sources */,
 				0D1B161D17BF54140019AD6F /* BXFood.m in Sources */,
