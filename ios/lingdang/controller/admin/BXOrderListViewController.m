@@ -90,7 +90,8 @@
     [_tableView addPullToRefreshWithActionHandler:^{
         
         void (^sucBlock)(NSArray *orders) = ^(NSArray *orders){
-            weakSelf.orderData = orders;
+            
+            weakSelf.orderData = [BXOrder fixAVOSArray:orders];
             if (self.showType == ShowByShop) {
                 [self mergeOrderByShop];
             }
@@ -234,7 +235,7 @@
      __block BXOrderListViewController *weakSelf = self;
     
     void (^sucBlock)(NSArray *orders) = ^(NSArray *orders){
-        weakSelf.orderData = orders;
+        weakSelf.orderData = [BXOrder fixAVOSArray:orders];
         if (self.showType == ShowByShop) {
             [self mergeOrderByShop];
         }
@@ -309,7 +310,7 @@
         }
         if (!found)
         {
-            [self.orderDataByShop addObject:[order copy]];
+            [self.orderDataByShop addObject:order];
         }
     }
     
