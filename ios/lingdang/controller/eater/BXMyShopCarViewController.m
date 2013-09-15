@@ -7,11 +7,14 @@
 //
 
 #import "BXMyShopCarViewController.h"
+#import "BXOrder.h"
 #import "BXFood.h"
 
 @interface BXMyShopCarViewController () <UITableViewDataSource, UITableViewDelegate>
 
-@property (nonatomic, weak) IBOutlet UITableView *tableview;
+@property (nonatomic, weak) IBOutlet UITableView        * tableview;
+
+@property (nonatomic, strong) IBOutlet UIView           * footerView;
 
 @end
 
@@ -26,11 +29,22 @@ BCSINGLETON_IN_M(BXMyShopCarViewController);
         self.foodItems = [[NSMutableArray alloc] init];
         self.title = @"购物车";
         
+        __weak BXMyShopCarViewController *weakself = self;
         self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"关闭" style:UIBarButtonItemStyleBordered handler:^(id sender) {
-            [self dismissViewControllerAnimated:YES completion:nil];
+            [weakself dismissViewControllerAnimated:YES completion:nil];
+        }];
+        
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"清空" style:UIBarButtonItemStyleDone handler:^(id sender) {
+            [weakself.foodItems removeAllObjects];
+            [weakself.tableview reloadData];
         }];
     }
     return self;
+}
+
+- (void)viewDidLoad
+{
+    self.tableview.tableFooterView = self.footerView;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -43,6 +57,7 @@ BCSINGLETON_IN_M(BXMyShopCarViewController);
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
+    self.tableview.tableFooterView.hidden = _foodItems.count > 0? NO : YES;
     return _foodItems.count > 0 ? 1 : 0;
 }
 
@@ -71,5 +86,24 @@ BCSINGLETON_IN_M(BXMyShopCarViewController);
     return cell;
 }
 
+- (IBAction)createOrder:(id)sender
+{
+    BXOrder *order = [BXOrder object];
+    order.pToUser = [AVUser currentUser];
+    order.foodItems = _foodItems;
+    order.status = 0;
+    order.isPaid = NO;
+    
+    [order saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        NSString *msg = nil;
+        if (error) {
+            msg = @"下单失败，给程畅些反馈";
+            [SVProgressHUD showErrorWithStatus:msg];
+        }else {
+            msg = @"下单成功\n请等候通知";
+            [SVProgressHUD showSuccessWithStatus:msg];
+        }
+    }];
+}
 
 @end

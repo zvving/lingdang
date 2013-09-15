@@ -72,7 +72,24 @@ static NSIndexPath *previouse = nil;
     item.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"确定吃这" style:UIBarButtonItemStyleDone handler:^(id sender) {
         removeSelf();
         NSInteger amount = [_amountPicker selectedRowInComponent:0] + 1;
-        NSDictionary *foodItem = @{@"food": _food, @"amount": @(amount)};
+        
+        // 合并相同的菜单
+        BOOL hasFound = NO;
+        NSDictionary *foundedFoodItem = nil;
+        for (NSDictionary *foodItem in weakself.shopCar.foodItems) {
+            BXFood *food = [foodItem objectForKey:@"food"];
+            if ([food.objectId isEqualToString: _food.objectId]) {
+                hasFound = YES;
+                foundedFoodItem = foodItem;
+                break;
+            }
+        }
+        if (hasFound) {
+            [weakself.shopCar.foodItems removeObject:foundedFoodItem];
+            amount += [foundedFoodItem[@"amount"] integerValue];
+        }
+        NSDictionary *foodItem = @{@"food": _food, @"amount" : @(amount)};
+        
         [weakself.shopCar.foodItems addObject:foodItem];
         
         UITableViewCell *cell = [weakself.tableView cellForRowAtIndexPath:previouse];

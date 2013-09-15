@@ -50,12 +50,12 @@
     return [[self objectForKey:@"isPaid"] boolValue];
 }
 
-- (void)setFoodItems:(NSDictionary *)foodItems
+- (void)setFoodItems:(NSArray *)foodItems
 {
     [self setObject:foodItems forKey:@"foodItems"];
 }
 
-- (NSDictionary *)foodItems
+- (NSArray *)foodItems
 {
     return [self objectForKey:@"foodItems"];
 }
@@ -76,19 +76,19 @@
 
 -(BXOrder*) merge:(BXOrder*)order
 {
-    [order.foodItems enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop)
-    {
-        if (![self.foodItems objectForKey:key])
-        {
-            [self.foodItems setValue:obj forKey:key];
-        }
-        else
-        {
-            int oldAmount = [[self.foodItems objectForKey:key] integerValue];
-            int newAmount = oldAmount + [obj integerValue];
-            [self.foodItems setValue:[NSNumber numberWithInt:newAmount] forKey:key];
-        }
-    }];
+//    [order.foodItems enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop)
+//    {
+//        if (![self.foodItems objectForKey:key])
+//        {
+//            [self.foodItems setValue:obj forKey:key];
+//        }
+//        else
+//        {
+//            int oldAmount = [[self.foodItems objectForKey:key] integerValue];
+//            int newAmount = oldAmount + [obj integerValue];
+//            [self.foodItems setValue:[NSNumber numberWithInt:newAmount] forKey:key];
+//        }
+//    }];
     
     return self;
 }
