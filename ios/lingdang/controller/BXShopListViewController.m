@@ -64,7 +64,7 @@
             });
             
         } fail:^(NSError *err) {
-            [_shopTable.pullToRefreshView stopAnimating];
+            [weakself.shopTable.pullToRefreshView stopAnimating];
         }];
     }];
     
@@ -122,7 +122,8 @@
                                        handler:^(id sender)
          {
              BXMyOrderViewController *myOrdersVC = [[BXMyOrderViewController alloc] init];
-             [weakSelf.navigationController pushViewController:myOrdersVC animated:YES];
+             UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:myOrdersVC];
+             [weakSelf presentViewController:nav animated:YES completion:nil];
          }];
         
         if ([AVUser currentUser] == nil) {

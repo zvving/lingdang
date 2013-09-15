@@ -90,13 +90,18 @@
     return [self objectForKey:@"foodAmountArr"];
 }
 
+- (void)setShop:(BXShop *)shop
+{
+    [self setObject:shop forKey:@"shop"];
+}
+
 - (BXShop*)shop
 {
-    NSEnumerator *enumerator = [self.foodItems objectEnumerator];
-    NSDictionary* foodItem = [enumerator nextObject];
-    BXFood* food = [foodItem objectForKey:@"food"];
-    food = [BXFood fixAVOSObject:food];
-    return food.pToShop;
+    id obj = [self objectForKey:@"shop"];
+    if ([obj isKindOfClass:[AVObject class]]) {
+        return [BXShop fixAVOSObject:obj];
+    }
+    return obj;
 }
 
 -(BXOrder*)merge:(BXOrder*)order
