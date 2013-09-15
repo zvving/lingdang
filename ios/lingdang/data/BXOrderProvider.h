@@ -23,6 +23,10 @@ BCSINGLETON_IN_H(BXOrderProvider)
 - (void)allOrders:(void(^)(NSArray* orders))sucBlock
              fail:(void(^)(NSError* err))failBlock;
 
+- (void)allOrdersWithDate:(NSDate*)date
+                  success:(void(^)(NSArray* orders))sucBlock
+                     fail:(void(^)(NSError* err))failBlock;
+
 - (void)myOrders:(void(^)(NSArray* orders))sucBlock
              fail:(void(^)(NSError* err))failBlock;
 

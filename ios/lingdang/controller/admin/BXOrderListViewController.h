@@ -19,4 +19,6 @@ typedef enum
 
 @property (nonatomic, assign) eShowType     showType;
 
+- (IBAction)switchViewType:(id)sender;
+
 @end

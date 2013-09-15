@@ -23,10 +23,14 @@
         toolbar.items = [NSArray arrayWithObjects:cancelButton,space,okButton,nil];
         [self addSubview:toolbar];
         
-        _datePicker = [[UIDatePicker alloc] initWithFrame:CGRectMake(0, 44, 320, self.frame.size.height-44)];
-        _datePicker.maximumDate = [NSDate date];
-        _datePicker.minimumDate = [NSDate dateWithTimeInterval:3600*24*10 sinceDate:[NSDate date]];
-        _datePicker.datePickerMode = UIDatePickerModeDate;
+        _datePicker = [[UIPickerView alloc] initWithFrame:CGRectMake(0, 44, 320, self.frame.size.height-44)];
+        _datePicker.showsSelectionIndicator = YES;
+        _datePicker.dataSource = self;
+        _datePicker.delegate = self;
+//        _datePicker.maximumDate = [NSDate date];
+//        _datePicker.minimumDate = [NSDate dateWithTimeInterval:3600*24*10 sinceDate:[NSDate date]];
+//        _datePicker.datePickerMode = UIDatePickerModeDate;
+        
         
         
         [self addSubview:_datePicker];
@@ -50,11 +54,39 @@
 
 -(void)ok:(id)sender
 {
-    [self.delegate selectInView:self didSelectWithDate:_datePicker.date];
+    NSInteger row = [_datePicker selectedRowInComponent:0];
+    NSDate* date = [NSDate dateWithTimeInterval:-3600*24*row sinceDate:[NSDate date]];
+    [self.delegate selectInView:self didSelectWithDate:date];
 }
 
 -(void)resetDate:(NSDate*)date
 {
-    [_datePicker setDate:date];
+    //[_datePicker setDate:date];
+}
+
+#pragma mark - delegate
+- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
+{
+    return 1;
+}
+
+- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
+{
+    return 30;
+}
+
+- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
+{
+    NSString* dateStr = @"今天";
+    if (row>0)
+    {
+        NSDate* date = [NSDate dateWithTimeInterval:-3600*24*row sinceDate:[NSDate date]];
+        NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+        NSDateComponents *comps =  [calendar components:NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit fromDate:date];
+        int month = [comps month];
+        int day = [comps day];
+        dateStr = [NSString stringWithFormat:@"%d月%d日", month,day];
+    }
+    return dateStr;
 }
 @end
