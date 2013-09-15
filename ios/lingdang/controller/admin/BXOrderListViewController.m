@@ -14,6 +14,7 @@
 #import "BXDateSelectView.h"
 #import "BXOrderFoodCell.h"
 #import "BXOrderCmdCell.h"
+#import "BXOrderShopGroup.h"
 
 @interface BXOrderListViewController () <UITableViewDataSource, UITableViewDelegate>
 
@@ -23,8 +24,8 @@
 
 @property (nonatomic,strong) NSDate* selectDate;
 
-@property (nonatomic, strong) NSArray *             orderData;
-@property (nonatomic, strong) NSMutableArray *      orderDataByShop;
+@property (nonatomic, strong) NSArray *                     orderData;
+@property (nonatomic, strong) BXOrderShopGroup *            orderShopGroup;
 
 
 @property (strong, nonatomic) BXDateSelectView* dateSelectView;
@@ -93,10 +94,7 @@
         void (^sucBlock)(NSArray *orders) = ^(NSArray *orders){
             
             weakSelf.orderData = [BXOrder fixAVOSArray:orders];
-            if (self.showType == ShowByShop)
-            {
-                [self mergeOrderByShop];
-            }
+            weakSelf.orderShopGroup = [BXOrderShopGroup groupByOrders:_orderData];
             [_tableView reloadData];
             [_tableView.pullToRefreshView stopAnimating];
         };
@@ -124,7 +122,7 @@
 {
     if (self.showType == ShowByShop)
     {
-        return _orderDataByShop.count;
+        return _orderShopGroup.itemArr.count;
     }
     else
     {
@@ -136,8 +134,8 @@
 {
     if (self.showType == ShowByShop)
     {
-        BXOrder* order = [_orderDataByShop objectAtIndex:section];
-        return order.foodNameArr.count + 1;
+        BXOrderShopGroupItem *item = _orderShopGroup.itemArr[section];
+        return item.foodNameArr.count + 1;
     }
     else
     {
@@ -150,8 +148,8 @@
 {
     if (self.showType == ShowByShop)
     {
-        BXOrder* order = [_orderDataByShop objectAtIndex:section];
-        NSString* title = [NSString stringWithFormat:@"%@ %@",order.shop.name, order.shop.name];
+        BXOrderShopGroupItem *item = _orderShopGroup.itemArr[section];
+        NSString* title = [NSString stringWithFormat:@"%@",item.shop.name];
         return title;
     }
     else
@@ -166,68 +164,107 @@
     static NSString *foodCellId = @"BXOrderFoodCell";
     static NSString *cmdCellId = @"BXOrderCmdCell";
     
-    BXOrder* order;
-    if (self.showType == ShowByShop)
-    {
-        order = [self.orderDataByShop objectAtIndex:indexPath.section];
-    }
-    else
-    {
-        order = [self.orderData objectAtIndex:indexPath.section];
-    }
     
     UITableViewCell *cell = nil;
     
-
-    
-    if (indexPath.row == [order.foodNameArr count])
+    if (self.showType == ShowByShop)
     {
-        cell = [tableView dequeueReusableCellWithIdentifier:cmdCellId];
-        if (!cell)
+        BXOrderShopGroupItem *item = _orderShopGroup.itemArr[indexPath.section];
+        if (indexPath.row == [item.foodNameArr count])
         {
-            cell = [[[NSBundle mainBundle] loadNibNamed:cmdCellId owner:nil options:nil] lastObject];
+            cell = [tableView dequeueReusableCellWithIdentifier:cmdCellId];
+            if (!cell)
+            {
+                cell = [[[NSBundle mainBundle] loadNibNamed:cmdCellId owner:nil options:nil] lastObject];
+            }
+            BXOrderCmdCell* foodCell = (BXOrderCmdCell*)cell;
+            
+            float totalPrice = 0;
+            for(int i = 0;i<[item.foodNameArr count];i++)
+            {
+                float price = [item.foodPriceArr[i] floatValue];
+                int amount = [item.foodAmountArr[i] intValue];
+                totalPrice +=  amount * price;
+            }
+            foodCell.priceLabel.text = [NSString stringWithFormat:@"共%.1f元",totalPrice];
+            
+            [foodCell.cmdButton setTitle:@"按店铺" forState:UIControlStateNormal];
         }
-        BXOrderCmdCell* foodCell = (BXOrderCmdCell*)cell;
-        
-        float totalPrice = 0;
-        for(int i = 0;i<[order.foodNameArr count];i++)
+        else
         {
-            float price = [order.foodPriceArr[i] floatValue];
-            int amount = [order.foodAmountArr[i] intValue];
-            totalPrice +=  amount * price;
-        }
-        foodCell.priceLabel.text = [NSString stringWithFormat:@"共%.1f元",totalPrice];
-        
-        if (order.status == 0)
-        {
-            [foodCell.cmdButton setTitle:@"修改订单" forState:UIControlStateNormal];
-        }
-        else if (order.status == 1)
-        {
-            [foodCell.cmdButton setTitle:@"已预定" forState:UIControlStateNormal];
-        }
-        else if (order.status == 2)
-        {
-            [foodCell.cmdButton setTitle:@"已拨打电话" forState:UIControlStateNormal];
+            cell = [tableView dequeueReusableCellWithIdentifier:foodCellId];
+            if (!cell)
+            {
+                cell = [[[NSBundle mainBundle] loadNibNamed:foodCellId owner:self options:nil] lastObject];
+                
+            }
+            
+            float price = [item.foodPriceArr[indexPath.row] floatValue];
+            int amount = [item.foodAmountArr[indexPath.row] intValue];
+            
+            BXOrderFoodCell* foodCell = (BXOrderFoodCell*)cell;
+            foodCell.foodLabel.text = item.foodNameArr[indexPath.row];
+            foodCell.priceLabel.text = [NSString stringWithFormat:@"￥%.1f", price];
+            foodCell.amountLabel.text = [NSString stringWithFormat:@"x%d", amount];
         }
     }
     else
     {
-        cell = [tableView dequeueReusableCellWithIdentifier:foodCellId];
-        if (!cell)
+        BXOrder* order = [self.orderData objectAtIndex:indexPath.section];
+        if (indexPath.row == [order.foodNameArr count])
         {
-            cell = [[[NSBundle mainBundle] loadNibNamed:foodCellId owner:self options:nil] lastObject];
+            cell = [tableView dequeueReusableCellWithIdentifier:cmdCellId];
+            if (!cell)
+            {
+                cell = [[[NSBundle mainBundle] loadNibNamed:cmdCellId owner:nil options:nil] lastObject];
+            }
+            BXOrderCmdCell* foodCell = (BXOrderCmdCell*)cell;
             
+            float totalPrice = 0;
+            for(int i = 0;i<[order.foodNameArr count];i++)
+            {
+                float price = [order.foodPriceArr[i] floatValue];
+                int amount = [order.foodAmountArr[i] intValue];
+                totalPrice +=  amount * price;
+            }
+            foodCell.priceLabel.text = [NSString stringWithFormat:@"共%.1f元",totalPrice];
+            
+            if (order.status == 0)
+            {
+                [foodCell.cmdButton setTitle:@"修改订单" forState:UIControlStateNormal];
+            }
+            else if (order.status == 1)
+            {
+                [foodCell.cmdButton setTitle:@"已预定" forState:UIControlStateNormal];
+            }
+            else if (order.status == 2)
+            {
+                [foodCell.cmdButton setTitle:@"已拨打电话" forState:UIControlStateNormal];
+            }
         }
-
-        float price = [order.foodPriceArr[indexPath.row] floatValue];
-        int amount = [order.foodAmountArr[indexPath.row] intValue];
-        
-        BXOrderFoodCell* foodCell = (BXOrderFoodCell*)cell;
-        foodCell.foodLabel.text = order.foodNameArr[indexPath.row];
-        foodCell.priceLabel.text = [NSString stringWithFormat:@"￥%.1f", price];
-        foodCell.amountLabel.text = [NSString stringWithFormat:@"x%d", amount];
+        else
+        {
+            cell = [tableView dequeueReusableCellWithIdentifier:foodCellId];
+            if (!cell)
+            {
+                cell = [[[NSBundle mainBundle] loadNibNamed:foodCellId owner:self options:nil] lastObject];
+                
+            }
+            
+            float price = [order.foodPriceArr[indexPath.row] floatValue];
+            int amount = [order.foodAmountArr[indexPath.row] intValue];
+            
+            BXOrderFoodCell* foodCell = (BXOrderFoodCell*)cell;
+            foodCell.foodLabel.text = order.foodNameArr[indexPath.row];
+            foodCell.priceLabel.text = [NSString stringWithFormat:@"￥%.1f", price];
+            foodCell.amountLabel.text = [NSString stringWithFormat:@"x%d", amount];
+        }
     }
+    
+    
+
+    
+
     
     return cell;
 }
@@ -257,23 +294,24 @@
     self.selectDate = date;
     [self updateTitle];
     
-     __block BXOrderListViewController *weakSelf = self;
-    
-    void (^sucBlock)(NSArray *orders) = ^(NSArray *orders){
-        weakSelf.orderData = [BXOrder fixAVOSArray:orders];
-        if (self.showType == ShowByShop) {
-            [self mergeOrderByShop];
-        }
-        [_tableView reloadData];
-        [_tableView.pullToRefreshView stopAnimating];
-    };
-    
-    void (^failBlock)(NSError *err) = ^(NSError *err) {
-        [SVProgressHUD showErrorWithStatus:@"获取订单失败"];
-        [_tableView.pullToRefreshView stopAnimating];
-    };
-    
-    [[BXOrderProvider sharedInstance] allOrdersWithDate:date success:sucBlock fail:failBlock];
+    [self.tableView triggerPullToRefresh];
+//     __block BXOrderListViewController *weakSelf = self;
+//    
+//    void (^sucBlock)(NSArray *orders) = ^(NSArray *orders){
+//        weakSelf.orderData = [BXOrder fixAVOSArray:orders];
+//        if (self.showType == ShowByShop) {
+//            [self mergeOrderByShop];
+//        }
+//        [_tableView reloadData];
+//        [_tableView.pullToRefreshView stopAnimating];
+//    };
+//    
+//    void (^failBlock)(NSError *err) = ^(NSError *err) {
+//        [SVProgressHUD showErrorWithStatus:@"获取订单失败"];
+//        [_tableView.pullToRefreshView stopAnimating];
+//    };
+//    
+//    [[BXOrderProvider sharedInstance] allOrdersWithDate:date success:sucBlock fail:failBlock];
     
 }
 
@@ -310,37 +348,6 @@
     {
         self.title = [NSString stringWithFormat:@"%d月%d日",selMonth,selDay];
     }
-}
-
-- (void) mergeOrderByShop
-{
-    if (!self.orderDataByShop)
-    {
-        self.orderDataByShop = [NSMutableArray array];
-    }
-    
-    [self.orderDataByShop removeAllObjects];
-    
-    for (BXOrder* order in self.orderData)
-    {
-//        NSString* shopName = order.shopName;
-//        
-//        BOOL found = NO;
-//        for (BXOrder* shopOrder in self.orderDataByShop)
-//        {
-//            if ([shopOrder.shopName isEqualToString:shopName])
-//            {
-//                [shopOrder merge:order];
-//                found = YES;
-//                break;
-//            }
-//        }
-//        if (!found)
-//        {
-//            [self.orderDataByShop addObject:order];
-//        }
-    }
-    
 }
 
 - (IBAction)shopButtonClicked:(id)sender

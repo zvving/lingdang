@@ -35,6 +35,7 @@
 		0DF135E117BE827400262A1F /* BXAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DF135E017BE827400262A1F /* BXAppDelegate.m */; };
 		0DF3C8E217E5908700B0F586 /* BXShopAddViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DF3C8E017E5908700B0F586 /* BXShopAddViewController.m */; };
 		0DF3C8E317E5908700B0F586 /* BXShopAddViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0DF3C8E117E5908700B0F586 /* BXShopAddViewController.xib */; };
+		0DF3C8E917E5F64000B0F586 /* BXOrderShopGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DF3C8E817E5F64000B0F586 /* BXOrderShopGroup.m */; };
 		0DFC857117C0DEAB00266138 /* BXMyOrderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DFC856F17C0DEAB00266138 /* BXMyOrderViewController.m */; };
 		0DFC857217C0DEAB00266138 /* BXMyOrderViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0DFC857017C0DEAB00266138 /* BXMyOrderViewController.xib */; };
 		0DFC857517C1034A00266138 /* BXObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DFC857417C1034A00266138 /* BXObject.m */; };
@@ -100,6 +101,8 @@
 		0DF3C8DF17E5908700B0F586 /* BXShopAddViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BXShopAddViewController.h; sourceTree = "<group>"; };
 		0DF3C8E017E5908700B0F586 /* BXShopAddViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BXShopAddViewController.m; sourceTree = "<group>"; };
 		0DF3C8E117E5908700B0F586 /* BXShopAddViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BXShopAddViewController.xib; sourceTree = "<group>"; };
+		0DF3C8E717E5F64000B0F586 /* BXOrderShopGroup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BXOrderShopGroup.h; sourceTree = "<group>"; };
+		0DF3C8E817E5F64000B0F586 /* BXOrderShopGroup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BXOrderShopGroup.m; sourceTree = "<group>"; };
 		0DFC856E17C0DEAB00266138 /* BXMyOrderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BXMyOrderViewController.h; sourceTree = "<group>"; };
 		0DFC856F17C0DEAB00266138 /* BXMyOrderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BXMyOrderViewController.m; sourceTree = "<group>"; };
 		0DFC857017C0DEAB00266138 /* BXMyOrderViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BXMyOrderViewController.xib; sourceTree = "<group>"; };
@@ -205,6 +208,8 @@
 				0D1B15FA17BF54140019AD6F /* BXUserProvider.h */,
 				0D1B15FB17BF54140019AD6F /* BXUserProvider.m */,
 				0D1B15FC17BF54140019AD6F /* model */,
+				0DF3C8E717E5F64000B0F586 /* BXOrderShopGroup.h */,
+				0DF3C8E817E5F64000B0F586 /* BXOrderShopGroup.m */,
 			);
 			name = data;
 			path = ../data;
@@ -446,6 +451,7 @@
 				0D1B161D17BF54140019AD6F /* BXFood.m in Sources */,
 				36F3CB1017E554770064237A /* BXOrderFoodCell.m in Sources */,
 				36F3CB0B17E4B34B0064237A /* BXDateSelectView.m in Sources */,
+				0DF3C8E917E5F64000B0F586 /* BXOrderShopGroup.m in Sources */,
 				0DF135E117BE827400262A1F /* BXAppDelegate.m in Sources */,
 				0D1B161717BF54140019AD6F /* BXLoginViewController.m in Sources */,
 				0D1B161E17BF54140019AD6F /* BXOrder.m in Sources */,
