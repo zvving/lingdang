@@ -181,36 +181,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-//    BXFood *food = _foodData[indexPath.row];
-//    
-//    if (_isAdminMode) { // 管家管理菜单界面
-//        
-//    } else { // 食客下单界面
-//        UIActionSheet *as = [UIActionSheet actionSheetWithTitle:@"这顿就它了？"];
-//        [as setDestructiveButtonWithTitle:food.name handler:^{
-//            [SVProgressHUD showWithStatus:@"排队中"
-//                                 maskType:SVProgressHUDMaskTypeGradient];
-//            [[BXOrderProvider sharedInstance] addOrderWithFood:food
-//                                                         count:1
-//                                                       success:^(BXOrder *order)
-//             {
-//                 [SVProgressHUD showSuccessWithStatus:@"已下单"];
-//             } fail:^(NSError *err) {
-//                 [SVProgressHUD showErrorWithStatus:@"网络异常"];
-//             }];
-//            
-//            
-//            [tableView deselectRowAtIndexPath:indexPath animated:YES];
-//        }];
-//        [as setCancelButtonWithTitle:@"取消" handler:^{
-//            [tableView deselectRowAtIndexPath:indexPath animated:YES];
-//        }];
-//        [as showInView:self.view];
-//        
-//    }
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-
-    
 }
 
 #pragma mark - get & set
