@@ -38,7 +38,7 @@
     self = [super init];
     if (self)
     {
-        self.showType = ShowByShop;
+        self.showType = ShowByUser;
         self.selectDate = [NSDate date];
     }
     return self;
@@ -93,10 +93,9 @@
         void (^sucBlock)(NSArray *orders) = ^(NSArray *orders){
             
             weakSelf.orderData = [BXOrder fixAVOSArray:orders];
-            weakSelf.orderDataByShop = [BXOrder fixAVOSArray:orders];
             if (self.showType == ShowByShop)
             {
-               // [self mergeOrderByShop];
+                [self mergeOrderByShop];
             }
             [_tableView reloadData];
             [_tableView.pullToRefreshView stopAnimating];
@@ -319,6 +318,8 @@
     {
         self.orderDataByShop = [NSMutableArray array];
     }
+    
+    [self.orderDataByShop removeAllObjects];
     
     for (BXOrder* order in self.orderData)
     {
