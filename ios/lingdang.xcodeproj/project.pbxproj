@@ -39,6 +39,8 @@
 		36F3CB0B17E4B34B0064237A /* BXDateSelectView.m in Sources */ = {isa = PBXBuildFile; fileRef = 36F3CB0A17E4B34B0064237A /* BXDateSelectView.m */; };
 		44C2C0FD30594384975C71D8 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E20000085954C69A6BBD3EE /* libPods.a */; };
 		A991CA7717E496CE00068FDD /* balana.png in Resources */ = {isa = PBXBuildFile; fileRef = A991CA7617E496CE00068FDD /* balana.png */; };
+		A991CA7B17E5512000068FDD /* BXMyShopCarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A991CA7917E5512000068FDD /* BXMyShopCarViewController.m */; };
+		A991CA7C17E5512000068FDD /* BXMyShopCarViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A991CA7A17E5512000068FDD /* BXMyShopCarViewController.xib */; };
 		A9FE829117E48349008C1640 /* BXShopListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A9FE828F17E48349008C1640 /* BXShopListViewController.m */; };
 		A9FE829217E48349008C1640 /* BXShopListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A9FE829017E48349008C1640 /* BXShopListViewController.xib */; };
 /* End PBXBuildFile section */
@@ -97,6 +99,9 @@
 		36F3CB0A17E4B34B0064237A /* BXDateSelectView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BXDateSelectView.m; sourceTree = "<group>"; };
 		9E20000085954C69A6BBD3EE /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		A991CA7617E496CE00068FDD /* balana.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = balana.png; sourceTree = "<group>"; };
+		A991CA7817E5512000068FDD /* BXMyShopCarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BXMyShopCarViewController.h; sourceTree = "<group>"; };
+		A991CA7917E5512000068FDD /* BXMyShopCarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BXMyShopCarViewController.m; sourceTree = "<group>"; };
+		A991CA7A17E5512000068FDD /* BXMyShopCarViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BXMyShopCarViewController.xib; sourceTree = "<group>"; };
 		A9FE828E17E48349008C1640 /* BXShopListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BXShopListViewController.h; sourceTree = "<group>"; };
 		A9FE828F17E48349008C1640 /* BXShopListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BXShopListViewController.m; sourceTree = "<group>"; };
 		A9FE829017E48349008C1640 /* BXShopListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BXShopListViewController.xib; sourceTree = "<group>"; };
@@ -157,6 +162,9 @@
 				0DFC856E17C0DEAB00266138 /* BXMyOrderViewController.h */,
 				0DFC856F17C0DEAB00266138 /* BXMyOrderViewController.m */,
 				0DFC857017C0DEAB00266138 /* BXMyOrderViewController.xib */,
+				A991CA7817E5512000068FDD /* BXMyShopCarViewController.h */,
+				A991CA7917E5512000068FDD /* BXMyShopCarViewController.m */,
+				A991CA7A17E5512000068FDD /* BXMyShopCarViewController.xib */,
 			);
 			path = eater;
 			sourceTree = "<group>";
@@ -328,6 +336,7 @@
 				0D1B161317BF54140019AD6F /* BXFoodInfoViewController.xib in Resources */,
 				0D1B161517BF54140019AD6F /* BXOrderListViewController.xib in Resources */,
 				0D1B162617BF54140019AD6F /* lingdang-Info.plist in Resources */,
+				A991CA7C17E5512000068FDD /* BXMyShopCarViewController.xib in Resources */,
 				0D1B162517BF54140019AD6F /* InfoPlist.strings in Resources */,
 				0D29F43B17E4477A00168ADB /* Images.xcassets in Resources */,
 				0D1B162117BF54140019AD6F /* Default.png in Resources */,
@@ -378,6 +387,7 @@
 				0D1B162717BF54140019AD6F /* main.m in Sources */,
 				0D1B161417BF54140019AD6F /* BXOrderListViewController.m in Sources */,
 				0DFC857517C1034A00266138 /* BXObject.m in Sources */,
+				A991CA7B17E5512000068FDD /* BXMyShopCarViewController.m in Sources */,
 				0D1B161C17BF54140019AD6F /* BXUserProvider.m in Sources */,
 				A9FE829117E48349008C1640 /* BXShopListViewController.m in Sources */,
 				0D1B161217BF54140019AD6F /* BXFoodInfoViewController.m in Sources */,

@@ -38,11 +38,12 @@
 {
     [super viewDidLoad];
     
+    self.title = @"店铺";
+    
     self.orderListVC = [[BXOrderListViewController alloc] init];
     self.loginVC = [[BXLoginViewController alloc] init];
     self.adminNav = [[UINavigationController alloc] initWithRootViewController:_orderListVC];
     
-    //_orderListVC.isAdminMode = YES;
     _adminNav.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
     
     [self buildBarButtons];
@@ -60,12 +61,6 @@
     }];
     
     [_shopTable triggerPullToRefresh];
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    self.title = _isAdminMode ? @"菜单管理" : [NSString stringWithFormat:@"菜单"];
 }
 
 - (void)buildBarButtons

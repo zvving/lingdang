@@ -8,11 +8,13 @@
 
 #import "BXFoodListViewController.h"
 #import "BXMyOrderViewController.h"
+#import "BXMyShopCarViewController.h"
 #import "BXOrder.h"
 
 #import "BXShop.h"
 #import "BXFoodProvider.h"
 
+static NSIndexPath *previouse = nil;
 
 @interface BXFoodListViewController () <UITableViewDataSource, UITableViewDelegate, UIPickerViewDataSource, UIPickerViewDelegate>
 
@@ -24,18 +26,27 @@
 
 @property (strong, nonatomic) NSArray                   * shopFoods;
 
-@property (strong, nonatomic) BXOrder                   * order;
 @property (strong, nonatomic) BXFood                    * food;
+
+@property (strong, nonatomic) BXMyShopCarViewController * shopCar;
 
 @end
 
 @implementation BXFoodListViewController
 
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        self.shopCar = [BXMyShopCarViewController sharedInstance];
+    }
+    return self;
+}
+
 - (void)viewDidLoad
 {
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"购物车" style:UIBarButtonItemStyleBordered handler:^(id sender) {
-        BXMyOrderViewController *myOrderVC = [[BXMyOrderViewController alloc] init];
-        UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:myOrderVC];
+        UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:_shopCar];
         [self presentViewController:nav animated:YES completion:nil];
     }];
     
@@ -43,7 +54,7 @@
     __weak BXFoodListViewController *weakself = self;
     void (^removeSelf)(void) = ^(void){
         [UIView beginAnimations:@"pickerDown" context:nil];
-        [UIView animateWithDuration:2.5f delay:0.0f options:UIViewAnimationOptionCurveEaseOut animations:^{
+        [UIView animateWithDuration:2.0f delay:0.0f options:UIViewAnimationOptionCurveEaseOut animations:^{
             CGRect selfRect = self.containerView.frame;
             self.containerView.frame = CGRectMake(0, CGRectGetMaxY(selfRect) + CGRectGetHeight(selfRect), CGRectGetWidth(selfRect), CGRectGetHeight(selfRect));
         } completion:^(BOOL finished) {
@@ -58,8 +69,16 @@
     item.leftBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"取消" style:UIBarButtonItemStyleBordered handler:^(id sender) {
         removeSelf();
     }];
-    item.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"确定" style:UIBarButtonItemStyleDone handler:^(id sender) {
+    item.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"确定吃这" style:UIBarButtonItemStyleDone handler:^(id sender) {
         removeSelf();
+        NSInteger amount = [_amountPicker selectedRowInComponent:0] + 1;
+        NSDictionary *foodItem = @{@"food": _food, @"amount": @(amount)};
+        [weakself.shopCar.foodItems addObject:foodItem];
+        
+        UITableViewCell *cell = [weakself.tableView cellForRowAtIndexPath:previouse];
+        cell.accessoryType = UITableViewCellAccessoryNone;
+        
+        [SVProgressHUD showSuccessWithStatus:@"已添加到购物车"];
     }];
     
     // load the foods accordding to the shop
@@ -98,7 +117,6 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSIndexPath *previouse = nil;
     if (previouse !=nil && previouse.row != indexPath.row) {
         UITableViewCell *previousCell = [tableView cellForRowAtIndexPath:previouse];
         previousCell.accessoryType = UITableViewCellAccessoryNone;
@@ -118,7 +136,7 @@
     [self.view addSubview:_containerView];
     self.tableView.userInteractionEnabled = NO;
     [UIView beginAnimations:@"pickerUp" context:nil];
-    [UIView animateWithDuration:2.0f delay:0.0f options:UIViewAnimationOptionCurveEaseInOut animations:^{
+    [UIView animateWithDuration:1.0f delay:0.0f options:UIViewAnimationOptionCurveEaseInOut animations:^{
         CGRect dstRect = CGRectMake(0, bounds.size.height - originRect.size
                                     .height, CGRectGetWidth(originRect), CGRectGetHeight(originRect));
         _containerView.frame = dstRect;
