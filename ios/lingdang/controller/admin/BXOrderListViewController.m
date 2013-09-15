@@ -8,6 +8,7 @@
 
 #import "BXOrderListViewController.h"
 #import "BXFoodListViewController.h"
+#import "BXShopListViewController.h"
 
 #import "BXOrderProvider.h"
 #import "BXDateSelectView.h"
@@ -314,5 +315,12 @@
         }
     }
     
+}
+
+- (IBAction)shopButtonClicked:(id)sender
+{
+    BXShopListViewController *shopVC = [[BXShopListViewController alloc] init];
+    shopVC.isAdminMode = YES;
+    [self.navigationController pushViewController:shopVC animated:YES];
 }
 @end

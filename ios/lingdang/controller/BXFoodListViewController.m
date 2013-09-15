@@ -45,6 +45,8 @@ static NSIndexPath *previouse = nil;
 
 - (void)viewDidLoad
 {
+    self.title = [NSString stringWithFormat:@"%@%@的菜", _isAdminMode ? @"管理" : @"", _shop.name];
+    
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"购物车" style:UIBarButtonItemStyleBordered handler:^(id sender) {
         UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:_shopCar];
         [self presentViewController:nav animated:YES completion:nil];
