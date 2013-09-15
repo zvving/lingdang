@@ -78,9 +78,33 @@
 {
     __block BXShopListViewController *weakSelf = self;
     
-    if (_isAdminMode) { // 管理 food 界面
-        // null
-    } else { // 订餐界面
+    if (_isAdminMode)// 管理 food 界面
+    {
+        UIBarButtonItem* rightItem =
+        [[UIBarButtonItem alloc] initWithTitle:@"编辑"
+                                         style:UIBarButtonItemStyleBordered
+                                       handler:^(id sender)
+         {
+             if (self.shopTable.editing)
+             {
+                 self.shopTable.editing = NO;
+                 ((UIBarButtonItem*)sender).title = @"编辑";;
+             }
+             else
+             {
+                 self.shopTable.editing = YES;
+                 ((UIBarButtonItem*)sender).title = @"完成";;
+             }
+             
+         }];
+
+        rightItem.possibleTitles = [NSSet setWithObjects:@"编辑", @"完成", nil];
+        self.navigationItem.rightBarButtonItem = rightItem;
+        
+    }
+    else // 订餐界面
+    {
+        
         self.navigationItem.leftBarButtonItem =
         [[UIBarButtonItem alloc] initWithTitle:@"切至管家"
                                          style:UIBarButtonItemStylePlain
@@ -155,6 +179,22 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     [self.navigationController pushViewController:foodListVC animated:YES];
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (editingStyle == UITableViewCellEditingStyleDelete)
+    {
+        [SVProgressHUD showWithStatus:@"删除店铺中" maskType:SVProgressHUDMaskTypeGradient];
+        
+        BXShop* shop = _shops[indexPath.row];
+        [[BXShopProvider sharedInstance] deleteShop:shop success:^{
+            [SVProgressHUD showErrorWithStatus:@"删除店铺成功"];
+            [self.shopTable triggerPullToRefresh];
+        } fail:^(NSError *err) {
+            [SVProgressHUD showErrorWithStatus:@"删除店铺失败"];
+        }];
+    }
 }
 
 - (IBAction)addShopButtonClicked:(id)sender
