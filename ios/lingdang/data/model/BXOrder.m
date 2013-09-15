@@ -92,12 +92,12 @@
 
 - (void)setShop:(BXShop *)shop
 {
-    [self setObject:shop forKey:@"shop"];
+    [self setObject:shop forKey:@"pToShop"];
 }
 
 - (BXShop*)shop
 {
-    id obj = [self objectForKey:@"shop"];
+    id obj = [self objectForKey:@"pToShop"];
     if (obj == nil || [obj isKindOfClass:[NSNull class]]) {
         return nil;
     }

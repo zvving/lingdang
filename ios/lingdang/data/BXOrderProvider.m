@@ -93,6 +93,7 @@ BCSINGLETON_IN_M(BXOrderProvider)
     PFQuery *query = [BXOrder query];
     
     [query whereKey:@"pToUser" equalTo:[AVUser currentUser]];
+    [query includeKey:@"pToShop"];
     [query addAscendingOrder:@"updatedAt"];
     
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
