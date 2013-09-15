@@ -19,13 +19,14 @@
 @property (weak, nonatomic) IBOutlet UITextField *priceTf;
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
 @property (weak, nonatomic) IBOutlet UILabel *shopNameLabel;
+@property (weak, nonatomic) IBOutlet UIButton *foodCmdButton;
 
 @property (nonatomic, strong) NSArray *         shopData;
 
 // post action
 
 // private
-- (IBAction)addShopButtonClicked:(id)sender;
+- (IBAction)foodCmdButtonClicked:(id)sender;
 
 @end
 
@@ -36,6 +37,12 @@
     [super viewDidLoad];
 
     self.title = _food ? @"更新菜品" : @"新增菜品";
+    if (_food)
+    {
+        [self.foodCmdButton setTitle:@"更新菜品" forState:UIControlStateNormal];
+        self.nameTf.text = _food.name;
+        self.priceTf.text = [NSString stringWithFormat:@"%g",_food.price];
+    }
     
     _shopNameLabel.text = _shop.name;
 }
@@ -43,7 +50,21 @@
 
 #pragma mark - refresh data
 
-- (IBAction)addShopButtonClicked:(id)sender {
+- (IBAction)foodCmdButtonClicked:(id)sender
+{
+    if (self.food)
+    {
+        [self editFood];
+    }
+    else
+    {
+        [self addFood];
+    }
+   
+}
+
+- (void)addFood
+{
     [SVProgressHUD showWithStatus:@"新增菜品中" maskType:SVProgressHUDMaskTypeGradient];
     [[BXFoodProvider sharedInstance] addFoodWithName:_nameTf.text price:([_priceTf.text floatValue]) shop:_shop imageStr:nil upImgUser:nil success:^(BXFood *food) {
         NSString *title = [NSString stringWithFormat:@"%@已新增", food.name];
@@ -55,6 +76,24 @@
         });
     } fail:^(NSError *err) {
         [SVProgressHUD showErrorWithStatus:@"新增店铺失败"];
+    }];
+}
+
+- (void)editFood
+{
+    [SVProgressHUD showWithStatus:@"更新菜品中" maskType:SVProgressHUDMaskTypeGradient];
+    self.food.name = _nameTf.text;
+    self.food.price = [_priceTf.text floatValue];
+    [[BXFoodProvider sharedInstance] updateFood:self.food onSuccess:^{
+        NSString *title = [NSString stringWithFormat:@"菜品已新增"];
+        [SVProgressHUD showSuccessWithStatus:title];
+        double delayInSeconds = 1.0;
+        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+            [self.navigationController popViewControllerAnimated:YES];
+        });
+    } onFail:^(NSError *err) {
+        [SVProgressHUD showErrorWithStatus:@"菜品更新失败"];
     }];
 }
 
