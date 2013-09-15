@@ -48,6 +48,8 @@ BCSINGLETON_IN_M(BXOrderProvider)
     PFQuery *query = [BXOrder query];
 
     [query addAscendingOrder:@"updatedAt"];
+    [query includeKey:@"shop"];
+    [query includeKey:@"pToUser"];
 
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (error) {

@@ -156,7 +156,7 @@
     }
     else
     {
-        BXOrder* order = [_orderDataByShop objectAtIndex:section];
+        BXOrder* order = [_orderData objectAtIndex:section];
         NSString* title = [NSString stringWithFormat:@"%@ %@",order.pToUser.username,order.shop.name];
         return title;
     }
