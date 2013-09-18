@@ -228,7 +228,7 @@ UIPickerViewDataSource,UIPickerViewDelegate, UIActionSheetDelegate>
         [self.view addSubview:_containerView];
         self.tableView.userInteractionEnabled = NO;
         [UIView beginAnimations:@"pickerUp" context:nil];
-        [UIView animateWithDuration:1.0f delay:0.0f options:UIViewAnimationOptionCurveEaseInOut animations:^{
+        [UIView animateWithDuration:10.0f delay:0.0f options:UIViewAnimationOptionCurveEaseInOut animations:^{
             CGRect dstRect = CGRectMake(0, bounds.size.height - originRect.size
                                     .height, CGRectGetWidth(originRect), CGRectGetHeight(originRect));
             _containerView.frame = dstRect;

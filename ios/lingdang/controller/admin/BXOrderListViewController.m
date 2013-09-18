@@ -81,11 +81,9 @@
         self.tableView.userInteractionEnabled = NO;
         self.showTypeSeg.userInteractionEnabled = NO;
         
-        [UIView beginAnimations:nil context:nil];
-        [UIView animateWithDuration:1.0f delay:0.0f options:UIViewAnimationOptionCurveEaseInOut animations:^{
+        [UIView animateWithDuration:10.0f delay:0.0f options:UIViewAnimationOptionCurveEaseInOut animations:^{
             self.dateSelectView.frame = CGRectMake(0, self.view.frame.size.height-206, 320, 206);
         } completion:nil];
-        [UIView commitAnimations];
         
     }];
     
