@@ -50,12 +50,6 @@
             [weakself.tableView.pullToRefreshView stopAnimating];
         }];
     }];
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    
     [self.tableView triggerPullToRefresh];
 }
 
@@ -98,7 +92,23 @@
         }
         
         cmdCell.priceLabel.text = [NSString stringWithFormat:@"%g元", sum];
-        [cmdCell.cmdButton setTitle:@"修改订单" forState:UIControlStateNormal];
+        
+        UILabel *hintLabel = nil;
+        switch (order.status) {
+            case kOrderStatusEditable:
+                [cmdCell.cmdButton setTitle:@"修改订单" forState:UIControlStateNormal];
+                [cmdCell.cmdButton addTarget:self action:@selector(editOrderAction:) forControlEvents:UIControlEventTouchUpInside];
+                break;
+            case kOrderStatusArrived: case kOrderStatusOrdered:
+                hintLabel = [[UILabel alloc] init];
+                hintLabel.text = order.status == kOrderStatusOrdered ? @"已下单！" : @"饭到了！";
+                hintLabel.font = [UIFont boldSystemFontOfSize:15.0f];
+                [hintLabel sizeToFit];
+                cmdCell.cmdButton.hidden = YES;
+                cmdCell.accessoryView = hintLabel;
+                break;
+        }
+
     } else {
         BXMyOrderCell *myOrderCell = (BXMyOrderCell *)cell;
         float price = [order.foodPriceArr[indexPath.row] floatValue];
@@ -110,6 +120,45 @@
     }
     
     return cell;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 320.f, 24.0f)];
+    view.backgroundColor = [UIColor clearColor];
+    
+    static NSDateFormatter *ndf = nil;
+    if (ndf == nil) {
+        ndf = [[NSDateFormatter alloc] init];
+        ndf.dateFormat = @"MM月dd日";
+    }
+    
+    BXOrder *order = _orderData[section];
+    UILabel *label = [[UILabel alloc] initWithFrame: CGRectMake(10.0f, section == 0? 12.0f : 0.0f, 300.0f, 24.0f)];
+    label.text = [ndf stringFromDate: order.createdAt];
+    [view addSubview:label];
+
+    return view;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    if (section == 0) {
+        return 36.0f;
+    }
+    return 24.0f;
+}
+
+- (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return nil;
+}
+
+#pragma mark button actions
+
+- (void)editOrderAction: (id)sender
+{
+    NSLog(@"first step to edit order");
 }
 
 @end

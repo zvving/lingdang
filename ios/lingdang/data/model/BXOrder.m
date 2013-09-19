@@ -30,12 +30,12 @@
     return [self objectForKey:@"pToUser"];
 }
 
-- (void)setStatus:(int)status
+- (void)setStatus:(OrderStatus)status
 {
     [self setObject:@(status) forKey:@"status"];
 }
 
-- (int)status
+- (OrderStatus)status
 {
     return [[self objectForKey:@"status"] intValue];
 }
