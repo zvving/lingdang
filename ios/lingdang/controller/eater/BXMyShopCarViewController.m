@@ -122,7 +122,14 @@ BCSINGLETON_IN_M(BXMyShopCarViewController);
             
             [self.foodItems removeAllObjects];
             [self.tableview reloadData];
-            [SVProgressHUD showSuccessWithStatus:msg];
+            if ([self.presentingViewController isMemberOfClass:[UINavigationController class]]) {
+                UINavigationController *nav = (UINavigationController *)self.presentingViewController;
+                [nav popViewControllerAnimated:NO];
+            }
+            [self dismissViewControllerAnimated:YES completion:^{
+                [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationGoMyOrder
+                                                                    object:nil];
+            }];
         }
     }];
 }
