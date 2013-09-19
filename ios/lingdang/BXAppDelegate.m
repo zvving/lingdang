@@ -14,6 +14,7 @@
 #import "BXFood.h"
 #import "BXOrder.h"
 #import "BXConfig.h"
+#import "BXPushProvider.h"
 
 
 @implementation BXAppDelegate
@@ -67,7 +68,17 @@
 - (void)application:(UIApplication *)app didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
     AVInstallation *currentInstallation = [AVInstallation currentInstallation];
     [currentInstallation setDeviceTokenFromData:deviceToken];
-    [currentInstallation saveInBackground];
+    [currentInstallation saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        if (succeeded && [[AVUser currentUser] isAuthenticated]) {
+            AVUser *user = [AVUser currentUser];
+            [user setObject:currentInstallation.deviceToken forKey:@"deviceToken"];
+            [user setObject:currentInstallation.objectId forKey:@"installationId"];
+            
+            [user saveInBackground];
+        }
+    }];
+    
+
 }
 
 - (void)application:(UIApplication *)app didFailToRegisterForRemoteNotificationsWithError:(NSError *)err {

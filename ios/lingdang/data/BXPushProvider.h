@@ -10,4 +10,15 @@
 
 @interface BXPushProvider : NSObject
 
+
+BCSINGLETON_IN_H(BXPushProvider)
+
+
+- (void)pushAllWithTitle:(NSString*)title;
+
+- (void)pushUserId:(NSString*)userId withTitle:(NSString*)title;
+
+- (void)pushUser:(AVUser*)targetUser withTitle:(NSString*)title;
+
+
 @end
