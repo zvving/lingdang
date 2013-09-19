@@ -122,7 +122,10 @@ BCSINGLETON_IN_M(BXMyShopCarViewController);
             
             [self.foodItems removeAllObjects];
             [self.tableview reloadData];
-            [SVProgressHUD showSuccessWithStatus:msg];
+            [self dismissViewControllerAnimated:NO completion:^{
+                [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationGoMyOrder
+                                                                    object:nil];
+            }];
         }
     }];
 }

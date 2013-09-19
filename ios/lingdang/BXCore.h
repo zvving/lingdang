@@ -20,4 +20,6 @@
 
 #define kCacheAllFood       @"kCacheAllFood"
 
+#define kNotificationGoMyOrder              @"kNotificationGoMyOrder"
+
 #endif

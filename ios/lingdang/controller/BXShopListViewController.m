@@ -69,6 +69,12 @@
     }];
     
     [_shopTable triggerPullToRefresh];
+    
+    // resigter notification
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(showMyOrder:)
+                                                 name:kNotificationGoMyOrder
+                                               object:nil];
 }
 
 - (void)buildBarButtons
@@ -116,9 +122,7 @@
                                          style:UIBarButtonItemStylePlain
                                        handler:^(id sender)
          {
-             BXMyOrderViewController *myOrdersVC = [[BXMyOrderViewController alloc] init];
-             UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:myOrdersVC];
-             [weakSelf presentViewController:nav animated:YES completion:nil];
+             [weakSelf showMyOrder:nil];
          }];
         
         if ([AVUser currentUser] == nil) {
@@ -206,6 +210,17 @@
 {
     BXShopAddViewController *shopAdd = [[BXShopAddViewController alloc] init];
     [self.navigationController pushViewController:shopAdd animated:YES];
+}
+
+- (void)showMyOrder:(NSNotification *)notification
+{
+    BXMyOrderViewController *myOrdersVC = [[BXMyOrderViewController alloc] init];
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:myOrdersVC];
+    [self presentViewController:nav animated:YES completion:^{
+        if ([notification.name isEqualToString:kNotificationGoMyOrder]) {
+            [self.navigationController popViewControllerAnimated:NO];
+        }
+    }];
 }
 
 @end
