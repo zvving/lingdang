@@ -49,9 +49,10 @@ BCSINGLETON_IN_M(BXShopProvider)
 {
     PFQuery *query = [BXShop query];
     [query addAscendingOrder:kDBColName];
+    query.cachePolicy = kPFCachePolicyCacheThenNetwork;
+    
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (error) {
-            [SVProgressHUD showErrorWithStatus:@"获取店铺信息失败"];
             if (failBlock) {
                 failBlock(error);
             }

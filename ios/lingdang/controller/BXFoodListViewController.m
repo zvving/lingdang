@@ -149,8 +149,9 @@ UIPickerViewDataSource,UIPickerViewDelegate, UIActionSheetDelegate>
         [SVProgressHUD showSuccessWithStatus:@"已添加到购物车"];
     }];
     
+    
     // load the foods accordding to the shop
-    [self.tableView addPullToRefreshWithActionHandler:^{
+    void (^loadDataBlock)(void) = ^ {
         [[BXFoodProvider sharedInstance]allFoodsInShop:self.shop onSuccess:^(NSArray *foods) {
             weakself.shopFoods = foods;
             [weakself.tableView reloadData];
@@ -158,9 +159,10 @@ UIPickerViewDataSource,UIPickerViewDelegate, UIActionSheetDelegate>
         } onFail:^(NSError *err) {
             [weakself.tableView.pullToRefreshView stopAnimating];
         }];
-    }];
+    };
+    [self.tableView addPullToRefreshWithActionHandler:loadDataBlock];
     
-    [self.tableView triggerPullToRefresh];
+    loadDataBlock();
 }
 
 - (void)viewDidAppear:(BOOL)animated

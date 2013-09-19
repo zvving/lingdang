@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0D10559017EB465D005D54C3 /* NSObject+Properties.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D10558D17EB465D005D54C3 /* NSObject+Properties.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		0D10559117EB465D005D54C3 /* NSString+PropertyKVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D10558F17EB465D005D54C3 /* NSString+PropertyKVC.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		0D1B161217BF54140019AD6F /* BXFoodInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D1B15E817BF54140019AD6F /* BXFoodInfoViewController.m */; };
 		0D1B161317BF54140019AD6F /* BXFoodInfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0D1B15E917BF54140019AD6F /* BXFoodInfoViewController.xib */; };
 		0D1B161417BF54140019AD6F /* BXOrderListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D1B15EB17BF54140019AD6F /* BXOrderListViewController.m */; };
@@ -55,6 +57,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0D10558C17EB465D005D54C3 /* NSObject+Properties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+Properties.h"; sourceTree = "<group>"; };
+		0D10558D17EB465D005D54C3 /* NSObject+Properties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Properties.m"; sourceTree = "<group>"; };
+		0D10558E17EB465D005D54C3 /* NSString+PropertyKVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+PropertyKVC.h"; sourceTree = "<group>"; };
+		0D10558F17EB465D005D54C3 /* NSString+PropertyKVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+PropertyKVC.m"; sourceTree = "<group>"; };
 		0D1B15C217BE9F170019AD6F /* BXConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BXConfig.h; sourceTree = "<group>"; };
 		0D1B15CB17BF07B60019AD6F /* BXCore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BXCore.h; sourceTree = "<group>"; };
 		0D1B15E717BF54140019AD6F /* BXFoodInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BXFoodInfoViewController.h; sourceTree = "<group>"; };
@@ -147,6 +153,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0D10558B17EB465D005D54C3 /* NSObject+Properties */ = {
+			isa = PBXGroup;
+			children = (
+				0D10558C17EB465D005D54C3 /* NSObject+Properties.h */,
+				0D10558D17EB465D005D54C3 /* NSObject+Properties.m */,
+				0D10558E17EB465D005D54C3 /* NSString+PropertyKVC.h */,
+				0D10558F17EB465D005D54C3 /* NSString+PropertyKVC.m */,
+			);
+			path = "NSObject+Properties";
+			sourceTree = "<group>";
+		};
 		0D1B15E517BF54140019AD6F /* controller */ = {
 			isa = PBXGroup;
 			children = (
@@ -237,6 +254,7 @@
 		0D1B160317BF54140019AD6F /* lib */ = {
 			isa = PBXGroup;
 			children = (
+				0D10558B17EB465D005D54C3 /* NSObject+Properties */,
 				0D1B160417BF54140019AD6F /* BCSingleton.h */,
 			);
 			path = lib;
@@ -445,9 +463,11 @@
 				A9FE829117E48349008C1640 /* BXShopListViewController.m in Sources */,
 				0D1B161217BF54140019AD6F /* BXFoodInfoViewController.m in Sources */,
 				0DBE424B17EAF92C003CB04F /* BXPushProvider.m in Sources */,
+				0D10559117EB465D005D54C3 /* NSString+PropertyKVC.m in Sources */,
 				0D1B161B17BF54140019AD6F /* BXShopProvider.m in Sources */,
 				36F3CB1417E554D10064237A /* BXOrderCmdCell.m in Sources */,
 				0D1B161917BF54140019AD6F /* BXFoodProvider.m in Sources */,
+				0D10559017EB465D005D54C3 /* NSObject+Properties.m in Sources */,
 				0D1B161617BF54140019AD6F /* BXFoodListViewController.m in Sources */,
 				A9B2981717E5D466000D9862 /* BXMyOrderCell.m in Sources */,
 				0D1B161A17BF54140019AD6F /* BXOrderProvider.m in Sources */,

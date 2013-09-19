@@ -92,6 +92,7 @@ BCSINGLETON_IN_M(BXFoodProvider)
             }
         }
     }];
+    
 }
 
 
