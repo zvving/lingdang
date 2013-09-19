@@ -14,6 +14,11 @@
     return @"demo";
 }
 
++ (instancetype)object
+{
+    return [[BXObject alloc] initWithClassName:[BXObject parseClassName]];
+}
+
 + (AVQuery*)query;
 {
     return [AVQuery queryWithClassName:[self parseClassName]];

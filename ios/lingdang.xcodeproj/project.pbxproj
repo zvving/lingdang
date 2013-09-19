@@ -28,6 +28,7 @@
 		0D1B162517BF54140019AD6F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0D1B160D17BF54140019AD6F /* InfoPlist.strings */; };
 		0D1B162717BF54140019AD6F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D1B161117BF54140019AD6F /* main.m */; };
 		0D29F43B17E4477A00168ADB /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0D29F43A17E4477A00168ADB /* Images.xcassets */; };
+		0DBE424B17EAF92C003CB04F /* BXPushProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DBE424A17EAF92C003CB04F /* BXPushProvider.m */; };
 		0DF135D117BE827400262A1F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0DF135D017BE827400262A1F /* UIKit.framework */; };
 		0DF135D317BE827400262A1F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0DF135D217BE827400262A1F /* Foundation.framework */; };
 		0DF135D517BE827400262A1F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0DF135D417BE827400262A1F /* CoreGraphics.framework */; };
@@ -91,6 +92,8 @@
 		0D1B161017BF54140019AD6F /* lingdang-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "lingdang-Prefix.pch"; sourceTree = "<group>"; };
 		0D1B161117BF54140019AD6F /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		0D29F43A17E4477A00168ADB /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		0DBE424917EAF92C003CB04F /* BXPushProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BXPushProvider.h; sourceTree = "<group>"; };
+		0DBE424A17EAF92C003CB04F /* BXPushProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BXPushProvider.m; sourceTree = "<group>"; };
 		0DF135CD17BE827400262A1F /* lingdang.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = lingdang.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0DF135D017BE827400262A1F /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		0DF135D217BE827400262A1F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -209,6 +212,8 @@
 				0D1B15FC17BF54140019AD6F /* model */,
 				0DF3C8E717E5F64000B0F586 /* BXOrderShopGroup.h */,
 				0DF3C8E817E5F64000B0F586 /* BXOrderShopGroup.m */,
+				0DBE424917EAF92C003CB04F /* BXPushProvider.h */,
+				0DBE424A17EAF92C003CB04F /* BXPushProvider.m */,
 			);
 			name = data;
 			path = ../data;
@@ -345,7 +350,7 @@
 				ORGANIZATIONNAME = baixing.com;
 				TargetAttributes = {
 					0DF135CC17BE827400262A1F = {
-						DevelopmentTeam = 74UX6D4SCA;
+						DevelopmentTeam = L5B4TBT7H9;
 					};
 				};
 			};
@@ -439,6 +444,7 @@
 				0D1B161C17BF54140019AD6F /* BXUserProvider.m in Sources */,
 				A9FE829117E48349008C1640 /* BXShopListViewController.m in Sources */,
 				0D1B161217BF54140019AD6F /* BXFoodInfoViewController.m in Sources */,
+				0DBE424B17EAF92C003CB04F /* BXPushProvider.m in Sources */,
 				0D1B161B17BF54140019AD6F /* BXShopProvider.m in Sources */,
 				36F3CB1417E554D10064237A /* BXOrderCmdCell.m in Sources */,
 				0D1B161917BF54140019AD6F /* BXFoodProvider.m in Sources */,
@@ -524,7 +530,7 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -549,7 +555,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "lingdang/support/lingdang-Prefix.pch";
 				INFOPLIST_FILE = "$(SRCROOT)/lingdang/support/lingdang-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -568,7 +574,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "lingdang/support/lingdang-Prefix.pch";
 				INFOPLIST_FILE = "$(SRCROOT)/lingdang/support/lingdang-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
