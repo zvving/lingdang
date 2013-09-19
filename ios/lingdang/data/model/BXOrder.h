@@ -11,13 +11,19 @@
 #import "BXFood.h"
 #import "BXObject.h"
 
+typedef enum {
+    kOrderStatusEditable = 0,
+    kOrderStatusOrdered,
+    kOrderStatusArrived
+} OrderStatus;
+
 @interface BXOrder : BXObject
 
 //下单者
 @property (nonatomic, strong) AVUser *                  pToUser;
 
 //订单状态:0 已下单可修改,1 已预订不可修改,2 已送达
-@property (nonatomic, assign) int                  status;
+@property (nonatomic, assign) OrderStatus               status;
 
 //付款状态
 @property (nonatomic, assign) BOOL                 isPaid;

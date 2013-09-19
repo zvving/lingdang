@@ -167,7 +167,9 @@
     }
     
     BXShop *shop = _shops[indexPath.row];
-    NSString *msg = [NSString stringWithFormat:@"%@ (%@)", [shop objectForKey:@"name"], [shop objectForKey:@"shipInfo"]];
+    NSString *shopInfo = shop.shipInfo.length == 0? @"" :
+                          [NSString stringWithFormat:@"(%@)", shop.shipInfo];
+    NSString *msg = [NSString stringWithFormat:@"%@%@", shop.name, shopInfo];
     cell.textLabel.text = msg;
 
     return cell;

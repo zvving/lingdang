@@ -94,7 +94,8 @@ BCSINGLETON_IN_M(BXOrderProvider)
     
     [query whereKey:@"pToUser" equalTo:[AVUser currentUser]];
     [query includeKey:@"pToShop"];
-    [query addAscendingOrder:@"updatedAt"];
+    [query addDescendingOrder:@"updatedAt"];
+    query.limit = 15;
     
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (error) {

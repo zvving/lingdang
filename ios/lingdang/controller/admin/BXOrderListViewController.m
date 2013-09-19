@@ -84,7 +84,7 @@
         self.tableView.userInteractionEnabled = NO;
         self.showTypeSeg.userInteractionEnabled = NO;
         
-        [UIView animateWithDuration:10.0f delay:0.0f options:UIViewAnimationOptionCurveEaseInOut animations:^{
+        [UIView animateWithDuration:0.3f delay:0.0f options:UIViewAnimationOptionCurveEaseInOut animations:^{
             self.dateSelectView.frame = CGRectMake(0, self.view.frame.size.height-206, 320, 206);
         } completion:nil];
         
@@ -261,12 +261,6 @@
             foodCell.amountLabel.text = [NSString stringWithFormat:@"x%d", amount];
         }
     }
-    
-    
-
-    
-
-    
     return cell;
 }
 
