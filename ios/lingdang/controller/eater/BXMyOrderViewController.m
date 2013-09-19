@@ -130,7 +130,7 @@
     static NSDateFormatter *ndf = nil;
     if (ndf == nil) {
         ndf = [[NSDateFormatter alloc] init];
-        ndf.dateFormat = @"MM月dd日";
+        ndf.dateFormat = @"MM月dd日HH:mm";
     }
     
     BXOrder *order = _orderData[section];

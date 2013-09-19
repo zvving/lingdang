@@ -261,12 +261,6 @@
             foodCell.amountLabel.text = [NSString stringWithFormat:@"x%d", amount];
         }
     }
-    
-    
-
-    
-
-    
     return cell;
 }
 
