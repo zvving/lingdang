@@ -38,6 +38,9 @@
 {
     [super viewDidLoad];
     
+    self.edgesForExtendedLayout = UIRectEdgeNone;
+    self.navigationController.navigationBar.barTintColor = _isAdminMode ? kColorAdminRed : kColorEaterYellow;
+    
     self.title = _isAdminMode ? @"管理店铺" : @"浏览店铺";
     _addShopButton.hidden = !_isAdminMode;
     

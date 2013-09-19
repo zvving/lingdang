@@ -49,6 +49,9 @@
 {
     [super viewDidLoad];
     
+    self.edgesForExtendedLayout = UIRectEdgeNone;
+    self.navigationController.navigationBar.barTintColor = kColorAdminRed;
+    
     [self updateTitle];
     
     self.showTypeSeg.selectedSegmentIndex = self.showType;

@@ -48,10 +48,11 @@ UIPickerViewDataSource,UIPickerViewDelegate, UIActionSheetDelegate>
 
 - (void)viewDidLoad
 {
+    self.edgesForExtendedLayout = UIRectEdgeNone;
+    self.navigationController.navigationBar.barTintColor = _isAdminMode ? kColorAdminRed : kColorEaterYellow;
+    
     self.title = [NSString stringWithFormat:@"%@%@的菜", _isAdminMode ? @"管理" : @"", _shop.name];
     _addFoodButton.hidden = !_isAdminMode;
-    
-    self.tableView.allowsSelectionDuringEditing = YES;
     
     __weak BXFoodListViewController *weakself = self;
 

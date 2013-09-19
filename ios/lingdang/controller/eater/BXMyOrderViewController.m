@@ -29,6 +29,9 @@
 {
     [super viewDidLoad];
     
+    self.edgesForExtendedLayout = UIRectEdgeNone;
+    self.navigationController.navigationBar.barTintColor = kColorEaterYellow;
+    
     self.title = @"我的订单";
     
     // set ui & actions

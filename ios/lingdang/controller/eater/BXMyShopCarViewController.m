@@ -44,6 +44,9 @@ BCSINGLETON_IN_M(BXMyShopCarViewController);
 
 - (void)viewDidLoad
 {
+    self.edgesForExtendedLayout = UIRectEdgeNone;
+    self.navigationController.navigationBar.barTintColor = kColorEaterYellow;
+    
     self.tableview.tableFooterView = self.footerView;
 }
 

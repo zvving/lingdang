@@ -34,6 +34,9 @@
 {
     [super viewDidLoad];
     
+    self.edgesForExtendedLayout = UIRectEdgeNone;
+    self.navigationController.navigationBar.barTintColor = kColorAdminRed;
+    
     if (self.curShop)
     {
         self.title = @"修改店铺";
