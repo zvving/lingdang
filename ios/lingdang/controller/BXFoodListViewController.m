@@ -51,7 +51,7 @@ UIPickerViewDataSource,UIPickerViewDelegate, UIActionSheetDelegate>
     self.edgesForExtendedLayout = UIRectEdgeNone;
     self.navigationController.navigationBar.barTintColor = _isAdminMode ? kColorAdminRed : kColorEaterYellow;
     
-    self.title = [NSString stringWithFormat:@"%@%@的菜", _isAdminMode ? @"管理" : @"", _shop.name];
+    self.title = [NSString stringWithFormat:@"%@%@", _isAdminMode ? @"管理" : @"", _shop.name];
     _addFoodButton.hidden = !_isAdminMode;
     
     __weak BXFoodListViewController *weakself = self;
@@ -107,8 +107,7 @@ UIPickerViewDataSource,UIPickerViewDelegate, UIActionSheetDelegate>
     
     // set containerUI
     void (^removeSelf)(void) = ^(void){
-        [UIView beginAnimations:@"pickerDown" context:nil];
-        [UIView animateWithDuration:2.0f delay:0.0f options:UIViewAnimationOptionCurveEaseOut animations:^{
+        [UIView animateWithDuration:0.3f delay:0.0f options:UIViewAnimationOptionCurveEaseOut animations:^{
             CGRect selfRect = self.containerView.frame;
             self.containerView.frame = CGRectMake(0, CGRectGetMaxY(selfRect) + CGRectGetHeight(selfRect), CGRectGetWidth(selfRect), CGRectGetHeight(selfRect));
         } completion:^(BOOL finished) {
@@ -116,7 +115,6 @@ UIPickerViewDataSource,UIPickerViewDelegate, UIActionSheetDelegate>
                 [_containerView removeFromSuperview];
             }
         }];
-        [UIView commitAnimations];
         
         UITableViewCell *cell = [weakself.tableView cellForRowAtIndexPath:previouse];
         cell.accessoryType = UITableViewCellAccessoryNone;
@@ -228,13 +226,12 @@ UIPickerViewDataSource,UIPickerViewDelegate, UIActionSheetDelegate>
         _containerView.frame = CGRectMake(0, bounds.size.height, CGRectGetWidth(originRect), CGRectGetHeight(originRect));
         [self.view addSubview:_containerView];
         self.tableView.userInteractionEnabled = NO;
-        [UIView beginAnimations:@"pickerUp" context:nil];
-        [UIView animateWithDuration:10.0f delay:0.0f options:UIViewAnimationOptionCurveEaseInOut animations:^{
+        
+        [UIView animateWithDuration:0.3f delay:0.0f options:UIViewAnimationOptionCurveEaseInOut animations:^{
             CGRect dstRect = CGRectMake(0, bounds.size.height - originRect.size
                                     .height, CGRectGetWidth(originRect), CGRectGetHeight(originRect));
             _containerView.frame = dstRect;
         } completion:nil];
-        [UIView commitAnimations];
     }
 }
 
