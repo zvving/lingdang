@@ -31,7 +31,10 @@
 
 - (void)setShipInfo:(NSString *)shipInfo
 {
-    [self setObject:shipInfo forKey:@"shipInfo"];
+    if (shipInfo) {
+        [self setObject:shipInfo forKey:@"shipInfo"];
+    }
+
 }
 
 - (NSString *)shipInfo
@@ -41,7 +44,10 @@
 
 - (void)setPhone:(NSString *)phone
 {
-    [self setObject:phone forKey:@"phone"];
+    if (phone) {
+        [self setObject:phone forKey:@"phone"];
+    }
+
 }
 
 - (NSString *)phone

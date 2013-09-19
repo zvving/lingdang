@@ -56,7 +56,7 @@
     
     // load the data;
     __weak BXShopListViewController *weakself = self;
-    [_shopTable addPullToRefreshWithActionHandler:^{
+    void (^loadDataBlock)(void) = ^ {
         [[BXShopProvider sharedInstance] allShops:^(NSArray *shops) {
             weakself.shops = shops;
             [weakself.shopTable reloadData];
@@ -69,9 +69,12 @@
         } fail:^(NSError *err) {
             [weakself.shopTable.pullToRefreshView stopAnimating];
         }];
-    }];
+    };
     
-    [_shopTable triggerPullToRefresh];
+    
+    [_shopTable addPullToRefreshWithActionHandler:loadDataBlock];
+    
+    loadDataBlock();
     
     // resigter notification
     [[NSNotificationCenter defaultCenter] addObserver:self

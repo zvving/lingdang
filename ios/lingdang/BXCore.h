@@ -18,7 +18,8 @@
 
 #define kCacheIsAdminMode   @"kCacheIsAdminMode"
 
-#define kCacheAllFood       @"kCacheAllFood"
+#define kCacheFoodsBy(shopId)       [NSString stringWithFormat:@"kCacheFoods_shop_%@", (shopId)]
+#define kCacheAllShops      @"kCacheAllShops"
 
 #define kNotificationGoMyOrder              @"kNotificationGoMyOrder"
 

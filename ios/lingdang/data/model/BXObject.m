@@ -7,6 +7,9 @@
 //
 
 #import "BXObject.h"
+#import <objc/runtime.h>
+#import "NSObject+Properties.h"
+
 
 @implementation BXObject
 
@@ -22,6 +25,28 @@
 + (AVQuery*)query;
 {
     return [AVQuery queryWithClassName:[self parseClassName]];
+}
+
+#pragma mark - NSCoding AVObject 缓存用不了，呜呜呜
+
+- (void)encodeWithCoder:(NSCoder *)aCoder {
+    NSArray *properties = [self propertyNames];
+    NSObject *obj = nil;
+    for (NSString* property in properties) {
+        obj = [self valueForKey:property];
+        [aCoder encodeObject:obj forKey:property];
+    }
+}
+
+- (id)initWithCoder:(NSCoder *)aDecoder {
+    self = [self init];
+    NSArray *properties = [self propertyNames];
+    NSObject *obj = nil;
+    for (NSString* propertyStr in properties) {
+        obj = [aDecoder decodeObjectForKey:propertyStr];
+        [self setValue:obj forKey:propertyStr];
+    }
+    return self;
 }
 
 + (instancetype)fixAVOSObject:(AVObject*)avObj;

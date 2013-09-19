@@ -39,7 +39,7 @@
 
 - (void)setName:(NSString *)name
 {
-    [self setObject:name forKey:@"name"];
+    [self setObject:name?:@"" forKey:@"name"];
 }
 
 - (NSString *)name

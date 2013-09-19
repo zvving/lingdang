@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface BXObject : AVObject
+@interface BXObject : AVObject <NSCoding>
 
 + (instancetype)object;
 
