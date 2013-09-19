@@ -63,13 +63,11 @@ UIPickerViewDataSource,UIPickerViewDelegate, UIActionSheetDelegate>
                                          style:UIBarButtonItemStyleBordered
                                        handler:^(id sender)
         {
-             if (self.tableView.editing)
-             {
+             if (self.tableView.editing) {
                  self.tableView.editing = NO;
                  ((UIBarButtonItem*)sender).title = @"编辑";;
              }
-             else
-             {
+             else {
                  self.tableView.editing = YES;
                  ((UIBarButtonItem*)sender).title = @"完成";;
              }
@@ -152,8 +150,6 @@ UIPickerViewDataSource,UIPickerViewDelegate, UIActionSheetDelegate>
     }];
     
     // load the foods accordding to the shop
-
-    
     [self.tableView addPullToRefreshWithActionHandler:^{
         [[BXFoodProvider sharedInstance]allFoodsInShop:self.shop onSuccess:^(NSArray *foods) {
             weakself.shopFoods = foods;
@@ -163,12 +159,13 @@ UIPickerViewDataSource,UIPickerViewDelegate, UIActionSheetDelegate>
             [weakself.tableView.pullToRefreshView stopAnimating];
         }];
     }];
+    
+    [self.tableView triggerPullToRefresh];
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    [self.tableView triggerPullToRefresh];
 }
 
 #pragma mark tableview delegate & datasource methods
@@ -200,7 +197,7 @@ UIPickerViewDataSource,UIPickerViewDelegate, UIActionSheetDelegate>
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (self.tableView.editing)
+    if (_isAdminMode)
     {
         BXFoodInfoViewController *foodEdit = [[BXFoodInfoViewController alloc] init];
         foodEdit.food = _shopFoods[indexPath.row];
@@ -217,9 +214,7 @@ UIPickerViewDataSource,UIPickerViewDelegate, UIActionSheetDelegate>
         previouse = indexPath;
     
         _food = _shopFoods[indexPath.row];
-    
-        [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    
+
         // animate the present
         CGRect bounds = self.view.bounds;
         CGRect originRect = _containerView.frame;
@@ -233,6 +228,7 @@ UIPickerViewDataSource,UIPickerViewDelegate, UIActionSheetDelegate>
             _containerView.frame = dstRect;
         } completion:nil];
     }
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
