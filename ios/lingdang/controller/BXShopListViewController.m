@@ -216,11 +216,7 @@
 {
     BXMyOrderViewController *myOrdersVC = [[BXMyOrderViewController alloc] init];
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:myOrdersVC];
-    [self presentViewController:nav animated:YES completion:^{
-        if ([notification.name isEqualToString:kNotificationGoMyOrder]) {
-            [self.navigationController popViewControllerAnimated:NO];
-        }
-    }];
+    [self presentViewController:nav animated:YES completion:nil];
 }
 
 @end
