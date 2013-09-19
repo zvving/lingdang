@@ -13,12 +13,16 @@
 #import "BXMyOrderCell.h"
 #import "BXOrderCmdCell.h"
 
+#define TagFromSctionAndRow(section, row)               (section*10000 + row)
+#define SectionFromTag(tag)                       (tag / 10000)
+#define RowFromTag(tag)                                 (tag % 10000)
+
 @interface BXMyOrderViewController ()<UITableViewDataSource, UITableViewDelegate>
 
 
 @property (weak, nonatomic) IBOutlet UITableView *  tableView;
 
-@property (nonatomic, strong) NSArray *             orderData;
+@property (nonatomic, strong) NSMutableArray *             orderData;
 
 
 @end
@@ -43,7 +47,7 @@
     __weak BXMyOrderViewController *weakself = self;
     [self.tableView addPullToRefreshWithActionHandler:^{
         [[BXOrderProvider sharedInstance] myOrders:^(NSArray *orders) {
-            weakself.orderData = orders;
+            weakself.orderData = [[NSMutableArray alloc] initWithArray:orders];
             [self.tableView reloadData];
             [weakself.tableView.pullToRefreshView stopAnimating];
         } fail:^(NSError *err) {
@@ -96,8 +100,10 @@
         UILabel *hintLabel = nil;
         switch (order.status) {
             case kOrderStatusEditable:
-                [cmdCell.cmdButton setTitle:@"修改订单" forState:UIControlStateNormal];
+                [cmdCell.cmdButton setTitle:@"取消订单" forState:UIControlStateNormal];
+                [cmdCell.cmdButton setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
                 [cmdCell.cmdButton addTarget:self action:@selector(editOrderAction:) forControlEvents:UIControlEventTouchUpInside];
+                cmdCell.cmdButton.tag = TagFromSctionAndRow(indexPath.section, indexPath.row);
                 break;
             case kOrderStatusArrived: case kOrderStatusOrdered:
                 hintLabel = [[UILabel alloc] init];
@@ -156,9 +162,16 @@
 
 #pragma mark button actions
 
-- (void)editOrderAction: (id)sender
+- (void)editOrderAction: (UIButton *)sender
 {
-    NSLog(@"first step to edit order");
+    NSInteger section = SectionFromTag(sender.tag);
+    
+    [self.orderData removeObjectAtIndex: section];
+    NSIndexSet *indexSet = [NSIndexSet indexSetWithIndex:section];
+    
+    [self.tableView beginUpdates];
+    [self.tableView deleteSections:indexSet withRowAnimation:UITableViewRowAnimationFade];
+    [self.tableView endUpdates];
 }
 
 @end
