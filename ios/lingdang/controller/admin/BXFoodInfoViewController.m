@@ -18,7 +18,6 @@
 @property (weak, nonatomic) IBOutlet UITextField *nameTf;
 @property (weak, nonatomic) IBOutlet UITextField *priceTf;
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
-@property (weak, nonatomic) IBOutlet UILabel *shopNameLabel;
 @property (weak, nonatomic) IBOutlet UIButton *foodCmdButton;
 
 @property (nonatomic, strong) NSArray *         shopData;
@@ -36,9 +35,14 @@
 {
     [super viewDidLoad];
     
-    self.edgesForExtendedLayout = UIRectEdgeNone;
+    self.edgesForExtendedLayout = UIRectEdgeAll;
     self.navigationController.navigationBar.barTintColor = kColorAdminRed;
-
+    
+    UIImage *tfBackground =  [[UIImage imageNamed:@"TextFieldBack"] resizableImageWithCapInsets:UIEdgeInsetsMake(2.0f, 2.0f, 2.0f, 2.0f)];
+    self.nameTf.background = tfBackground;
+    self.priceTf.background = tfBackground;
+    CGRect bountds = [self.nameTf editingRectForBounds:CGRectMake(30.0f, 0.0f, 210.0f, 44.0)];
+    
     self.title = _food ? @"更新菜品" : @"新增菜品";
     if (_food)
     {
@@ -46,8 +50,6 @@
         self.nameTf.text = _food.name;
         self.priceTf.text = [NSString stringWithFormat:@"%g",_food.price];
     }
-    
-    _shopNameLabel.text = _shop.name;
 }
 
 
@@ -88,7 +90,7 @@
     self.food.name = _nameTf.text;
     self.food.price = [_priceTf.text floatValue];
     [[BXFoodProvider sharedInstance] updateFood:self.food onSuccess:^{
-        NSString *title = [NSString stringWithFormat:@"菜品已新增"];
+        NSString *title = [NSString stringWithFormat:@"更新成功"];
         [SVProgressHUD showSuccessWithStatus:title];
         double delayInSeconds = 1.0;
         dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));

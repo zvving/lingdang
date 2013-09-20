@@ -52,6 +52,7 @@
 		A991CA7C17E5512000068FDD /* BXMyShopCarViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A991CA7A17E5512000068FDD /* BXMyShopCarViewController.xib */; };
 		A9B2981717E5D466000D9862 /* BXMyOrderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A9B2981617E5D466000D9862 /* BXMyOrderCell.m */; };
 		A9B2981917E5D4CA000D9862 /* BXMyOrderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A9B2981817E5D4CA000D9862 /* BXMyOrderCell.xib */; };
+		A9F157D617EBFC7E003CA9F9 /* TextFieldBack@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A9F157D517EBFC7E003CA9F9 /* TextFieldBack@2x.png */; };
 		A9FE829117E48349008C1640 /* BXShopListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A9FE828F17E48349008C1640 /* BXShopListViewController.m */; };
 		A9FE829217E48349008C1640 /* BXShopListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A9FE829017E48349008C1640 /* BXShopListViewController.xib */; };
 /* End PBXBuildFile section */
@@ -126,13 +127,14 @@
 		36F3CB1517E554F30064237A /* BXOrderFoodCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BXOrderFoodCell.xib; sourceTree = "<group>"; };
 		36F3CB1717E556490064237A /* BXOrderCmdCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BXOrderCmdCell.xib; sourceTree = "<group>"; };
 		9E20000085954C69A6BBD3EE /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		A991CA7617E496CE00068FDD /* balana.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = balana.png; sourceTree = "<group>"; };
+		A991CA7617E496CE00068FDD /* balana.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = balana.png; path = ../support/balana.png; sourceTree = "<group>"; };
 		A991CA7817E5512000068FDD /* BXMyShopCarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BXMyShopCarViewController.h; sourceTree = "<group>"; };
 		A991CA7917E5512000068FDD /* BXMyShopCarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BXMyShopCarViewController.m; sourceTree = "<group>"; };
 		A991CA7A17E5512000068FDD /* BXMyShopCarViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BXMyShopCarViewController.xib; sourceTree = "<group>"; };
 		A9B2981517E5D466000D9862 /* BXMyOrderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BXMyOrderCell.h; path = cell/BXMyOrderCell.h; sourceTree = "<group>"; };
 		A9B2981617E5D466000D9862 /* BXMyOrderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BXMyOrderCell.m; path = cell/BXMyOrderCell.m; sourceTree = "<group>"; };
 		A9B2981817E5D4CA000D9862 /* BXMyOrderCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = BXMyOrderCell.xib; path = cell/BXMyOrderCell.xib; sourceTree = "<group>"; };
+		A9F157D517EBFC7E003CA9F9 /* TextFieldBack@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "TextFieldBack@2x.png"; sourceTree = "<group>"; };
 		A9FE828E17E48349008C1640 /* BXShopListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BXShopListViewController.h; sourceTree = "<group>"; };
 		A9FE828F17E48349008C1640 /* BXShopListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BXShopListViewController.m; sourceTree = "<group>"; };
 		A9FE829017E48349008C1640 /* BXShopListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BXShopListViewController.xib; sourceTree = "<group>"; };
@@ -226,11 +228,11 @@
 				0D1B15F917BF54140019AD6F /* BXShopProvider.m */,
 				0D1B15FA17BF54140019AD6F /* BXUserProvider.h */,
 				0D1B15FB17BF54140019AD6F /* BXUserProvider.m */,
-				0D1B15FC17BF54140019AD6F /* model */,
 				0DF3C8E717E5F64000B0F586 /* BXOrderShopGroup.h */,
 				0DF3C8E817E5F64000B0F586 /* BXOrderShopGroup.m */,
 				0DBE424917EAF92C003CB04F /* BXPushProvider.h */,
 				0DBE424A17EAF92C003CB04F /* BXPushProvider.m */,
+				0D1B15FC17BF54140019AD6F /* model */,
 			);
 			name = data;
 			path = ../data;
@@ -263,7 +265,6 @@
 		0D1B160517BF54140019AD6F /* support */ = {
 			isa = PBXGroup;
 			children = (
-				A991CA7617E496CE00068FDD /* balana.png */,
 				0D1B160617BF54140019AD6F /* Default-568h@2x.png */,
 				0D1B160717BF54140019AD6F /* Default.png */,
 				0D1B160817BF54140019AD6F /* Default@2x.png */,
@@ -313,6 +314,7 @@
 				0D1B15C217BE9F170019AD6F /* BXConfig.h */,
 				0D1B15E517BF54140019AD6F /* controller */,
 				0D1B160317BF54140019AD6F /* lib */,
+				A9F157D417EBFC5E003CA9F9 /* resources */,
 				0D1B160517BF54140019AD6F /* support */,
 				0D29F43A17E4477A00168ADB /* Images.xcassets */,
 			);
@@ -333,6 +335,15 @@
 				A9B2981817E5D4CA000D9862 /* BXMyOrderCell.xib */,
 			);
 			name = cell;
+			sourceTree = "<group>";
+		};
+		A9F157D417EBFC5E003CA9F9 /* resources */ = {
+			isa = PBXGroup;
+			children = (
+				A9F157D517EBFC7E003CA9F9 /* TextFieldBack@2x.png */,
+				A991CA7617E496CE00068FDD /* balana.png */,
+			);
+			path = resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -405,6 +416,7 @@
 				0D1B162417BF54140019AD6F /* BXFoodListViewController.xib in Resources */,
 				0D1B161317BF54140019AD6F /* BXFoodInfoViewController.xib in Resources */,
 				0D1B161517BF54140019AD6F /* BXOrderListViewController.xib in Resources */,
+				A9F157D617EBFC7E003CA9F9 /* TextFieldBack@2x.png in Resources */,
 				A991CA7C17E5512000068FDD /* BXMyShopCarViewController.xib in Resources */,
 				0D1B162517BF54140019AD6F /* InfoPlist.strings in Resources */,
 				0DF3C8E317E5908700B0F586 /* BXShopAddViewController.xib in Resources */,
