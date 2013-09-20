@@ -21,6 +21,7 @@
 @property (weak, nonatomic) IBOutlet UITableView *  tableView;
 
 @property (weak, nonatomic) IBOutlet UISegmentedControl *  showTypeSeg;
+@property (weak, nonatomic) IBOutlet UIButton *shopButton;
 
 @property (nonatomic,strong) NSDate* selectDate;
 
@@ -58,15 +59,19 @@
     
     __block BXOrderListViewController *weakSelf = self;
 
+#if TARGET_IPHONE_SIMULATOR
+    
     self.navigationItem.leftBarButtonItem =
-    [[UIBarButtonItem alloc] initWithTitle:@"切至食客"
+    [[UIBarButtonItem alloc] initWithTitle:@"切至吃货"
                                      style:UIBarButtonItemStylePlain
                                    handler:^(id sender)
     {
-        [weakSelf dismissViewControllerAnimated:YES completion:^{
-            [[EGOCache globalCache] removeCacheForKey:kCacheIsAdminMode];
-        }];
+        [weakSelf trunToEaterModel];
     }];
+    
+    self.shopButton.hidden = NO;
+    
+#endif
     
     self.navigationItem.rightBarButtonItem =
     [[UIBarButtonItem alloc] initWithTitle:@"历史订单"
@@ -320,6 +325,13 @@
 }
 
 #pragma mark - Private Methord
+
+- (void)trunToEaterModel
+{
+    [[EGOCache globalCache] removeCacheForKey:kCacheIsAdminMode];
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
 - (void) updateTitle
 {
     NSDate* now = [NSDate date];
@@ -351,4 +363,28 @@
     shopVC.isAdminMode = YES;
     [self.navigationController pushViewController:shopVC animated:YES];
 }
+
+
+#pragma mark - Shake
+
+-(BOOL)canBecomeFirstResponder {
+    return YES;
+}
+
+- (void)motionEnded:(UIEventSubtype)motion withEvent:(UIEvent *)event
+{
+    if (motion == UIEventSubtypeMotionShake)
+    {
+        UIActionSheet *as = [UIActionSheet actionSheetWithTitle:@"隐藏功能"];
+        [as setDestructiveButtonWithTitle:@"切至吃货模式" handler:^{
+            [self trunToEaterModel];
+        }];
+        [as addButtonWithTitle:@"管理店铺、菜品" handler:^{
+            [self shopButtonClicked:nil];
+        }];
+        [as setCancelButtonWithTitle:@"取消" handler:nil];
+        [as showInView:self.view];
+    }
+}
+
 @end

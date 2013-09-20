@@ -190,8 +190,8 @@
 				0D1B15E717BF54140019AD6F /* BXFoodInfoViewController.h */,
 				0D1B15E817BF54140019AD6F /* BXFoodInfoViewController.m */,
 				0D1B15E917BF54140019AD6F /* BXFoodInfoViewController.xib */,
-				0D1B15EB17BF54140019AD6F /* BXOrderListViewController.m */,
 				0D1B15EA17BF54140019AD6F /* BXOrderListViewController.h */,
+				0D1B15EB17BF54140019AD6F /* BXOrderListViewController.m */,
 				0D1B15EC17BF54140019AD6F /* BXOrderListViewController.xib */,
 				36F3CB0917E4B34B0064237A /* BXDateSelectView.h */,
 				36F3CB0A17E4B34B0064237A /* BXDateSelectView.m */,
@@ -386,7 +386,7 @@
 				ORGANIZATIONNAME = baixing.com;
 				TargetAttributes = {
 					0DF135CC17BE827400262A1F = {
-						DevelopmentTeam = 74UX6D4SCA;
+						DevelopmentTeam = L5B4TBT7H9;
 					};
 				};
 			};
@@ -608,7 +608,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Shanghai Kijiji Information Technology Co., Ltd.";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "lingdang/support/lingdang-Prefix.pch";
 				INFOPLIST_FILE = "$(SRCROOT)/lingdang/support/lingdang-Info.plist";

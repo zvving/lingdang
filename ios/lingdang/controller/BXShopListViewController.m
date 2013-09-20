@@ -116,15 +116,18 @@
     else // 订餐界面
     {
         
+#if TARGET_IPHONE_SIMULATOR
+        
         self.navigationItem.leftBarButtonItem =
         [[UIBarButtonItem alloc] initWithTitle:@"切至管家"
                                          style:UIBarButtonItemStylePlain
                                        handler:^(id sender)
          {
-             [[EGOCache globalCache] setString:@"YES" forKey:kCacheIsAdminMode];
-             [weakSelf presentViewController:_adminNav animated:YES completion:nil];
+             [self trunToAdminModel];
          }];
         
+#endif
+
         self.navigationItem.rightBarButtonItem =
         [[UIBarButtonItem alloc] initWithTitle:@"我的订单"
                                          style:UIBarButtonItemStylePlain
@@ -227,6 +230,30 @@
     BXMyOrderViewController *myOrdersVC = [[BXMyOrderViewController alloc] init];
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:myOrdersVC];
     [self presentViewController:nav animated:YES completion:nil];
+}
+
+
+#pragma mark - Shake
+
+- (void)motionEnded:(UIEventSubtype)motion withEvent:(UIEvent *)event
+{
+    if (motion == UIEventSubtypeMotionShake)
+    {
+        UIActionSheet *as = [UIActionSheet actionSheetWithTitle:@"隐藏功能"];
+        [as setDestructiveButtonWithTitle:@"切至管家模式" handler:^{
+            [self trunToAdminModel];
+        }];
+        [as setCancelButtonWithTitle:@"取消" handler:nil];
+        [as showInView:self.view];
+    }
+}
+
+#pragma mark - private
+
+- (void)trunToAdminModel
+{
+    [[EGOCache globalCache] setString:@"YES" forKey:kCacheIsAdminMode];
+    [self presentViewController:_adminNav animated:YES completion:nil];
 }
 
 @end

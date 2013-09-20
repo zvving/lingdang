@@ -20,7 +20,9 @@
 @implementation BXAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
-{    
+{
+    application.applicationSupportsShakeToEdit = YES;
+    
     [AVOSCloud setApplicationId:kAVOSAppId clientKey:kAVOSClientKey];
     [AVOSCloud useAVCloudCN];
     
