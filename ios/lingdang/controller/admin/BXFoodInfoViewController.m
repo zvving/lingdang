@@ -37,12 +37,7 @@
     
     self.edgesForExtendedLayout = UIRectEdgeAll;
     self.navigationController.navigationBar.barTintColor = kColorAdminRed;
-    
-    UIImage *tfBackground =  [[UIImage imageNamed:@"TextFieldBack"] resizableImageWithCapInsets:UIEdgeInsetsMake(2.0f, 2.0f, 2.0f, 2.0f)];
-    self.nameTf.background = tfBackground;
-    self.priceTf.background = tfBackground;
-    CGRect bountds = [self.nameTf editingRectForBounds:CGRectMake(30.0f, 0.0f, 210.0f, 44.0)];
-    
+        
     self.title = _food ? @"更新菜品" : @"新增菜品";
     if (_food)
     {
@@ -50,8 +45,14 @@
         self.nameTf.text = _food.name;
         self.priceTf.text = [NSString stringWithFormat:@"%g",_food.price];
     }
+    
+    __weak BXFoodInfoViewController *weakself = self;
+    double delayInSeconds = 1.0;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        [weakself.nameTf becomeFirstResponder];
+    });
 }
-
 
 #pragma mark - refresh data
 
@@ -100,6 +101,12 @@
     } onFail:^(NSError *err) {
         [SVProgressHUD showErrorWithStatus:@"菜品更新失败"];
     }];
+}
+
+#pragma mark button actions
+- (IBAction)backgroundTapped:(id)sender
+{
+    [self.view endEditing:YES];
 }
 
 @end
