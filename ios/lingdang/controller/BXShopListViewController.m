@@ -83,6 +83,15 @@
                                              selector:@selector(showMyOrder:)
                                                  name:kNotificationGoMyOrder
                                                object:nil];
+    
+    UILongPressGestureRecognizer *ges = [UILongPressGestureRecognizer recognizerWithHandler:^(UIGestureRecognizer *sender, UIGestureRecognizerState state, CGPoint location) {
+        CGPoint p = [sender locationInView:self.shopTable];
+        NSIndexPath *indexPath = [self.shopTable indexPathForRowAtPoint:p];
+        if (indexPath && state == UIGestureRecognizerStateBegan) {
+            [self pushEdithShopViewByIndexPath:indexPath];
+        }
+    }];
+    [self.shopTable addGestureRecognizer:ges];
 }
 
 - (void)buildBarButtons
@@ -187,9 +196,7 @@
 {
     if (self.shopTable.editing)
     {
-        BXShopAddViewController *shopEdit = [[BXShopAddViewController alloc] init];
-        shopEdit.curShop = _shops[indexPath.row];
-        [self.navigationController pushViewController:shopEdit animated:YES];
+        [self pushEdithShopViewByIndexPath:indexPath];
     }
     else
     {
@@ -249,6 +256,13 @@
 }
 
 #pragma mark - private
+
+- (void)pushEdithShopViewByIndexPath:(NSIndexPath*)indexPath
+{
+    BXShopAddViewController *shopEdit = [[BXShopAddViewController alloc] init];
+    shopEdit.curShop = _shops[indexPath.row];
+    [self.navigationController pushViewController:shopEdit animated:YES];
+}
 
 - (void)trunToAdminModel
 {
