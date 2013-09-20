@@ -6,23 +6,23 @@
 //  Copyright (c) 2013年 baixing.com. All rights reserved.
 //
 
+#import <MobileCoreServices/UTCoreTypes.h>
+
 #import "BXFoodInfoViewController.h"
-
 #import "BXShop.h"
-
 #import "BXShopProvider.h"
 #import "BXFoodProvider.h"
 
-@interface BXFoodInfoViewController () <UIActionSheetDelegate>
+@interface BXFoodInfoViewController () <UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
-@property (weak, nonatomic) IBOutlet UITextField *nameTf;
-@property (weak, nonatomic) IBOutlet UITextField *priceTf;
-@property (weak, nonatomic) IBOutlet UIImageView *imageView;
-@property (weak, nonatomic) IBOutlet UIButton *foodCmdButton;
+@property (weak, nonatomic) IBOutlet UITextField    *nameTf;
+@property (weak, nonatomic) IBOutlet UITextField    *priceTf;
+@property (weak, nonatomic) IBOutlet UIImageView    *imageView;
+@property (weak, nonatomic) IBOutlet UIButton       *foodCmdButton;
 
-@property (nonatomic, strong) NSArray *         shopData;
+@property (nonatomic, strong) NSArray               *shopData;
 
-// post action
+@property (nonatomic, strong) AVFile                *image;
 
 // private
 - (IBAction)foodCmdButtonClicked:(id)sender;
@@ -45,13 +45,6 @@
         self.nameTf.text = _food.name;
         self.priceTf.text = [NSString stringWithFormat:@"%g",_food.price];
     }
-    
-    __weak BXFoodInfoViewController *weakself = self;
-    double delayInSeconds = 1.0;
-    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-        [weakself.nameTf becomeFirstResponder];
-    });
 }
 
 #pragma mark - refresh data
@@ -72,7 +65,12 @@
 - (void)addFood
 {
     [SVProgressHUD showWithStatus:@"新增菜品中" maskType:SVProgressHUDMaskTypeGradient];
-    [[BXFoodProvider sharedInstance] addFoodWithName:_nameTf.text price:([_priceTf.text floatValue]) shop:_shop imageStr:nil upImgUser:nil success:^(BXFood *food) {
+    [[BXFoodProvider sharedInstance] addFoodWithName:_nameTf.text
+                                               price:([_priceTf.text floatValue])
+                                                shop:_shop
+                                               image:self.image
+                                           upImgUser:nil
+                                             success:^(BXFood *food) {
         NSString *title = [NSString stringWithFormat:@"%@已新增", food.name];
         [SVProgressHUD showSuccessWithStatus:title];
         double delayInSeconds = 1.0;
@@ -90,6 +88,7 @@
     [SVProgressHUD showWithStatus:@"更新菜品中" maskType:SVProgressHUDMaskTypeGradient];
     self.food.name = _nameTf.text;
     self.food.price = [_priceTf.text floatValue];
+    self.food.image = self.image;
     [[BXFoodProvider sharedInstance] updateFood:self.food onSuccess:^{
         NSString *title = [NSString stringWithFormat:@"更新成功"];
         [SVProgressHUD showSuccessWithStatus:title];
@@ -124,7 +123,7 @@
 #define SelectPhotoFromLibraryButtonIndex           1
 #define CancelButtonIndex                           2
 
-#pragma mark uiactionsheet actions
+#pragma mark - uiactionsheet action delegate methods
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     UIImagePickerControllerSourceType sourceType;
@@ -145,8 +144,41 @@
         }
         UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
         imagePicker.sourceType = sourceType;
+        imagePicker.mediaTypes = @[(NSString *)kUTTypeImage];
+        imagePicker.allowsEditing = NO;
+        imagePicker.delegate = self;
         [self presentViewController:imagePicker animated:YES completion:nil];
     }
 }
 
+#pragma mark - UIImagePickerViewController delegate methods
+
+- (void)imagePickerController:(UIImagePickerController *)picker
+didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+    UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
+    __weak BXFoodInfoViewController *weakself = self;
+    [self dismissViewControllerAnimated:YES completion:^{
+        //上传image到AVCloud
+        NSData *imageData = UIImagePNGRepresentation(image);
+        AVFile *imageFile = [AVFile fileWithName:_food.objectId data:imageData];
+        
+        [imageFile saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+            weakself.navigationController.view.userInteractionEnabled = YES;
+            if (error != nil) {
+                [SVProgressHUD showErrorWithStatus:@"上传失败！"];
+            }
+            if (succeeded) {
+                [SVProgressHUD showSuccessWithStatus:@"上传成功！"];
+                weakself.imageView.image = image;
+            }
+        } progressBlock:^(int percentDone) {
+            weakself.navigationController.view.userInteractionEnabled = NO;
+            [SVProgressHUD showProgress:percentDone/100.0 status:@"正在上传"];
+        }];
+        AVFile *oldFile = weakself.food.image;
+        [oldFile deleteInBackgroundWithBlock:nil];
+        weakself.image = imageFile;
+    }];
+}
 @end

@@ -67,4 +67,14 @@
     return [self objectForKey:@"shopName"];
 }
 
+- (AVFile *)image
+{
+    return [self objectForKey:@"image"];
+}
+
+- (void)setImage:(AVFile *)image
+{
+    [self setObject:image forKey:@"image"];
+}
+
 @end

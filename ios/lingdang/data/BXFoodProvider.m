@@ -16,7 +16,7 @@ BCSINGLETON_IN_M(BXFoodProvider)
 - (void)addFoodWithName:(NSString*)name
                   price:(float)price
                    shop:(BXShop*)shop
-               imageStr:(NSString*)imageStr
+                  image:(AVFile*)image
               upImgUser:(AVUser*)upImgUser
                 success:(void(^)(BXFood* food))sucBlock
                    fail:(void(^)(NSError* err))failBlock;
@@ -25,7 +25,7 @@ BCSINGLETON_IN_M(BXFoodProvider)
     food.name = name;
     food.price = price;
     food.pToShop = shop;
-    food.imageStr = imageStr;
+    food.image = image;
     food.upImgUser = upImgUser;
     [food saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         if (succeeded) {

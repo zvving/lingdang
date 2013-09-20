@@ -15,7 +15,7 @@
 @interface BXFood : BXObject
 
 @property (nonatomic, strong)       NSString *          name;
-@property (nonatomic, strong)       NSString *          imageStr;
+@property (nonatomic, strong)       AVFile *            image;
 @property (nonatomic, assign)       float               price;
 @property (nonatomic, strong)       BXShop *            pToShop;
 @property (nonatomic, strong)       AVUser *            upImgUser;
