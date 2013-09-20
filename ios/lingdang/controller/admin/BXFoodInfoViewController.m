@@ -44,6 +44,16 @@
         [self.foodCmdButton setTitle:@"更新菜品" forState:UIControlStateNormal];
         self.nameTf.text = _food.name;
         self.priceTf.text = [NSString stringWithFormat:@"%g",_food.price];
+        
+        __weak BXFoodInfoViewController *weakself = self;
+        AVFile *file = _food.image;
+        if (file != nil) {
+            [file getThumbnail:YES width:_imageView.bounds.size.width height:_imageView.bounds.size.height withBlock:^(UIImage *image, NSError *error) {
+                if (error == nil) {
+                    weakself.imageView.image = image;
+                }
+            }];
+        }
     }
 }
 
@@ -159,8 +169,10 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
     UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
     __weak BXFoodInfoViewController *weakself = self;
     [self dismissViewControllerAnimated:YES completion:^{
+        weakself.navigationController.view.userInteractionEnabled = NO;
+        
         //上传image到AVCloud
-        NSData *imageData = UIImagePNGRepresentation(image);
+        NSData *imageData = UIImageJPEGRepresentation(image, 0.5);
         AVFile *imageFile = [AVFile fileWithName:_food.objectId data:imageData];
         
         [imageFile saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
@@ -173,11 +185,15 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
                 weakself.imageView.image = image;
             }
         } progressBlock:^(int percentDone) {
-            weakself.navigationController.view.userInteractionEnabled = NO;
-            [SVProgressHUD showProgress:percentDone/100.0 status:@"正在上传"];
+            [SVProgressHUD showProgress:percentDone / 100.0f status:@"正在上传"];
         }];
-        AVFile *oldFile = weakself.food.image;
-        [oldFile deleteInBackgroundWithBlock:nil];
+        
+        if (weakself.food != nil) {
+            AVFile *oldFile = weakself.food.image;
+            if (oldFile != nil && [oldFile isKindOfClass:[NSNull class]] == false) {
+                [oldFile deleteInBackgroundWithBlock:nil];
+            }
+        }
         weakself.image = imageFile;
     }];
 }

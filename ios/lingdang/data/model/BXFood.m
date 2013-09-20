@@ -69,12 +69,18 @@
 
 - (AVFile *)image
 {
-    return [self objectForKey:@"image"];
+    AVFile *avfile = [self objectForKey:@"image"];
+    if (avfile == nil || [avfile isMemberOfClass:[NSNull class]]) {
+        return nil;
+    }
+    return avfile;
 }
 
 - (void)setImage:(AVFile *)image
 {
-    [self setObject:image forKey:@"image"];
+    if (image != nil && [image.objectId isEqualToString: self.objectId] == false) {
+        [self setObject:image forKey:@"image"];
+    }
 }
 
 @end

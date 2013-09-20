@@ -27,6 +27,7 @@ UIPickerViewDataSource,UIPickerViewDelegate, UIActionSheetDelegate>
 @property (weak, nonatomic)   IBOutlet UIPickerView     * amountPicker;
 
 @property (strong, nonatomic) NSArray                   * shopFoods;
+@property (strong, nonatomic) NSMutableDictionary       * foodsImages;
 @property (weak, nonatomic) IBOutlet UIButton *addFoodButton;
 
 @property (strong, nonatomic) BXFood                    * food;
@@ -151,9 +152,20 @@ UIPickerViewDataSource,UIPickerViewDelegate, UIActionSheetDelegate>
     
     
     // load the foods accordding to the shop
+    weakself.foodsImages = [[NSMutableDictionary alloc] init];
     void (^loadDataBlock)(void) = ^ {
         [[BXFoodProvider sharedInstance]allFoodsInShop:self.shop onSuccess:^(NSArray *foods) {
             weakself.shopFoods = foods;
+            [foods enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+                BXFood *food = obj;
+                AVFile *file = food.image;
+                [file getThumbnail:NO width:128 height:128 withBlock:^(UIImage *image, NSError *error) {
+                    if (error == nil) {
+                        [weakself.foodsImages setObject:image forKey:food.objectId];
+                    }
+                }];
+            }];
+            
             [weakself.tableView reloadData];
             [weakself.tableView.pullToRefreshView stopAnimating];
         } onFail:^(NSError *err) {
@@ -190,9 +202,8 @@ UIPickerViewDataSource,UIPickerViewDelegate, UIActionSheetDelegate>
     }
     
     BXFood *food = _shopFoods[indexPath.row];
-    
-    cell.imageView.image = [UIImage imageNamed:@"balana"];
     cell.textLabel.text = food.name;
+    cell.imageView.image = _foodsImages[food.objectId];
     cell.detailTextLabel.text = [NSString stringWithFormat:@"%g", food.price];
     return cell;
 }
