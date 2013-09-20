@@ -30,4 +30,8 @@ BCSINGLETON_IN_H(BXOrderProvider)
 - (void)myOrders:(void(^)(NSArray* orders))sucBlock
              fail:(void(^)(NSError* err))failBlock;
 
+- (void)deleteOrder:(BXOrder *) order
+          onSuccess:(void (^)(void)) sucBlock
+             onFail:(void (^)(NSError *err)) errBlock;
+
 @end

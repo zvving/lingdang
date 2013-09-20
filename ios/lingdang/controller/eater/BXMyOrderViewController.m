@@ -14,7 +14,7 @@
 #import "BXOrderCmdCell.h"
 
 #define TagFromSctionAndRow(section, row)               (section*10000 + row)
-#define SectionFromTag(tag)                       (tag / 10000)
+#define SectionFromTag(tag)                             (tag / 10000)
 #define RowFromTag(tag)                                 (tag % 10000)
 
 @interface BXMyOrderViewController ()<UITableViewDataSource, UITableViewDelegate>
@@ -165,13 +165,25 @@
 - (void)editOrderAction: (UIButton *)sender
 {
     NSInteger section = SectionFromTag(sender.tag);
+    BXOrder *order = self.orderData[section];
     
-    [self.orderData removeObjectAtIndex: section];
-    NSIndexSet *indexSet = [NSIndexSet indexSetWithIndex:section];
+    __weak BXMyOrderViewController *weakself = self;
+    [[BXOrderProvider sharedInstance] deleteOrder:order onSuccess:^{
+        [weakself.orderData removeObjectAtIndex: section];
+        NSIndexSet *indexSet = [NSIndexSet indexSetWithIndex:section];
+        
+        // pls check http://t.cn/z8ncg24
+        [CATransaction begin];
+        [CATransaction setCompletionBlock:^{
+            [weakself.tableView reloadData];
+        }];
+        [weakself.tableView beginUpdates];
+        [weakself.tableView deleteSections:indexSet withRowAnimation:UITableViewRowAnimationFade];
+        [weakself.tableView endUpdates];
     
-    [self.tableView beginUpdates];
-    [self.tableView deleteSections:indexSet withRowAnimation:UITableViewRowAnimationFade];
-    [self.tableView endUpdates];
+        [CATransaction commit];
+
+    } onFail:nil];
 }
 
 @end

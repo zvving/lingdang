@@ -41,7 +41,7 @@ BCSINGLETON_IN_M(BXOrderProvider)
 {
     PFQuery *query = [BXOrder query];
 
-    [query addAscendingOrder:@"updatedAt"];
+    [query addDescendingOrder:@"updatedAt"];
     [query includeKey:@"shop"];
     [query includeKey:@"pToUser"];
 
@@ -65,7 +65,7 @@ BCSINGLETON_IN_M(BXOrderProvider)
     PFQuery *query = [BXOrder query];
     [query whereKey:@"updatedAt" greaterThan:date];
     [query whereKey:@"updatedAt" lessThan:[NSDate dateWithTimeInterval:3600*24 sinceDate:date]];
-    [query addAscendingOrder:@"updatedAt"];
+    [query addDescendingOrder:@"updatedAt"];
     
     
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
@@ -103,6 +103,47 @@ BCSINGLETON_IN_M(BXOrderProvider)
             }
         }
     }];
+}
+
+#warning TODO 这里server端需要检测order的status，如果非0的话，不允许删除
+- (void)deleteOrder:(BXOrder *) order
+          onSuccess:(void (^)(void)) sucBlock
+             onFail:(void (^)(NSError *err)) errBlock
+{
+    AVUser *currentUser = [AVUser currentUser];
+    if ([order.pToUser.objectId isEqualToString:currentUser.objectId] == NO) {
+        NSError *error = [[NSError alloc] initWithDomain:nil
+                                                        code:0
+                                                    userInfo:@{@"msg": @"你没有权限操作"}];
+        [self processError:error withBlock:errBlock];
+        return;
+    }
+    
+    [order deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        if (error != nil) {
+            if (error) {
+                NSError *err = [[NSError alloc] initWithDomain:nil
+                                                          code:error.code
+                                                      userInfo:@{@"msg":@"取消失败，请稍后重试"}];
+
+                [self processError:err withBlock:errBlock];
+            }
+        }
+        
+        if (succeeded && sucBlock) {
+            sucBlock();
+        }
+    }];
+}
+
+- (void)processError:(NSError *)error
+           withBlock:(void (^)(NSError *err)) errBlock
+{
+    if (error != nil) {
+        errBlock(error);
+    } else {
+        [SVProgressHUD showErrorWithStatus:error.userInfo[@"msg"]];
+    }
 }
 
 @end

@@ -18,7 +18,6 @@
 @property (weak, nonatomic) IBOutlet UITextField *nameTf;
 @property (weak, nonatomic) IBOutlet UITextField *priceTf;
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
-@property (weak, nonatomic) IBOutlet UILabel *shopNameLabel;
 @property (weak, nonatomic) IBOutlet UIButton *foodCmdButton;
 
 @property (nonatomic, strong) NSArray *         shopData;
@@ -36,9 +35,9 @@
 {
     [super viewDidLoad];
     
-    self.edgesForExtendedLayout = UIRectEdgeNone;
+    self.edgesForExtendedLayout = UIRectEdgeAll;
     self.navigationController.navigationBar.barTintColor = kColorAdminRed;
-
+        
     self.title = _food ? @"更新菜品" : @"新增菜品";
     if (_food)
     {
@@ -47,9 +46,13 @@
         self.priceTf.text = [NSString stringWithFormat:@"%g",_food.price];
     }
     
-    _shopNameLabel.text = _shop.name;
+    __weak BXFoodInfoViewController *weakself = self;
+    double delayInSeconds = 1.0;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        [weakself.nameTf becomeFirstResponder];
+    });
 }
-
 
 #pragma mark - refresh data
 
@@ -88,7 +91,7 @@
     self.food.name = _nameTf.text;
     self.food.price = [_priceTf.text floatValue];
     [[BXFoodProvider sharedInstance] updateFood:self.food onSuccess:^{
-        NSString *title = [NSString stringWithFormat:@"菜品已新增"];
+        NSString *title = [NSString stringWithFormat:@"更新成功"];
         [SVProgressHUD showSuccessWithStatus:title];
         double delayInSeconds = 1.0;
         dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
@@ -98,6 +101,12 @@
     } onFail:^(NSError *err) {
         [SVProgressHUD showErrorWithStatus:@"菜品更新失败"];
     }];
+}
+
+#pragma mark button actions
+- (IBAction)backgroundTapped:(id)sender
+{
+    [self.view endEditing:YES];
 }
 
 @end
