@@ -20,14 +20,14 @@
     return [[BXOrder alloc] initWithClassName:[BXOrder parseClassName]];
 }
 
-- (void)setPToUser:(AVUser *)pToUser
-{
-    [self setObject:pToUser forKey:@"pToUser"];
-}
-
-- (AVUser *)pToUser
+- (AVUser *)user
 {
     return [self objectForKey:@"pToUser"];
+}
+
+- (void)setUser:(AVUser *)user
+{
+    [self setObject:user forKey:@"pToUser"];
 }
 
 - (void)setStatus:(OrderStatus)status

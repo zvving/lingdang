@@ -92,7 +92,7 @@ BCSINGLETON_IN_M(BXMyShopCarViewController);
 - (IBAction)createOrder:(id)sender
 {
     BXOrder *order = [BXOrder object];
-    order.pToUser = [AVUser currentUser];
+    order.user = [AVUser currentUser];
     order.status = 0;
     order.isPaid = NO;
     NSMutableArray *foodArr = [NSMutableArray array];

@@ -20,7 +20,7 @@ typedef enum {
 @interface BXOrder : BXObject
 
 //下单者
-@property (nonatomic, strong) AVUser *                  pToUser;
+@property (nonatomic, strong) AVUser *                  user;
 
 //订单状态:0 已下单可修改,1 已预订不可修改,2 已送达
 @property (nonatomic, assign) OrderStatus               status;
