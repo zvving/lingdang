@@ -13,7 +13,7 @@
 #import "BXShopProvider.h"
 #import "BXFoodProvider.h"
 
-@interface BXFoodInfoViewController () 
+@interface BXFoodInfoViewController () <UIActionSheetDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextField *nameTf;
 @property (weak, nonatomic) IBOutlet UITextField *priceTf;
@@ -93,7 +93,7 @@
     [[BXFoodProvider sharedInstance] updateFood:self.food onSuccess:^{
         NSString *title = [NSString stringWithFormat:@"更新成功"];
         [SVProgressHUD showSuccessWithStatus:title];
-        double delayInSeconds = 1.0;
+        double delayInSeconds = 0.1;
         dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
         dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
             [self.navigationController popViewControllerAnimated:YES];
@@ -107,6 +107,46 @@
 - (IBAction)backgroundTapped:(id)sender
 {
     [self.view endEditing:YES];
+}
+
+- (IBAction)imageButtonAction:(id)sender
+{
+    [self.view endEditing:YES];
+    UIActionSheet *acSheet = [[UIActionSheet alloc] initWithTitle:nil
+                                                         delegate:self
+                                                cancelButtonTitle:@"取消"
+                                           destructiveButtonTitle:nil
+                                                otherButtonTitles:@"拍照", @"从手机相册选择", nil];
+    [acSheet showInView:self.view];
+}
+
+#define TakePhotoButtonIndex                        0
+#define SelectPhotoFromLibraryButtonIndex           1
+#define CancelButtonIndex                           2
+
+#pragma mark uiactionsheet actions
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    UIImagePickerControllerSourceType sourceType;
+    switch (buttonIndex) {
+        case TakePhotoButtonIndex:
+            sourceType = UIImagePickerControllerSourceTypeCamera;
+            break;
+        case SelectPhotoFromLibraryButtonIndex:
+            sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+            break;
+    }
+    
+    if (buttonIndex == TakePhotoButtonIndex ||
+        buttonIndex == SelectPhotoFromLibraryButtonIndex) {
+        if ([UIImagePickerController isSourceTypeAvailable:sourceType] == false) {
+            [SVProgressHUD showErrorWithStatus:@"哥，换个新手机吧"];
+            return ;
+        }
+        UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
+        imagePicker.sourceType = sourceType;
+        [self presentViewController:imagePicker animated:YES completion:nil];
+    }
 }
 
 @end
