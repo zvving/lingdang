@@ -175,6 +175,16 @@ UIPickerViewDataSource,UIPickerViewDelegate, UIActionSheetDelegate>
     [self.tableView addPullToRefreshWithActionHandler:loadDataBlock];
     
     loadDataBlock();
+    
+    
+    UILongPressGestureRecognizer *ges = [UILongPressGestureRecognizer recognizerWithHandler:^(UIGestureRecognizer *sender, UIGestureRecognizerState state, CGPoint location) {
+        CGPoint p = [sender locationInView:self.tableView];
+        NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:p];
+        if (indexPath && state == UIGestureRecognizerStateBegan) {
+            [self pushEdithFoodViewByIndexPath:indexPath];
+        }
+    }];
+    [self.tableView addGestureRecognizer:ges];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -212,9 +222,7 @@ UIPickerViewDataSource,UIPickerViewDelegate, UIActionSheetDelegate>
 {
     if (_isAdminMode)
     {
-        BXFoodInfoViewController *foodEdit = [[BXFoodInfoViewController alloc] init];
-        foodEdit.food = _shopFoods[indexPath.row];
-        [self.navigationController pushViewController:foodEdit animated:YES];
+        [self pushEdithFoodViewByIndexPath:indexPath];
     }
     else
     {
@@ -282,6 +290,13 @@ UIPickerViewDataSource,UIPickerViewDelegate, UIActionSheetDelegate>
     BXFoodInfoViewController *foodInfo = [[BXFoodInfoViewController alloc] init];
     foodInfo.shop = _shop;
     [self.navigationController pushViewController:foodInfo animated:YES];
+}
+
+- (void)pushEdithFoodViewByIndexPath:(NSIndexPath*)indexPath
+{
+    BXFoodInfoViewController *foodEdit = [[BXFoodInfoViewController alloc] init];
+    foodEdit.food = _shopFoods[indexPath.row];
+    [self.navigationController pushViewController:foodEdit animated:YES];
 }
 
 #pragma mark - uiaction sheet delegate methods

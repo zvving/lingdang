@@ -83,6 +83,15 @@
                                              selector:@selector(showMyOrder:)
                                                  name:kNotificationGoMyOrder
                                                object:nil];
+    
+    UILongPressGestureRecognizer *ges = [UILongPressGestureRecognizer recognizerWithHandler:^(UIGestureRecognizer *sender, UIGestureRecognizerState state, CGPoint location) {
+        CGPoint p = [sender locationInView:self.shopTable];
+        NSIndexPath *indexPath = [self.shopTable indexPathForRowAtPoint:p];
+        if (indexPath && state == UIGestureRecognizerStateBegan) {
+            [self pushEdithShopViewByIndexPath:indexPath];
+        }
+    }];
+    [self.shopTable addGestureRecognizer:ges];
 }
 
 - (void)buildBarButtons
@@ -116,15 +125,18 @@
     else // 订餐界面
     {
         
+#if TARGET_IPHONE_SIMULATOR
+        
         self.navigationItem.leftBarButtonItem =
         [[UIBarButtonItem alloc] initWithTitle:@"切至管家"
                                          style:UIBarButtonItemStylePlain
                                        handler:^(id sender)
          {
-             [[EGOCache globalCache] setString:@"YES" forKey:kCacheIsAdminMode];
-             [weakSelf presentViewController:_adminNav animated:YES completion:nil];
+             [self trunToAdminModel];
          }];
         
+#endif
+
         self.navigationItem.rightBarButtonItem =
         [[UIBarButtonItem alloc] initWithTitle:@"我的订单"
                                          style:UIBarButtonItemStylePlain
@@ -184,9 +196,7 @@
 {
     if (self.shopTable.editing)
     {
-        BXShopAddViewController *shopEdit = [[BXShopAddViewController alloc] init];
-        shopEdit.curShop = _shops[indexPath.row];
-        [self.navigationController pushViewController:shopEdit animated:YES];
+        [self pushEdithShopViewByIndexPath:indexPath];
     }
     else
     {
@@ -227,6 +237,37 @@
     BXMyOrderViewController *myOrdersVC = [[BXMyOrderViewController alloc] init];
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:myOrdersVC];
     [self presentViewController:nav animated:YES completion:nil];
+}
+
+
+#pragma mark - Shake
+
+- (void)motionEnded:(UIEventSubtype)motion withEvent:(UIEvent *)event
+{
+    if (motion == UIEventSubtypeMotionShake)
+    {
+        UIActionSheet *as = [UIActionSheet actionSheetWithTitle:@"隐藏功能"];
+        [as setDestructiveButtonWithTitle:@"切至管家模式" handler:^{
+            [self trunToAdminModel];
+        }];
+        [as setCancelButtonWithTitle:@"取消" handler:nil];
+        [as showInView:self.view];
+    }
+}
+
+#pragma mark - private
+
+- (void)pushEdithShopViewByIndexPath:(NSIndexPath*)indexPath
+{
+    BXShopAddViewController *shopEdit = [[BXShopAddViewController alloc] init];
+    shopEdit.curShop = _shops[indexPath.row];
+    [self.navigationController pushViewController:shopEdit animated:YES];
+}
+
+- (void)trunToAdminModel
+{
+    [[EGOCache globalCache] setString:@"YES" forKey:kCacheIsAdminMode];
+    [self presentViewController:_adminNav animated:YES completion:nil];
 }
 
 @end
