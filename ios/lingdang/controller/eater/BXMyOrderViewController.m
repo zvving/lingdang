@@ -13,10 +13,6 @@
 #import "BXMyOrderCell.h"
 #import "BXOrderCmdCell.h"
 
-#define TagFromSctionAndRow(section, row)               (section*10000 + row)
-#define SectionFromTag(tag)                             (tag / 10000)
-#define RowFromTag(tag)                                 (tag % 10000)
-
 @interface BXMyOrderViewController ()<UITableViewDataSource, UITableViewDelegate>
 
 

@@ -27,25 +27,12 @@
         _datePicker.showsSelectionIndicator = YES;
         _datePicker.dataSource = self;
         _datePicker.delegate = self;
-//        _datePicker.maximumDate = [NSDate date];
-//        _datePicker.minimumDate = [NSDate dateWithTimeInterval:3600*24*10 sinceDate:[NSDate date]];
-//        _datePicker.datePickerMode = UIDatePickerModeDate;
-        
-        
+        self.backgroundColor = [UIColor whiteColor];
         
         [self addSubview:_datePicker];
     }
     return self;
 }
-
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect
-{
-    // Drawing code
-}
-*/
 
 -(void)cancel:(id)sender
 {

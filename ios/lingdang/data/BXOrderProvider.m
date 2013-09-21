@@ -19,7 +19,7 @@ BCSINGLETON_IN_M(BXOrderProvider)
 {
     BXOrder *order = [BXOrder object];
 
-    order.pToUser = [AVUser currentUser];
+    order.user = [AVUser currentUser];
     order.status = 0;
     order.isPaid = NO;
     
@@ -42,7 +42,7 @@ BCSINGLETON_IN_M(BXOrderProvider)
     PFQuery *query = [BXOrder query];
 
     [query addDescendingOrder:@"updatedAt"];
-    [query includeKey:@"shop"];
+    [query includeKey:@"pToShop"];
     [query includeKey:@"pToUser"];
 
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
@@ -111,7 +111,7 @@ BCSINGLETON_IN_M(BXOrderProvider)
              onFail:(void (^)(NSError *err)) errBlock
 {
     AVUser *currentUser = [AVUser currentUser];
-    if ([order.pToUser.objectId isEqualToString:currentUser.objectId] == NO) {
+    if ([order.user.objectId isEqualToString:currentUser.objectId] == NO) {
         NSError *error = [[NSError alloc] initWithDomain:nil
                                                         code:0
                                                     userInfo:@{@"msg": @"你没有权限操作"}];

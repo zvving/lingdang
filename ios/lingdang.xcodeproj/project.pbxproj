@@ -52,6 +52,8 @@
 		A9F157E217EC023F003CA9F9 /* BXOrderCmdCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A9F157DD17EC023F003CA9F9 /* BXOrderCmdCell.m */; };
 		A9F157E317EC023F003CA9F9 /* BXOrderFoodCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A9F157DF17EC023F003CA9F9 /* BXOrderFoodCell.m */; };
 		A9F157E617EC027F003CA9F9 /* BXMyTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = A9F157E517EC027F003CA9F9 /* BXMyTextField.m */; };
+		A9F157EC17EC90A5003CA9F9 /* BXOrderCmdCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A9F157EA17EC90A5003CA9F9 /* BXOrderCmdCell.xib */; };
+		A9F157ED17EC90A5003CA9F9 /* BXOrderFoodCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A9F157EB17EC90A5003CA9F9 /* BXOrderFoodCell.xib */; };
 		A9FE829117E48349008C1640 /* BXShopListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A9FE828F17E48349008C1640 /* BXShopListViewController.m */; };
 		A9FE829217E48349008C1640 /* BXShopListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A9FE829017E48349008C1640 /* BXShopListViewController.xib */; };
 /* End PBXBuildFile section */
@@ -134,6 +136,8 @@
 		A9F157DF17EC023F003CA9F9 /* BXOrderFoodCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BXOrderFoodCell.m; sourceTree = "<group>"; };
 		A9F157E417EC027F003CA9F9 /* BXMyTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BXMyTextField.h; sourceTree = "<group>"; };
 		A9F157E517EC027F003CA9F9 /* BXMyTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BXMyTextField.m; sourceTree = "<group>"; };
+		A9F157EA17EC90A5003CA9F9 /* BXOrderCmdCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BXOrderCmdCell.xib; sourceTree = "<group>"; };
+		A9F157EB17EC90A5003CA9F9 /* BXOrderFoodCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BXOrderFoodCell.xib; sourceTree = "<group>"; };
 		A9FE828E17E48349008C1640 /* BXShopListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BXShopListViewController.h; sourceTree = "<group>"; };
 		A9FE828F17E48349008C1640 /* BXShopListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BXShopListViewController.m; sourceTree = "<group>"; };
 		A9FE829017E48349008C1640 /* BXShopListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BXShopListViewController.xib; sourceTree = "<group>"; };
@@ -347,8 +351,10 @@
 				A9F157DB17EC023F003CA9F9 /* BXMyOrderCell.xib */,
 				A9F157DC17EC023F003CA9F9 /* BXOrderCmdCell.h */,
 				A9F157DD17EC023F003CA9F9 /* BXOrderCmdCell.m */,
+				A9F157EA17EC90A5003CA9F9 /* BXOrderCmdCell.xib */,
 				A9F157DE17EC023F003CA9F9 /* BXOrderFoodCell.h */,
 				A9F157DF17EC023F003CA9F9 /* BXOrderFoodCell.m */,
+				A9F157EB17EC90A5003CA9F9 /* BXOrderFoodCell.xib */,
 			);
 			path = cell;
 			sourceTree = "<group>";
@@ -413,6 +419,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A9FE829217E48349008C1640 /* BXShopListViewController.xib in Resources */,
+				A9F157EC17EC90A5003CA9F9 /* BXOrderCmdCell.xib in Resources */,
 				0D1B162217BF54140019AD6F /* Default@2x.png in Resources */,
 				0D1B161817BF54140019AD6F /* BXLoginViewController.xib in Resources */,
 				0D1B162017BF54140019AD6F /* Default-568h@2x.png in Resources */,
@@ -421,6 +428,7 @@
 				0D1B161317BF54140019AD6F /* BXFoodInfoViewController.xib in Resources */,
 				0D1B161517BF54140019AD6F /* BXOrderListViewController.xib in Resources */,
 				A9F157D617EBFC7E003CA9F9 /* TextFieldBack@2x.png in Resources */,
+				A9F157ED17EC90A5003CA9F9 /* BXOrderFoodCell.xib in Resources */,
 				A991CA7C17E5512000068FDD /* BXMyShopCarViewController.xib in Resources */,
 				0D1B162517BF54140019AD6F /* InfoPlist.strings in Resources */,
 				0DF3C8E317E5908700B0F586 /* BXShopAddViewController.xib in Resources */,

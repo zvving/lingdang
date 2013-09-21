@@ -18,12 +18,12 @@
 
 @interface BXOrderListViewController () <UITableViewDataSource, UITableViewDelegate>
 
-@property (weak, nonatomic) IBOutlet UITableView *  tableView;
+@property (weak, nonatomic) IBOutlet UITableView                    *tableView;
+@property (weak, nonatomic) IBOutlet UISegmentedControl             *showTypeSeg;
 
-@property (weak, nonatomic) IBOutlet UISegmentedControl *  showTypeSeg;
+@property (nonatomic,strong) NSDate                 *selectDate;
 @property (weak, nonatomic) IBOutlet UIButton *shopButton;
 
-@property (nonatomic,strong) NSDate* selectDate;
 
 @property (nonatomic, strong) NSArray *                     orderData;
 @property (nonatomic, strong) BXOrderShopGroup *            orderShopGroup;
@@ -151,21 +151,41 @@
     }
 }
 
-- (NSString*)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
+    if (section == 0) {
+        return 35.0f;
+    }
+    return 24.0f;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    NSString *title = nil;
     if (self.showType == ShowByShop)
     {
         BXOrderShopGroupItem *item = _orderShopGroup.itemArr[section];
-        NSString* title = [NSString stringWithFormat:@"%@",item.shop.name];
-        return title;
+        title = [NSString stringWithFormat:@"%@",item.shop.name];
     }
     else
     {
         BXOrder* order = [_orderData objectAtIndex:section];
-        NSString* title = [NSString stringWithFormat:@"%@ %@",order.pToUser.username,order.shop.name];
-        return title;
+        title = [NSString stringWithFormat:@"%@●%@",order.user.username,order.shop.name];
     }
+    
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10.0f,
+                                                               section==0?35-24 : 0,
+                                                               300, 24)];
+    label.text = title;
+    label.font = [UIFont systemFontOfSize:15.0f];
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0.0f,
+                                                            0.0f,
+                                                            320.0f,
+                                                            section==0?30:24)];
+    [view addSubview:label];
+    return view;
 }
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *foodCellId = @"BXOrderFoodCell";
@@ -193,7 +213,7 @@
                 int amount = [item.foodAmountArr[i] intValue];
                 totalPrice +=  amount * price;
             }
-            foodCell.priceLabel.text = [NSString stringWithFormat:@"共%.1f元",totalPrice];
+            foodCell.priceLabel.text = [NSString stringWithFormat:@"共%g元",totalPrice];
             
             [foodCell.cmdButton setTitle:@"按店铺" forState:UIControlStateNormal];
         }
@@ -211,7 +231,7 @@
             
             BXOrderFoodCell* foodCell = (BXOrderFoodCell*)cell;
             foodCell.foodLabel.text = item.foodNameArr[indexPath.row];
-            foodCell.priceLabel.text = [NSString stringWithFormat:@"￥%.1f", price];
+            foodCell.priceLabel.text = [NSString stringWithFormat:@"￥%g", price];
             foodCell.amountLabel.text = [NSString stringWithFormat:@"x%d", amount];
         }
     }
@@ -226,6 +246,7 @@
                 cell = [[[NSBundle mainBundle] loadNibNamed:cmdCellId owner:nil options:nil] lastObject];
             }
             BXOrderCmdCell* foodCell = (BXOrderCmdCell*)cell;
+            foodCell.cmdButton.tag = TagFromSctionAndRow(indexPath.section, indexPath.row);
             
             float totalPrice = 0;
             for(int i = 0;i<[order.foodNameArr count];i++)
@@ -234,19 +255,15 @@
                 int amount = [order.foodAmountArr[i] intValue];
                 totalPrice +=  amount * price;
             }
-            foodCell.priceLabel.text = [NSString stringWithFormat:@"共%.1f元",totalPrice];
+            foodCell.priceLabel.text = [NSString stringWithFormat:@"共%g元",totalPrice];
             
-            if (order.status == 0)
-            {
-                [foodCell.cmdButton setTitle:@"修改订单" forState:UIControlStateNormal];
-            }
-            else if (order.status == 1)
-            {
-                [foodCell.cmdButton setTitle:@"已预定" forState:UIControlStateNormal];
-            }
-            else if (order.status == 2)
-            {
-                [foodCell.cmdButton setTitle:@"已拨打电话" forState:UIControlStateNormal];
+            if (order.isPaid) {
+                foodCell.cmdButton.hidden = YES;
+                foodCell.hasPaid.hidden = NO;
+            } else {
+                foodCell.cmdButton.hidden = NO;
+                foodCell.hasPaid.hidden = YES;
+                [foodCell.cmdButton addTarget:self action:@selector(payOrder:) forControlEvents:UIControlEventTouchUpInside];
             }
         }
         else
@@ -338,13 +355,13 @@
     NSDate* now = [NSDate date];
     NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
     NSDateComponents *comps =  [calendar components:NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit fromDate:now];
-    int nowYear=[comps year];
+    int nowYear= [comps year];
     int nowMonth = [comps month];
     int nowDay = [comps day];
     
     calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
     comps =  [calendar components:NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit fromDate:self.selectDate];
-    int selYear=[comps year];
+    int selYear= [comps year];
     int selMonth = [comps month];
     int selDay = [comps day];
     
@@ -372,6 +389,12 @@
     return YES;
 }
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    [self becomeFirstResponder];
+}
+
 - (void)motionEnded:(UIEventSubtype)motion withEvent:(UIEvent *)event
 {
     if (motion == UIEventSubtypeMotionShake)
@@ -385,6 +408,27 @@
         }];
         [as setCancelButtonWithTitle:@"取消" handler:nil];
         [as showInView:self.view];
+    }
+}
+
+#pragma mark button actions
+- (void)payOrder: (UIButton *)sender
+{
+    NSUInteger section = SectionFromTag(sender.tag);
+    BXOrder *order = self.orderData[section];
+    
+    if (self.showType == ShowByUser) {
+        order.isPaid = YES;
+        __weak BXOrderListViewController *weakself = self;
+        [order saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+            if (error) {
+                order.isPaid = NO;
+                [SVProgressHUD showErrorWithStatus:@"服务异常，稍后重试"];
+            }
+            if (succeeded) {
+                [weakself.tableView reloadData];
+            }
+        }];
     }
 }
 

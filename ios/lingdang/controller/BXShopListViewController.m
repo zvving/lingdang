@@ -179,15 +179,13 @@
     static NSString *cellId = @"shopCellId";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellId];
     if (!cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellId];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellId];
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
     
     BXShop *shop = _shops[indexPath.row];
-    NSString *shopInfo = shop.shipInfo.length == 0? @"" :
-                          [NSString stringWithFormat:@"(%@)", shop.shipInfo];
-    NSString *msg = [NSString stringWithFormat:@"%@%@", shop.name, shopInfo];
-    cell.textLabel.text = msg;
+    cell.textLabel.text = shop.name;
+    cell.detailTextLabel.text = shop.shipInfo.length > 0 ? shop.shipInfo : nil;
 
     return cell;
 }
@@ -241,6 +239,16 @@
 
 
 #pragma mark - Shake
+
+-(BOOL)canBecomeFirstResponder {
+    return YES;
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    [self becomeFirstResponder];
+}
 
 - (void)motionEnded:(UIEventSubtype)motion withEvent:(UIEvent *)event
 {
