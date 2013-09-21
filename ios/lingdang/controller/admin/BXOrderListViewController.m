@@ -16,6 +16,8 @@
 #import "BXOrderCmdCell.h"
 #import "BXOrderShopGroup.h"
 
+#import "BXPushProvider.h"
+
 @interface BXOrderListViewController () <UITableViewDataSource, UITableViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView                    *tableView;
@@ -457,6 +459,15 @@
         [order saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
             if (error) {
                 [SVProgressHUD showErrorWithStatus:@"更新订单失败"];
+            }
+            if (succeeded) {
+                NSString *title = nil;
+                if (nextStatus == kOrderStatusOrdered) {
+                    title = @"饭已经帮你订好了，混球!";
+                } else if(nextStatus == kOrderStatusArrived) {
+                    title = @"混球，饭好了，赶紧过来吃!";
+                }
+                [[BXPushProvider sharedInstance]pushUser:order.user withTitle:title];
             }
         }];
         
