@@ -14,10 +14,13 @@
 #import "BXFoodInfoViewController.h"
 #import "BXShopProvider.h"
 #import "BXShopAddViewController.h"
+#import "BCTableDataSource.h"
 
 #import "BXShop.h"
 
-@interface BXShopListViewController () <UITableViewDataSource, UITableViewDelegate>
+#define kCellIdShopList             @"kCellIdShopList"
+
+@interface BXShopListViewController () <UITableViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *shopTable;
 @property (weak, nonatomic) IBOutlet UIButton *addShopButton;
@@ -27,12 +30,13 @@
 @property (nonatomic, strong) UINavigationController            *adminNav;
 @property (nonatomic, strong) BXLoginViewController             *loginVC;
 
-@property (nonatomic, strong) NSArray                           *shops;
+@property (nonatomic, strong) NSMutableArray                           *shops;
+
+@property (nonatomic, strong) BCTableDataSource *               tableDataSource;
 
 @end
 
 @implementation BXShopListViewController
-
 
 - (void)viewDidLoad
 {
@@ -56,11 +60,23 @@
     
     [self buildBarButtons];
     
+    self.shops = [NSMutableArray array];
+    
+    self.tableDataSource = [[BCTableDataSource alloc] initWithItems:_shops
+                                                         cellIdentifier:kCellIdShopList
+                                                     configureCellBlock:^(UITableViewCell *cell, BXShop *shop)
+    {
+        cell.textLabel.text = shop.name;
+        cell.detailTextLabel.text = shop.shipInfo.length > 0 ? shop.shipInfo : nil;
+    }];
+    self.shopTable.dataSource = self.tableDataSource;
+    
     // load the data;
     __weak BXShopListViewController *weakself = self;
     void (^loadDataBlock)(void) = ^ {
         [[BXShopProvider sharedInstance] allShops:^(NSArray *shops) {
-            weakself.shops = shops;
+            [weakself.shops removeAllObjects];
+            [weakself.shops addObjectsFromArray:shops];
             [weakself.shopTable reloadData];
             double delayInSeconds = 0.1;
             dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
@@ -157,37 +173,11 @@
     
 }
 
-#pragma mark - UITableViewDataSource & UITableViewDelegate
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-    return 1;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    return [_shops count];
-}
+#pragma mark - UITableViewDelegate
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return 64.0f;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    static NSString *cellId = @"shopCellId";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellId];
-    if (!cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellId];
-        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    }
-    
-    BXShop *shop = _shops[indexPath.row];
-    cell.textLabel.text = shop.name;
-    cell.detailTextLabel.text = shop.shipInfo.length > 0 ? shop.shipInfo : nil;
-
-    return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
