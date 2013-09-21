@@ -42,7 +42,7 @@ BCSINGLETON_IN_M(BXOrderProvider)
     PFQuery *query = [BXOrder query];
     query.cachePolicy = kPFCachePolicyCacheThenNetwork;
 
-    [query addDescendingOrder:@"updatedAt"];
+    [query addDescendingOrder:@"createdAt"];
     [query includeKey:@"pToShop"];
     [query includeKey:@"pToUser"];
 
@@ -66,7 +66,7 @@ BCSINGLETON_IN_M(BXOrderProvider)
     PFQuery *query = [BXOrder query];
     [query whereKey:@"updatedAt" greaterThan:date];
     [query whereKey:@"updatedAt" lessThan:[NSDate dateWithTimeInterval:3600*24 sinceDate:date]];
-    [query addDescendingOrder:@"updatedAt"];
+    [query addDescendingOrder:@"createdAt"];
     
     
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
@@ -89,7 +89,7 @@ BCSINGLETON_IN_M(BXOrderProvider)
     
     [query whereKey:@"pToUser" equalTo:[AVUser currentUser]];
     [query includeKey:@"pToShop"];
-    [query addDescendingOrder:@"updatedAt"];
+    [query addDescendingOrder:@"createdAt"];
     query.limit = 15;
     
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
