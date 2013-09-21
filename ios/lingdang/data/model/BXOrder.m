@@ -22,11 +22,6 @@
 
 + (NSDate*)todayDate;
 {
-    
-    NSDateFormatter *ndf = [[NSDateFormatter alloc] init];
-    ndf.dateFormat = @"yyyy:MM月dd日HH:mm";
-    return [ndf dateFromString:@"2013:09月21日14:55"];
-    
     static NSDate *todayDate = nil;
     if (!todayDate) {
         NSDate *date = [NSDate date];
