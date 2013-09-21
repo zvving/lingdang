@@ -21,6 +21,8 @@
 @property (nonatomic, strong)   NSMutableArray *               foodPriceArr;
 @property (nonatomic, strong)   NSMutableArray *               foodAmountArr;
 
+@property (nonatomic, strong)   NSMutableArray *               userNameArr;
+
 @property (nonatomic, assign)   NSInteger                      status;
 
 - (void)appendOrder:(BXOrder*)order;

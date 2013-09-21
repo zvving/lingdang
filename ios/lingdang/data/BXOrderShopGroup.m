@@ -20,6 +20,7 @@
         _foodNameArr = [NSMutableArray array];
         _foodPriceArr = [NSMutableArray array];
         _foodAmountArr = [NSMutableArray array];
+        _userNameArr = [NSMutableArray array];
     }
     return self;
 }
@@ -41,6 +42,10 @@
             [_foodPriceArr addObject:price];
         }
     }];
+    
+    if (![_userNameArr containsObject:order.user.username]) {
+        [_userNameArr addObject:order.user.username];
+    }
 
 }
 

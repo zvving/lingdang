@@ -41,7 +41,7 @@
     self = [super init];
     if (self)
     {
-        self.showType = ShowByUser;
+        self.showType = ShowByShop;
         self.selectDate = [NSDate date];
     }
     return self;
@@ -58,8 +58,6 @@
     [self updateTitle];
     
     self.showTypeSeg.selectedSegmentIndex = self.showType;
-    
-    __block BXOrderListViewController *weakSelf = self;
 
 #if TARGET_IPHONE_SIMULATOR
     
@@ -68,7 +66,7 @@
                                      style:UIBarButtonItemStylePlain
                                    handler:^(id sender)
     {
-        [weakSelf trunToEaterModel];
+        [self trunToEaterModel];
     }];
     
     self.shopButton.hidden = NO;
@@ -98,30 +96,33 @@
     }];
     
     [_tableView addPullToRefreshWithActionHandler:^{
-        
-        void (^sucBlock)(NSArray *orders) = ^(NSArray *orders){
-            
-            weakSelf.orderData = [BXOrder fixAVOSArray:orders];
-            weakSelf.orderShopGroup = [BXOrderShopGroup groupByOrders:_orderData];
-            [_tableView reloadData];
-            [_tableView.pullToRefreshView stopAnimating];
-        };
-        
-        void (^failBlock)(NSError *err) = ^(NSError *err) {
-            [SVProgressHUD showErrorWithStatus:@"获取订单失败"];
-            [_tableView.pullToRefreshView stopAnimating];
-        };
-        
-        [[BXOrderProvider sharedInstance] allOrders:sucBlock fail:failBlock];
+        [self updateData];
     }];
     
-    [_tableView triggerPullToRefresh];
+    [self updateData];
     
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
+}
+
+- (void)updateData
+{
+    __block BXOrderListViewController *weakSelf = self;
+    void (^sucBlock)(NSArray *orders) = ^(NSArray *orders){
+        weakSelf.orderData = [BXOrder fixAVOSArray:orders];
+        weakSelf.orderShopGroup = [BXOrderShopGroup groupByOrders:_orderData];
+        [_tableView reloadData];
+        [_tableView.pullToRefreshView stopAnimating];
+    };
+    
+    void (^failBlock)(NSError *err) = ^(NSError *err) {
+        [_tableView.pullToRefreshView stopAnimating];
+    };
+    
+    [[BXOrderProvider sharedInstance] allOrders:sucBlock fail:failBlock];
 }
 
 #pragma mark - UITableViewDataSource & UITableViewDelegate
@@ -166,12 +167,13 @@
     if (self.showType == ShowByShop)
     {
         BXOrderShopGroupItem *item = _orderShopGroup.itemArr[section];
-        title = [NSString stringWithFormat:@"%@",item.shop.name];
+        
+        title = [NSString stringWithFormat:@"%@ - %@",item.shop.name, [item.userNameArr componentsJoinedByString:@","]];
     }
     else
     {
         BXOrder* order = [_orderData objectAtIndex:section];
-        title = [NSString stringWithFormat:@"%@●%@",order.user.username,order.shop.name];
+        title = [NSString stringWithFormat:@"%@ - %@●%@",order.createdAtStr, order.user.username,order.shop.name];
     }
     
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10.0f,
@@ -217,17 +219,22 @@
             foodCell.priceLabel.text = [NSString stringWithFormat:@"共%g元",totalPrice];
             
             if (item.status == kOrderStatusEditable) {
-                [foodCell.cmdButton setTitle:@"已拨打电话" forState:UIControlStateNormal];
+                [foodCell.cmdButton setTitle:@"预订好啦" forState:UIControlStateNormal];
             } else if (item.status == kOrderStatusOrdered) {
-                [foodCell.cmdButton setTitle:@"饭到了!" forState:UIControlStateNormal];
-                [foodCell.cmdButton setBackgroundColor:[UIColor redColor]];
+                [foodCell.cmdButton setTitle:@"饭到啦" forState:UIControlStateNormal];
             } else if (item.status == kOrderStatusArrived) {
                 [foodCell.cmdButton setTitle:@"订单完成" forState:UIControlStateNormal];
-                foodCell.cmdButton.enabled = NO;
             }
             
             foodCell.cmdButton.tag = TagFromSctionAndRow(indexPath.section, indexPath.row);
-            [foodCell.cmdButton addTarget:self action:@selector(changeOrderStatus:) forControlEvents:UIControlEventTouchUpInside];
+            [foodCell.cmdButton addTarget:self action:@selector(changeOrderNextStatusWithButton:) forControlEvents:UIControlEventTouchUpInside];
+            UILongPressGestureRecognizer *ges = [UILongPressGestureRecognizer recognizerWithHandler:^(UIGestureRecognizer *sender, UIGestureRecognizerState state, CGPoint location) {
+                if (state == UIGestureRecognizerStateBegan) {
+                    [self changeOrderStatus:foodCell.cmdButton];
+                }
+            }];
+            [foodCell.cmdButton addGestureRecognizer:ges];
+            
         }
         else
         {
@@ -441,42 +448,75 @@
 
 - (void)changeOrderStatus:(UIButton *)sender
 {
-    if (self.showType != ShowByShop) {
-        return;
-    }
+    void (^block)(int status) = ^(int status) {
+        [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
+        [self changeOrderStatus:status withButton:sender block:^(BOOL succeeded, NSError *error) {
+            [self updateData];
+            [SVProgressHUD dismiss];
+        }];
+    };
     
-    NSUInteger section = SectionFromTag(sender.tag);
+    
+    UIActionSheet *as = [UIActionSheet actionSheetWithTitle:@"修改订单状态"];
+    
+    [as addButtonWithTitle:@"刚下单，未预订" handler:^{
+        block(kOrderStatusEditable);
+    }];
+    [as addButtonWithTitle:@"已预订，未送达" handler:^{
+        block(kOrderStatusOrdered);
+    }];
+    [as addButtonWithTitle:@"已送达，订单完成" handler:^{
+        block(kOrderStatusArrived);
+    }];
+    [as setCancelButtonWithTitle:@"取消" handler:nil];
+    [as showInView:self.view];
+}
+
+- (void)changeOrderNextStatusWithButton:(UIButton*)btn
+{
+    NSUInteger section = SectionFromTag(btn.tag);
     BXOrderShopGroupItem *item= self.orderShopGroup.itemArr[section];
     
     NSInteger currentStatus = item.status;
-    NSInteger nextStatus;
+    NSInteger nextStatus = 0;
     if (currentStatus == kOrderStatusEditable) {
         nextStatus = kOrderStatusOrdered;
     } else if(currentStatus == kOrderStatusOrdered) {
         nextStatus = kOrderStatusArrived;
+    } else if(currentStatus == kOrderStatusArrived) {
+        return;
     }
+    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
+    [self changeOrderStatus:nextStatus withButton:btn block:^(BOOL succeeded, NSError *error) {
+        [self updateData];
+        [SVProgressHUD dismiss];
+    }];
+
+}
+
+- (void)changeOrderStatus:(int)status withButton:(UIButton*)btn block:(PFBooleanResultBlock)block
+{
+    NSUInteger section = SectionFromTag(btn.tag);
+    BXOrderShopGroupItem *item= self.orderShopGroup.itemArr[section];
     for (int i = 0; i < [item.orders count]; i++) {
         BXOrder *order = item.orders[i];
-        order.status = nextStatus;
-        [order saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-            if (error) {
-                [SVProgressHUD showErrorWithStatus:@"更新订单失败"];
-            }
-            if (succeeded) {
-                NSString *title = nil;
-                if (nextStatus == kOrderStatusOrdered) {
-                    title = @"饭已经帮你订好了，混球!";
-                } else if(nextStatus == kOrderStatusArrived) {
-                    title = @"混球，饭好了，赶紧过来吃!";
-                }
-                [[BXPushProvider sharedInstance]pushUser:order.user withTitle:title];
-            }
-        }];
-        
-        if (i == [item.orders count] - 1) {
-            [self.tableView triggerPullToRefresh];
+        order.status = status;
+        NSString *title = nil;
+        if (status == kOrderStatusOrdered) {
+            title = @"饭已经帮你订好了，混球!";
+        } else if(status == kOrderStatusArrived) {
+            title = @"混球，饭好了，赶紧过来吃!";
         }
+        [[BXPushProvider sharedInstance]pushUser:order.user withTitle:title];
     }
+    [AVObject saveAllInBackground:item.orders block:^(BOOL succeeded, NSError *error) {
+        if (!succeeded) {
+            [SVProgressHUD showErrorWithStatus:@"更新订单失败"];
+        }
+        if (block) {
+            block(succeeded, error);
+        }
+    }];
 }
 
 @end

@@ -40,6 +40,7 @@ BCSINGLETON_IN_M(BXOrderProvider)
              fail:(void(^)(NSError* err))failBlock;
 {
     PFQuery *query = [BXOrder query];
+    query.cachePolicy = kPFCachePolicyCacheThenNetwork;
 
     [query addDescendingOrder:@"updatedAt"];
     [query includeKey:@"pToShop"];
