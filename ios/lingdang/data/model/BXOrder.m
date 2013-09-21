@@ -20,6 +20,23 @@
     return [[BXOrder alloc] initWithClassName:[BXOrder parseClassName]];
 }
 
++ (NSDate*)todayDate;
+{
+    
+    NSDateFormatter *ndf = [[NSDateFormatter alloc] init];
+    ndf.dateFormat = @"yyyy:MM月dd日HH:mm";
+    return [ndf dateFromString:@"2013:09月21日14:55"];
+    
+    static NSDate *todayDate = nil;
+    if (!todayDate) {
+        NSDate *date = [NSDate date];
+        NSCalendar *calendar = [NSCalendar autoupdatingCurrentCalendar];
+        NSUInteger preservedComponents = (NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit);
+        todayDate = [calendar dateFromComponents:[calendar components:preservedComponents fromDate:date]];
+    }
+    return todayDate;
+}
+
 - (AVUser *)user
 {
     return [self objectForKey:@"pToUser"];
@@ -136,4 +153,21 @@
     self.foodItems = foodItems;
     return self;
 }
+
+- (NSString*)createdAtStr;
+{
+    static NSDateFormatter *ndf = nil;
+    if (ndf == nil) {
+        ndf = [[NSDateFormatter alloc] init];
+        ndf.dateFormat = @"MM月dd日HH:mm";
+    }
+
+    return [ndf stringFromDate:self.createdAt];
+}
+
+- (BOOL)isTodayCreated
+{
+    return [self.createdAt compare:[BXOrder todayDate]] == NSOrderedDescending;
+}
+
 @end

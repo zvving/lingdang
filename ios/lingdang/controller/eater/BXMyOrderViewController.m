@@ -31,6 +31,7 @@
     
     self.edgesForExtendedLayout = UIRectEdgeNone;
     self.navigationController.navigationBar.barTintColor = kColorEaterYellow;
+    self.navigationController.navigationBar.translucent = YES;
     
     self.title = @"我的订单";
     
@@ -90,8 +91,9 @@
             NSInteger amount = [order.foodAmountArr[i] integerValue];
             sum += price * amount;
         }
-        
+        cmdCell.priceLabel.frame = CGRectMake(20, 8, 100, 48);
         cmdCell.priceLabel.text = [NSString stringWithFormat:@"%g元", sum];
+//        cmdCell.cmdButton.enabled = order.isTodayCreated == NO;
         
         UILabel *hintLabel = nil;
         switch (order.status) {
@@ -115,7 +117,6 @@
         BXMyOrderCell *myOrderCell = (BXMyOrderCell *)cell;
         float price = [order.foodPriceArr[indexPath.row] floatValue];
         NSInteger amount = [order.foodAmountArr[indexPath.row] integerValue];
-        myOrderCell.shopNameLabel.text = order.shop.name;
         myOrderCell.foodNameLabel.text = order.foodNameArr[indexPath.row];
         myOrderCell.priceLabel.text = [NSString stringWithFormat:@"￥%g", price];
         myOrderCell.amountLabel.text = [NSString stringWithFormat:@"x%d", amount];
@@ -129,15 +130,11 @@
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 320.f, 24.0f)];
     view.backgroundColor = [UIColor clearColor];
     
-    static NSDateFormatter *ndf = nil;
-    if (ndf == nil) {
-        ndf = [[NSDateFormatter alloc] init];
-        ndf.dateFormat = @"MM月dd日HH:mm";
-    }
     
     BXOrder *order = _orderData[section];
     UILabel *label = [[UILabel alloc] initWithFrame: CGRectMake(10.0f, section == 0? 12.0f : 0.0f, 300.0f, 24.0f)];
-    label.text = [ndf stringFromDate: order.createdAt];
+    label.text = [NSString stringWithFormat:@"%@ - %@", order.createdAtStr, order.shop.name];
+    label.textColor = order.isTodayCreated ? [UIColor blackColor] : [UIColor grayColor];
     [view addSubview:label];
 
     return view;
@@ -162,24 +159,32 @@
 {
     NSInteger section = SectionFromTag(sender.tag);
     BXOrder *order = self.orderData[section];
-    
     __weak BXMyOrderViewController *weakself = self;
-    [[BXOrderProvider sharedInstance] deleteOrder:order onSuccess:^{
-        [weakself.orderData removeObjectAtIndex: section];
-        NSIndexSet *indexSet = [NSIndexSet indexSetWithIndex:section];
-        
-        // pls check http://t.cn/z8ncg24
-        [CATransaction begin];
-        [CATransaction setCompletionBlock:^{
-            [weakself.tableView reloadData];
-        }];
-        [weakself.tableView beginUpdates];
-        [weakself.tableView deleteSections:indexSet withRowAnimation:UITableViewRowAnimationFade];
-        [weakself.tableView endUpdates];
     
-        [CATransaction commit];
+    UIActionSheet *as =[UIActionSheet actionSheetWithTitle:@"确定删除?"];
+    [as setDestructiveButtonWithTitle:@"删除" handler:^{
+        [[BXOrderProvider sharedInstance] deleteOrder:order onSuccess:^{
+            [weakself.orderData removeObjectAtIndex: section];
+            NSIndexSet *indexSet = [NSIndexSet indexSetWithIndex:section];
+            
+            // pls check http://t.cn/z8ncg24
+            [CATransaction begin];
+            [CATransaction setCompletionBlock:^{
+                [weakself.tableView reloadData];
+            }];
+            [weakself.tableView beginUpdates];
+            [weakself.tableView deleteSections:indexSet withRowAnimation:UITableViewRowAnimationFade];
+            [weakself.tableView endUpdates];
+            
+            [CATransaction commit];
+            
+        } onFail:nil];
+    }];
+    [as setCancelButtonWithTitle:@"取消" handler:nil];
+    [as showInView:self.view];
+    
 
-    } onFail:nil];
+
 }
 
 @end

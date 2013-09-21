@@ -53,6 +53,7 @@
     
     self.edgesForExtendedLayout = UIRectEdgeNone;
     self.navigationController.navigationBar.barTintColor = kColorAdminRed;
+    self.navigationController.navigationBar.translucent = YES;
     
     [self updateTitle];
     
@@ -398,6 +399,12 @@
 
 -(BOOL)canBecomeFirstResponder {
     return YES;
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    [self becomeFirstResponder];
 }
 
 - (void)motionEnded:(UIEventSubtype)motion withEvent:(UIEvent *)event

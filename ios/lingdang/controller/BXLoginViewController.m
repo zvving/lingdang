@@ -22,6 +22,7 @@
 
 - (void)viewDidLoad
 {
+    self.navigationController.navigationBar.translucent = YES;
     _usernameTf.borderStyle = UITextBorderStyleRoundedRect;
 }
 

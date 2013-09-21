@@ -36,7 +36,7 @@
     [super viewDidLoad];
     
     self.edgesForExtendedLayout = UIRectEdgeAll;
-    self.navigationController.navigationBar.barTintColor = kColorAdminRed;
+    self.navigationController.navigationBar.translucent = YES;
         
     self.title = _food ? @"更新菜品" : @"新增菜品";
     if (_food)

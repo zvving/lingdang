@@ -35,6 +35,7 @@
     [super viewDidLoad];
     
     self.edgesForExtendedLayout = UIRectEdgeNone;
+    self.navigationController.navigationBar.translucent = YES;
     
     if (self.curShop)
     {
