@@ -21,15 +21,14 @@
 @property (weak, nonatomic) IBOutlet UITableView                    *tableView;
 @property (weak, nonatomic) IBOutlet UISegmentedControl             *showTypeSeg;
 
-@property (nonatomic,strong) NSDate                 *selectDate;
-@property (weak, nonatomic) IBOutlet UIButton *shopButton;
+@property (nonatomic,strong) NSDate                                 *selectDate;
+@property (weak, nonatomic) IBOutlet UIButton                       *shopButton;
 
 
-@property (nonatomic, strong) NSArray *                     orderData;
-@property (nonatomic, strong) BXOrderShopGroup *            orderShopGroup;
+@property (nonatomic, strong) NSArray                               *orderData;
+@property (nonatomic, strong) BXOrderShopGroup                      *orderShopGroup;
 
-
-@property (strong, nonatomic) BXDateSelectView* dateSelectView;
+@property (strong, nonatomic) BXDateSelectView                      *dateSelectView;
 
 @end
 
@@ -214,7 +213,18 @@
             }
             foodCell.priceLabel.text = [NSString stringWithFormat:@"共%g元",totalPrice];
             
-            [foodCell.cmdButton setTitle:@"按店铺" forState:UIControlStateNormal];
+            if (item.status == kOrderStatusEditable) {
+                [foodCell.cmdButton setTitle:@"已拨打电话" forState:UIControlStateNormal];
+            } else if (item.status == kOrderStatusOrdered) {
+                [foodCell.cmdButton setTitle:@"饭到了!" forState:UIControlStateNormal];
+                [foodCell.cmdButton setBackgroundColor:[UIColor redColor]];
+            } else if (item.status == kOrderStatusArrived) {
+                [foodCell.cmdButton setTitle:@"订单完成" forState:UIControlStateNormal];
+                foodCell.cmdButton.enabled = NO;
+            }
+            
+            foodCell.cmdButton.tag = TagFromSctionAndRow(indexPath.section, indexPath.row);
+            [foodCell.cmdButton addTarget:self action:@selector(changeOrderStatus:) forControlEvents:UIControlEventTouchUpInside];
         }
         else
         {
@@ -279,7 +289,7 @@
             
             BXOrderFoodCell* foodCell = (BXOrderFoodCell*)cell;
             foodCell.foodLabel.text = order.foodNameArr[indexPath.row];
-            foodCell.priceLabel.text = [NSString stringWithFormat:@"￥%.1f", price];
+            foodCell.priceLabel.text = [NSString stringWithFormat:@"￥%g", price];
             foodCell.amountLabel.text = [NSString stringWithFormat:@"x%d", amount];
         }
     }
@@ -422,6 +432,37 @@
                 [weakself.tableView reloadData];
             }
         }];
+    }
+}
+
+- (void)changeOrderStatus:(UIButton *)sender
+{
+    if (self.showType != ShowByShop) {
+        return;
+    }
+    
+    NSUInteger section = SectionFromTag(sender.tag);
+    BXOrderShopGroupItem *item= self.orderShopGroup.itemArr[section];
+    
+    NSInteger currentStatus = item.status;
+    NSInteger nextStatus;
+    if (currentStatus == kOrderStatusEditable) {
+        nextStatus = kOrderStatusOrdered;
+    } else if(currentStatus == kOrderStatusOrdered) {
+        nextStatus = kOrderStatusArrived;
+    }
+    for (int i = 0; i < [item.orders count]; i++) {
+        BXOrder *order = item.orders[i];
+        order.status = nextStatus;
+        [order saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+            if (error) {
+                [SVProgressHUD showErrorWithStatus:@"更新订单失败"];
+            }
+        }];
+        
+        if (i == [item.orders count] - 1) {
+            [self.tableView triggerPullToRefresh];
+        }
     }
 }
 

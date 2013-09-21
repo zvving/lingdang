@@ -44,7 +44,6 @@
 
 }
 
-
 @end
 
 
@@ -63,15 +62,18 @@
         if (o.shop == nil || [o.shop isKindOfClass:[NSNull class]]) {
             return;
         }
-        if ([group.keyMap.allKeys containsObject:o.shop.objectId]) {
-            BXOrderShopGroupItem *item = [group.keyMap objectForKey:o.shop.objectId];
+
+        //根据店铺名和订单状态来group
+        NSString *groupKey = [NSString stringWithFormat:@"%@%d", o.shop.objectId, o.status];
+        if ([group.keyMap.allKeys containsObject:groupKey]) {
+            BXOrderShopGroupItem *item = [group.keyMap objectForKey:groupKey];
             [item appendOrder:o];
         } else {
             BXOrderShopGroupItem *item = [[BXOrderShopGroupItem alloc] init];
             item.shop = o.shop;
+            item.status = o.status;
             [item appendOrder:o];
-            
-            [group.keyMap setObject:item forKey:item.shop.objectId];
+            [group.keyMap setObject:item forKey:groupKey];
             [group.itemArr addObject:item];
         }
     }];
