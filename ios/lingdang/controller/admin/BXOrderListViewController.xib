@@ -27,7 +27,7 @@
                         <outlet property="delegate" destination="-1" id="10"/>
                     </connections>
                 </tableView>
-                <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="6Yb-HF-WJG">
+                <toolbar opaque="NO" clearsContextBeforeDrawing="NO" alpha="0.90000000000000002" contentMode="scaleToFill" id="6Yb-HF-WJG">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -37,8 +37,8 @@
                                 <rect key="frame" x="6" y="8" width="310" height="29"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <segments>
-                                    <segment title="按店铺"/>
-                                    <segment title="按人"/>
+                                    <segment title="按店铺（预订）"/>
+                                    <segment title="按人(付款）"/>
                                 </segments>
                                 <connections>
                                     <action selector="switchViewType:" destination="-1" eventType="valueChanged" id="6fm-sf-KeD"/>
