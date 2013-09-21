@@ -267,14 +267,9 @@
             }
             foodCell.priceLabel.text = [NSString stringWithFormat:@"共%g元",totalPrice];
             
-            if (order.isPaid) {
-                foodCell.cmdButton.hidden = YES;
-                foodCell.hasPaid.hidden = NO;
-            } else {
-                foodCell.cmdButton.hidden = NO;
-                foodCell.hasPaid.hidden = YES;
-                [foodCell.cmdButton addTarget:self action:@selector(payOrder:) forControlEvents:UIControlEventTouchUpInside];
-            }
+            foodCell.cmdButton.tintColor = order.isPaid ? [UIColor blackColor] : [UIColor blueColor];
+            [foodCell.cmdButton setTitle:(order.isPaid ? @"付款完成" : @"确认付款") forState:UIControlStateNormal];
+            [foodCell.cmdButton addTarget:self action:@selector(payOrder:) forControlEvents:UIControlEventTouchUpInside];
         }
         else
         {
@@ -428,7 +423,7 @@
     BXOrder *order = self.orderData[section];
     
     if (self.showType == ShowByUser) {
-        order.isPaid = YES;
+        order.isPaid = ! order.isPaid;
         __weak BXOrderListViewController *weakself = self;
         [order saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
             if (error) {
