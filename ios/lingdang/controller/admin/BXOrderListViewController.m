@@ -212,7 +212,7 @@
                 int amount = [item.foodAmountArr[i] intValue];
                 totalPrice +=  amount * price;
             }
-            foodCell.priceLabel.text = [NSString stringWithFormat:@"共%.1f元",totalPrice];
+            foodCell.priceLabel.text = [NSString stringWithFormat:@"共%g元",totalPrice];
             
             [foodCell.cmdButton setTitle:@"按店铺" forState:UIControlStateNormal];
         }
@@ -230,7 +230,7 @@
             
             BXOrderFoodCell* foodCell = (BXOrderFoodCell*)cell;
             foodCell.foodLabel.text = item.foodNameArr[indexPath.row];
-            foodCell.priceLabel.text = [NSString stringWithFormat:@"￥%.1f", price];
+            foodCell.priceLabel.text = [NSString stringWithFormat:@"￥%g", price];
             foodCell.amountLabel.text = [NSString stringWithFormat:@"x%d", amount];
         }
     }
@@ -245,6 +245,7 @@
                 cell = [[[NSBundle mainBundle] loadNibNamed:cmdCellId owner:nil options:nil] lastObject];
             }
             BXOrderCmdCell* foodCell = (BXOrderCmdCell*)cell;
+            foodCell.cmdButton.tag = TagFromSctionAndRow(indexPath.section, indexPath.row);
             
             float totalPrice = 0;
             for(int i = 0;i<[order.foodNameArr count];i++)
@@ -253,19 +254,15 @@
                 int amount = [order.foodAmountArr[i] intValue];
                 totalPrice +=  amount * price;
             }
-            foodCell.priceLabel.text = [NSString stringWithFormat:@"共%.1f元",totalPrice];
+            foodCell.priceLabel.text = [NSString stringWithFormat:@"共%g元",totalPrice];
             
-            if (order.status == 0)
-            {
-                [foodCell.cmdButton setTitle:@"修改订单" forState:UIControlStateNormal];
-            }
-            else if (order.status == 1)
-            {
-                [foodCell.cmdButton setTitle:@"已预定" forState:UIControlStateNormal];
-            }
-            else if (order.status == 2)
-            {
-                [foodCell.cmdButton setTitle:@"已拨打电话" forState:UIControlStateNormal];
+            if (order.isPaid) {
+                foodCell.cmdButton.hidden = YES;
+                foodCell.hasPaid.hidden = NO;
+            } else {
+                foodCell.cmdButton.hidden = NO;
+                foodCell.hasPaid.hidden = YES;
+                [foodCell.cmdButton addTarget:self action:@selector(payOrder:) forControlEvents:UIControlEventTouchUpInside];
             }
         }
         else
@@ -404,6 +401,27 @@
         }];
         [as setCancelButtonWithTitle:@"取消" handler:nil];
         [as showInView:self.view];
+    }
+}
+
+#pragma mark button actions
+- (void)payOrder: (UIButton *)sender
+{
+    NSUInteger section = SectionFromTag(sender.tag);
+    BXOrder *order = self.orderData[section];
+    
+    if (self.showType == ShowByUser) {
+        order.isPaid = YES;
+        __weak BXOrderListViewController *weakself = self;
+        [order saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+            if (error) {
+                order.isPaid = NO;
+                [SVProgressHUD showErrorWithStatus:@"服务异常，稍后重试"];
+            }
+            if (succeeded) {
+                [weakself.tableView reloadData];
+            }
+        }];
     }
 }
 

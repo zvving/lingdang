@@ -26,4 +26,8 @@
 #define kColorEaterYellow           [UIColor colorWithRed:255.0/255.0 green:214.0/255.0 blue:82.0/255.0 alpha:1.0]
 #define kColorAdminRed              [UIColor redColor]
 
+#define TagFromSctionAndRow(section, row)               (section*10000 + row)
+#define SectionFromTag(tag)                             (tag / 10000)
+#define RowFromTag(tag)                                 (tag % 10000)
+
 #endif

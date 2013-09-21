@@ -23,12 +23,20 @@
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="6zf-ur-EAi">
                         <rect key="frame" x="202" y="10" width="108" height="44"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <state key="normal" title="按钮"/>
+                        <state key="normal" title="确认已付款"/>
                     </button>
+                    <label hidden="YES" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="已付款" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="uhe-nu-Cs2">
+                        <rect key="frame" x="202" y="10" width="108" height="44"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
             </tableViewCellContentView>
             <connections>
                 <outlet property="cmdButton" destination="6zf-ur-EAi" id="x9b-Iw-Pyt"/>
+                <outlet property="hasPaid" destination="uhe-nu-Cs2" id="ghM-lQ-dbW"/>
                 <outlet property="priceLabel" destination="C2k-Ny-PQb" id="gl1-ZO-b1W"/>
             </connections>
         </tableViewCell>
