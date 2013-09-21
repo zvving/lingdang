@@ -10,7 +10,6 @@
 
 @interface BXMyOrderCell : UITableViewCell
 
-@property (nonatomic, weak) IBOutlet UILabel *shopNameLabel;
 @property (nonatomic, weak) IBOutlet UILabel *foodNameLabel;
 @property (nonatomic, weak) IBOutlet UILabel *priceLabel;
 @property (nonatomic, weak) IBOutlet UILabel *amountLabel;

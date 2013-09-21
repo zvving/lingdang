@@ -46,6 +46,7 @@ BCSINGLETON_IN_M(BXMyShopCarViewController);
 {
     self.edgesForExtendedLayout = UIRectEdgeNone;
     self.navigationController.navigationBar.barTintColor = kColorEaterYellow;
+    self.navigationController.navigationBar.translucent = YES;
     
     self.tableview.tableFooterView = self.footerView;
 }

@@ -51,6 +51,7 @@ UIPickerViewDataSource,UIPickerViewDelegate, UIActionSheetDelegate>
 {
     self.edgesForExtendedLayout = UIRectEdgeNone;
     self.navigationController.navigationBar.barTintColor = _isAdminMode ? kColorAdminRed : kColorEaterYellow;
+    self.navigationController.navigationBar.translucent = YES;
     
     self.title = [NSString stringWithFormat:@"%@%@", _isAdminMode ? @"管理" : @"", _shop.name];
     _addFoodButton.hidden = !_isAdminMode;

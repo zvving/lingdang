@@ -52,6 +52,7 @@
     
     self.edgesForExtendedLayout = UIRectEdgeNone;
     self.navigationController.navigationBar.barTintColor = kColorAdminRed;
+    self.navigationController.navigationBar.translucent = YES;
     
     [self updateTitle];
     

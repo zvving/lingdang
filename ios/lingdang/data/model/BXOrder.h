@@ -19,6 +19,8 @@ typedef enum {
 
 @interface BXOrder : BXObject
 
++ (NSDate*)todayDate;
+
 //下单者
 @property (nonatomic, strong) AVUser *                  pToUser;
 
@@ -26,7 +28,7 @@ typedef enum {
 @property (nonatomic, assign) OrderStatus               status;
 
 //付款状态
-@property (nonatomic, assign) BOOL                 isPaid;
+@property (nonatomic, assign) BOOL                      isPaid;
 
 //预定的食物和数量  eg:[{food:{bxfood}, amount:int}, ...]
 @property (nonatomic, strong)   NSArray *               foodNameArr;
@@ -35,5 +37,10 @@ typedef enum {
 @property (nonatomic, strong)   BXShop *                shop;
 
 -(BXOrder*) merge:(BXOrder*)order;
+
+#pragma mark - helper
+
+- (NSString*)createdAtStr;
+- (BOOL)isTodayCreated;
 
 @end
